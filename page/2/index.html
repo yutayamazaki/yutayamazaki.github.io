@@ -4,16 +4,16 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
   
-  <title>404 Page not found</title>
-  <meta property="og:title" content="404 Page not found" />
-  <meta name="twitter:title" content="404 Page not found" />
+  <title>Yuta Yamazaki</title>
+  <meta property="og:title" content="Yuta Yamazaki" />
+  <meta name="twitter:title" content="Yuta Yamazaki" />
   
 
   
 
   <meta name="author" content=""/>
   <meta property="og:site_name" content="Yuta Yamazaki" />
-  <meta property="og:url" content="https://yutayamazaki.github.io/404.html" />
+  <meta property="og:url" content="https://yutayamazaki.github.io/" />
 
   
   <meta name="twitter:card" content="summary" />
@@ -34,6 +34,8 @@
   <link rel="stylesheet" href="https://yutayamazaki.github.io/css/style.css" />
   
   
+  <link href="https://yutayamazaki.github.io/index.xml" rel="alternate" type="application/rss+xml" title="Yuta Yamazaki" />
+  
   
   <script type="text/javascript" src="https://yutayamazaki.github.io/js/bundle.js"></script>
   
@@ -52,9 +54,77 @@
 
   <main id="main" class="l-main">
 
-<section class="p-notfound">
-  <h1>404</h1>
-</section>
+
+
+  
+  <article class="c-article p-list-article">
+  <header>
+    <h2 class="c-title c-article__title"><a href="https://yutayamazaki.github.io/posts/docker_pytorch/">DockerでPyTorchの実行環境を整備する 2019年11月</a></h2>
+    <p class="c-article__meta">
+      Posted on
+<time datetime="2020-07-06T01:35:23&#43;09:00">
+  Jul 6, 2020
+</time>
+
+    </p>
+  </header>
+  <div class="c-article__summary">
+    概要  PyTorchによるDeep Learningの実行環境をDockerコンテナで整備する Docker version19.03以降，ホストOSのGPUドライバとnvidia-container-runtimeさえあれば他はコンテナに閉じ込められる これで大体の場合コマンド一発で環境を再現できる  準備 ざっくりと以下の用意が必要．
+ dockerのversion19.03以降  公式ドキュメントを参照(このリンクはUbuntuの場合のドキュメント)   nvidia-container-runtime  GitHubのREADME.mdを参考にインストール   NVIDIA Driver  公式サイトを参考に自分のGPUに合わせたドライバをインストール    Dockerfileを作成する コンテナにはCUDAとCuDNNが入り，ホスト側のGPU Driverを利用する形になる．
+このDockerfileではUbuntu:18.04にCUDA:10.1とCuDNN:7が入ったイメージをベースにPython 3.7.1とPythonのパッケージをインストールしている．
+FROMnvidia/cuda:10.1-cudnn7-devel-ubuntu18.04 WORKDIR/codeENV PYTHON_VERSION 3.7.1ENV HOME /rootENV PYTHON_ROOT $HOME/local/python-$PYTHON_VERSIONENV PATH $PYTHON_ROOT/bin:$PATHENV PYENV_ROOT $HOME/.pyenvENV TZ=Asia/TokyoADD requirements.txt /codeRUN export DEBIAN_FRONTEND=noninteractive &amp;&amp; \  apt-get -y update &amp;&amp; \  apt-get -y upgrade &amp;&amp; \  apt-get -y install tzdataRUN apt-get -y install git make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev &amp;&amp; \  apt-get -y install wget curl llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev &amp;&amp; \  git clone https://github.
+  </div>
+  
+  <a href="https://yutayamazaki.github.io/posts/docker_pytorch/" class="c-article__btn p-list-article__btn">Read more</a>
+  
+</article>
+
+
+  
+    
+  <article class="c-article p-list-article">
+  <header>
+    <h2 class="c-title c-article__title"><a href="https://yutayamazaki.github.io/posts/serverless/">Serverless Frameworkの運用Tips</a></h2>
+    <p class="c-article__meta">
+      Posted on
+<time datetime="2020-07-06T01:35:23&#43;09:00">
+  Jul 6, 2020
+</time>
+
+    </p>
+  </header>
+  <div class="c-article__summary">
+    概要・背景  Serverless Frameworkを使う上で気をつけるべきことをまとめる  ログの有効期限を設定する Override AWS CloudFormation Resource
+LambdaのログはCloudWatch Logsに記録されていく．Serverless Frameworkの設定を特に何もしない場合はログの有効期限がないため，無限にログが記録されCloudWatch Logsの料金が嵩んでしまう．resources.extentionsを編集することで任意の日数だけログを保持しておくことができる．以下の例では30日分のログを保持する設定となっている．
+resources: extensions: WriteDashPostLogGroup: Properties: RetentionInDays: &#39;30&#39; Serverless Frameworkのv1.26.0以降はproviderに直接記入してログの保存日数を設定できるようになった．
+以下のPRで実装されている．
+Add logRetentionInDays property to provider level by horike37 · Pull Request #4591 · serverless/serverless
+provider: name: aws logRetentionInDays: 30 古いLambda関数を削除する Serverless Frameworkを用いたデプロイではデプロイの度に新たなファイルがアップロードされ，自動で関数の新しいバージョンが作成される．そのため以前の関数が全てLambda上のストレージに残ってしまうため，それらを自動で削除する設定を行う必要がある．
+serverless-prune-pluginというプラグインを用いることで容易に解決できる．
+まずはpluginsにserverless-prune-pluginを追加し，customで詳細な設定を行う．以下の設定ではデプロイ時に自動で過去のバージョンを削除し，直近の3つの関数を残すようにしている．
+plugins: - serverless-prune-plugin custom: prune: automatic: true number: 3 過去のバージョンを一切保存しない婆は特にプラグインなどを使用せずに以下の設定でok ．
+provider: versionFunctions: false 参考  serverless/docs/providers/aws/guide at master · serverless/serverless AWS Lambdaで運用した実績から得られた、serverless frameworkのオススメ設定とプラグインの知見 - GA technologies Tech Blog Serverless Frameworkを本番運用する際にやっておいたほうが良い事 - Qiita  
+  </div>
+  
+</article>
+
+
+
+<nav class="c-pagination p-pagination">
+  <div class="c-pagination__ctrl">
+    <div class="c-pagination__newer">
+      
+      <a href="/">Newer</a>
+      
+    </div>
+    <div class="c-pagination__older">
+      
+    </div>
+  </div>
+  <span class="c-pagination__count p-pagination__count">Page 2 of 2</span>
+</nav>
+ 
+
   </main>
   
 

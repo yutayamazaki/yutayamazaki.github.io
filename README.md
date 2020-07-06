@@ -1,1 +1,0 @@
-# yutayamazaki.github.io
