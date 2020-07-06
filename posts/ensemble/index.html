@@ -126,27 +126,27 @@
 <ul>
 <li>最初の弱識別器の学習データに対する各重みを以下の式で初期化する．</li>
 </ul>
-<!-- raw HTML omitted -->
-<p><!-- raw HTML omitted -->は学習データ<!-- raw HTML omitted -->に対する重みであり，<!-- raw HTML omitted -->はm個目弱識別器に対する学習データ<!-- raw HTML omitted -->の重みであることを示す．</p>
+<p><img src="https://latex.codecogs.com/gif.latex?w_i%5E1=1/N(i=1,...,N)" alt=""></p>
+<p><img src="https://latex.codecogs.com/gif.latex?w_i" alt="">は学習データ<img src="https://latex.codecogs.com/gif.latex?x_i" alt="">に対する重みであり，<img src="https://latex.codecogs.com/gif.latex?w_i%5Em" alt="">はm個目弱識別器に対する学習データ<img src="https://latex.codecogs.com/gif.latex?x_i" alt="">の重みであることを示す．</p>
 <ul>
-<li>弱識別器を以下の誤差関数を最小化するように学習する．
-<!-- raw HTML omitted --><!-- raw HTML omitted --></li>
+<li>弱識別器を以下の誤差関数を最小化するように学習する．</li>
 </ul>
-<p><!-- raw HTML omitted -->は<!-- raw HTML omitted -->のときに1，<!-- raw HTML omitted -->のときに0を返す関数である．</p>
+<p>![](<a href="https://latex.codecogs.com/gif.latex?E_m=">https://latex.codecogs.com/gif.latex?E_m=</a>\frac{\sum_{i=1}^{N}w_i^mI(y_m(x_i)\ne t_i)}{\sum_{i=1}^{N}w_i^m})</p>
+<p>![](<a href="https://latex.codecogs.com/gif.latex?I(y_m(x_i)">https://latex.codecogs.com/gif.latex?I(y_m(x_i)</a>\ne t_i))は![](<a href="https://latex.codecogs.com/gif.latex?y_m(x_i)">https://latex.codecogs.com/gif.latex?y_m(x_i)</a>\ne t_i)のときに1，<img src="https://latex.codecogs.com/gif.latex?y_m(x_i)=t_i" alt="">のときに0を返す関数である．</p>
 <ul>
 <li>弱識別器に対する重みを以下の式で決定する．</li>
 </ul>
-<p><!-- raw HTML omitted --></p>
+<p><img src="https://latex.codecogs.com/gif.latex?%5Calpha_m=ln(%5Cfrac%7B1-E_m%7D%7BE_m%7D)" alt=""></p>
 <p>この重みは次の識別器を学習する際の重みの更新と，推論時の弱識別器の重みとして利用される．</p>
 <ul>
 <li>学習データに対する重みを以下の式で更新する．</li>
 </ul>
-<p><!-- raw HTML omitted --></p>
+<p><img src="https://latex.codecogs.com/gif.latex?w_i%5E%7Bm+1%7D=%5Cfrac%7Bw_i%5Emexp(-%5Calpha_mI(y_m(x_i)%5Cne%7Bt_i%7D))%7D%7B%5Csum_%7Bj=1%7D%5E%7BN%7Dw_j%5Emexp(-%5Calpha_mI(y_m(x_j)%5Cne%7Bt_j%7D))%7D" alt=""></p>
 <h4 id="adaboostの推論">AdaBoostの推論</h4>
 <ul>
 <li>AdaBoostの推論は以下の式で表現される．</li>
 </ul>
-<p><!-- raw HTML omitted --></p>
+<p><img src="https://latex.codecogs.com/gif.latex?y(x)=sign(%5Csum_%7Bi=1%7D%5E%7Bm%7D%5Calpha_my_m(x))" alt=""></p>
 <h2 id="参考">参考</h2>
 <ul>
 <li><a href="https://mlwave.com/kaggle-ensembling-guide/">Kaggle Ensembling Guide | MLWave</a></li>

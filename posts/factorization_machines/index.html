@@ -94,22 +94,22 @@
 </ul>
 <h2 id="factorization-machines">Factorization Machines</h2>
 <p>FMは主にレコメンドシステムで利用される機械学習アルゴリズムであるが，Titanicの生存者予測のような通常のタスクに対しても利用は可能である．FMのモデルは次の数式で定義されている．</p>
-<p><!-- raw HTML omitted --><!-- raw HTML omitted --></p>
+<p><img src="https://latex.codecogs.com/gif.latex?%5Chat%7By%7D(x)=w_0+%5Csum_%7Bi=1%7D%5E%7Bn%7Dw_ix_i+%5Csum_%7Bi=1%7D%5E%7Bn%7D%5Csum_%7Bj=i+1%7D%5E%7Bn%7D(v_i,v_j)x_ix_j" alt=""></p>
 <ul>
-<li><!-- raw HTML omitted -->  ：各特徴量に対応する重み</li>
-<li><!-- raw HTML omitted -->  ：各アイテム・ユーザーの潜在ベクトルがまとまった行列</li>
-<li><!-- raw HTML omitted -->  ：入力サイズで一般にはアイテム数とユーザー数(と追加した特徴量)の和</li>
-<li><!-- raw HTML omitted -->  ：各特徴量の潜在ベクトルの次元数</li>
+<li><img src="https://latex.codecogs.com/gif.latex?%5Cboldsymbol%7B%5Cmathbf%7Bw%7D%7D%5Cin%7B%5Cmathbb%7BR%7D%5En%7D" alt="">  ：各特徴量に対応する重み</li>
+<li><img src="https://latex.codecogs.com/gif.latex?%5Cboldsymbol%7B%5Cmathbf%7Bv%7D%7D%5Cin%7B%5Cmathbb%7BR%7D%5E%7Bn*k%7D%7D" alt="">  ：各アイテム・ユーザーの潜在ベクトルがまとまった行列</li>
+<li><img src="https://latex.codecogs.com/gif.latex?n" alt="">  ：入力サイズで一般にはアイテム数とユーザー数(と追加した特徴量)の和</li>
+<li><img src="https://latex.codecogs.com/gif.latex?k" alt="">  ：各特徴量の潜在ベクトルの次元数</li>
 </ul>
-<p>FMは各特徴量に<!-- raw HTML omitted -->次元の潜在ベクトルを持たせ，第三項で内積を取ることで特徴量間の関係性を捉えた予測が可能となっている．</p>
+<p>FMは各特徴量に<img src="https://latex.codecogs.com/gif.latex?k" alt="">次元の潜在ベクトルを持たせ，第三項で内積を取ることで特徴量間の関係性を捉えた予測が可能となっている．</p>
 <h2 id="factorization-machinesの定義の解釈">Factorization Machinesの定義の解釈</h2>
 <p>ここではFMの定義式を項ごとに考えていく．</p>
-<h3 id="第一項-img-srchttpslatexcodecogscomgiflatexw_0-">第一項 <!-- raw HTML omitted --></h3>
+<h3 id="第一項-httpslatexcodecogscomgiflatexw_0">第一項 <img src="https://latex.codecogs.com/gif.latex?w_0" alt=""></h3>
 <p>第一項では入力の値に依らない重みが与えられる．これはECサイトなどにおける評価の平均的な高さを表現する項であり，そのサイト全体が高く(または低く)評価されがちな傾向を表現する項であると考えることができる．</p>
-<h3 id="第二項-img-srchttpslatexcodecogscomgiflatexsum_i1nw_ix_i-">第二項 <!-- raw HTML omitted --></h3>
+<h3 id="第二項-httpslatexcodecogscomgiflatexsum_i1nw_ix_i">第二項 <img src="https://latex.codecogs.com/gif.latex?%5Csum_%7Bi=1%7D%5E%7Bn%7Dw_ix_i" alt=""></h3>
 <p>第二項は各ユーザーやアイテムとそれに対応するスカラーの重みの積の和である．この項では各アイテムが高く(または低く)評価されがちであることや，各ユーザーがアイテムを高く(または低く)評価しがちであることを表現する項と考えることができる．</p>
-<h3 id="第三項-img-srchttpslatexcodecogscomgiflatexsum_i1nsum_ji1nv_iv_jx_ix_j-">第三項 <!-- raw HTML omitted --></h3>
-<p>この項ではアイテム・ユーザーの潜在ベクトル<!-- raw HTML omitted -->の内積が入力への重みとなっている．内積はベクトル間の類似度を表現するため，特徴量の潜在ベクトルが類似する場合にこの項の値が大きくなる．</p>
+<h3 id="第三項-httpslatexcodecogscomgiflatexsum_i1nsum_ji1nv_iv_jx_ix_j">第三項 <img src="https://latex.codecogs.com/gif.latex?%5Csum_%7Bi=1%7D%5E%7Bn%7D%5Csum_%7Bj=i+1%7D%5E%7Bn%7D(v_i,v_j)x_ix_j" alt=""></h3>
+<p>この項ではアイテム・ユーザーの潜在ベクトル<img src="https://latex.codecogs.com/gif.latex?%5Cboldsymbol%7B%5Cmathbf%7Bv_i%7D%7D,%5Cboldsymbol%7B%5Cmathbf%7Bv_j%7D" alt="">の内積が入力への重みとなっている．内積はベクトル間の類似度を表現するため，特徴量の潜在ベクトルが類似する場合にこの項の値が大きくなる．</p>
 <p>例えばユーザーAがアイテムaを高く評価した場合，出力が大きくなるようにパラメータを更新する必要があるため，ユーザーAとアイテムaのそれぞれの潜在ベクトルの類似度が高くなるように更新される．一方でユーザーBがアイテムbを低く評価した場合，出力が小さくなるようにパラメータを更新するため，ユーザーBとアイテムbの潜在ベクトルの類似度が小さくなるように更新される．</p>
 <p>つまり学習が進むにつれて類似するアイテム同士，類似するユーザー同士，類似するアイテム・ユーザー同士の潜在ベクトルの類似度が高くなる．</p>
 <h2 id="knnをアイテムベクトルで学習させてユーザーベクトルで推論した結果がなぜレコメンドとして妥当なのか">kNNをアイテムベクトルで学習させてユーザーベクトルで推論した結果がなぜレコメンドとして妥当なのか</h2>
