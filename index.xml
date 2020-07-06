@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Yuta Yamazaki</title>
+    <title>ざきメモ</title>
     <link>https://yutayamazaki.github.io/</link>
-    <description>Recent content on Yuta Yamazaki</description>
+    <description>Recent content on ざきメモ</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 06 Jul 2020 01:56:23 +0900</lastBuildDate>
@@ -17,13 +17,7 @@
       <pubDate>Mon, 06 Jul 2020 01:56:23 +0900</pubDate>
       
       <guid>https://yutayamazaki.github.io/posts/mask_rcnn/</guid>
-      <description>概要・背景  仕事でインスタンスセグメンテーションを触る必要があり著名なモデルであるMask R-CNNについて調べたのでまとめる Facebook AI Researchが2017年に発表 基本的には物体検出アルゴリズムであるFaster R-CNNと同じ 基本的にはFaster R-CNNの特徴マップからboxの位置・クラスを出力する部分に，セグメンテーションを行うモジュールを追加しただけ  インスタンスセグメンテーションとは Semantic Segmentationでは各ピクセルに何が映るかのクラスがわかるが，何個物体があってかつ各ピクセルが同じ物体を示しているのかまでは分からない．そのためObject Detectionをした上でピクセル単位で物体の領域を検出するタスクがInstance Segmentationである．以下のような予測結果の可視化をすることが多い．
-Mask R-CNN   Mask R-CNN
-  著者・所属機関
- Kaiming He, Georgia Gkioxari, Piotr Dollar, Ross Girshick Facebook AI Research (FAIR)    どんなもの
- 物体検出と検出した物体に対するマスク生成を単一のモデルで行えるMask R-CNNの提案 Faster R-CNNに特徴マップから物体のマスクを作るモジュールを付け足したもの Faster R-CNNよりちょっと遅くなるだけで5FPSは出る    先行研究と比べてどこがすごい？
- 既存の物体検出モデルの出力部分に少し変更を加えるだけで良い Faster R-CNNのRoIPoolingをRoIAlignに置き換えてRoIの取得と，ピクセルの割り当てで生じる丸め誤差を解消した  セグメンテーションなどのピクセルレベルでの予測を行うタスクでは問題になるため      技術や手法の肝はどこ？
- RoI Alignの提案  RoI Poolingでは特徴マップへマッピングする際と，その後の畳み込みの2つの処理でピクセルのズレが生じる RoI Alignでは出力サイズのようになるように領域を等分し，分割領域の4つのサンプル点の値をbilinear interpolationで求める そのサンプル点をmaxまたはavg poolingして必要なshapeに変換することでRoI Poolingよりもズレが少なく済む       どうやって有効だと証明した？  RoI Alignと従来手法の比較     従来のインスタンスセグメンテーションアルゴリズムとの比較がすこぶる良い  他  torchvisionの公式チュートリアルでtorchvisionに実装されたMask R-CNNを簡単に試せる  参考  Understanding Region of Interest — (RoI Align and RoI Warp) 最新の物体検出手法Mask R-CNNのRoI AlignとFast(er) R-CNNのRoI Poolingの違いを正しく理解する - Qiita 物体検出、セグメンテーションをMask R-CNNで理解してみる (初心者) - Qiita  </description>
+      <description>仕事でインスタンスセグメンテーションを触る必要があり著名なモデルであるMask R-CNNについて調べたのでまとめる．Facebook AI Researchが2017年に発表したモデルで，基本的には物体検出アルゴリズムであるFaster R-CNNと同じ．Faster R-CNNの特徴マップからboxの位置・クラスを出力する部分に，セグメンテーションを行うモジュールを追加しただけ．</description>
     </item>
     
     <item>
@@ -32,13 +26,7 @@ Mask R-CNN   Mask R-CNN
       <pubDate>Mon, 06 Jul 2020 01:55:23 +0900</pubDate>
       
       <guid>https://yutayamazaki.github.io/posts/okapi_bm25/</guid>
-      <description>概要  Okapi BM25は単語の出現頻度ベースの文書検索のランキングアルゴリズムのひとつ 文書検索周りの調査の過程でOkapi BM25を実装したのでその解説とともに記事を残す  Okapi BM25のアルゴリズム は検索対象の文書では検索クエリ，はクエリ内の各単語を表し，BM25のスコアは各単語の重要度と出現頻度から計算されるスコアの和で表現される．とはハイパーパラメータで，がよく利用される．または単語の文書における出現頻度，は文書の長さ，は全文書の平均の長さである．
-BM25の定性的な理解としてはクエリ内の単語の対象の文書における出現頻度をIDFで重み付けして足し合わせてるだけである．ただし対象の文書が長ければ長いほど頻度が大きくなるため，分母側で長い文書に対してよしなに罰則を与えている．
-Okapi BM25を用いた文書検索のデモ Okapi BM25の実装はGitHubに公開済みなのでこちらを利用してデモを行う．
-yutayamazaki/okapi-bm25: A Python implementation of Okapi-BM25
-okapi-bm25パッケージのインストールは以下のコマンドで可能．
-pip install git+https://github.com/yutayamazaki/okapi-bm25.git Wikipediaの概要のうち最初の段落を検索対象の文書集合として2つ目の段落をクエリとして類似文書の検索を行った．
-from typing import Dict, List import MeCab import numpy as np from okapi_bm25 import OkapiBM25 def tokenize(text: str, args: str = &amp;#39;-O wakati&amp;#39;) -&amp;gt; List[str]: tagger = MeCab.Tagger(args) return tagger.parse(text).strip().split(&amp;#39; &amp;#39;) if __name__ == &amp;#39;__main__&amp;#39;: titles: List[str] = [&amp;#39;Okapi BM25&amp;#39;, &amp;#39;PageRank&amp;#39;, &amp;#39;tfidf&amp;#39;, &amp;#39;Machine Learning&amp;#39;] docs: Dict[str, str] = { &amp;#39;Okapi BM25&amp;#39;: &amp;#39;Okapi BM25は、情報検索における順位付けの手法である。検索エンジンがクエリとの関連性に応じて、文書を順位付けするのに用いられる。1970年代から1980年代にかけて、スティーブン・ロバートソンやカレン・スパーク・ジョーンズらが確率適合モデル（英語版）に基づいて開発した。BM25の &amp;#34;BM&amp;#34; は、 &amp;#34;Best Matching&amp;#34; の略である。&amp;#39;, &amp;#39;PageRank&amp;#39;: &amp;#39;ページランク (PageRank) は、ウェブページの重要度を決定するためのアルゴリズムであり、検索エンジンのGoogleにおいて、検索語に対する適切な結果を得るために用いられている中心的な技術。Googleの創設者のうちラリー・ペイジとセルゲイ・ブリンによって1998年に発明された[1][2]。名称の由来は、ウェブページの&amp;#34;ページ&amp;#34;とラリー・ペイジの姓をかけたものである。&amp;#39;, &amp;#39;tf-idf&amp;#39;: &amp;#39;tf-idfは、文書中に含まれる単語の重要度を評価する手法の1つであり、主に情報検索やトピック分析などの分野で用いられている。tf-idfは、tf（英: Term Frequency、単語の出現頻度）とidf（英: Inverse Document Frequency、逆文書頻度）の二つの指標に基づいて計算される。&amp;#39;, &amp;#39;Machine Learning&amp;#39;: &amp;#39;機械学習（きかいがくしゅう、（英: machine learning、略称: ML）は、明示的な指示を用いることなく、その代わりにパターンと推論に依存して、特定の課題を効率的に実行するためにコンピュータシステムが使用するアルゴリズムおよび統計モデルの科学研究である。機械学習は人工知能の部分集合と見なされている。機械学習アルゴリズムは、タスクを実行するように明示的にプログラムされることなく予測や決定を行うために、「訓練データ」として知られるサンプルデータに基づいて数学モデルを構築する。機械学習アルゴリズムは、電子メールフィルタリングやコンピュータビジョンのように、タスクを効果的に実行するための従来のアルゴリズムを開発することが困難または実行不可能な、様々なアプリケーションで使用されている。&amp;#39; } doc_list: List[str] = list(docs.</description>
+      <description>Okapi BM25は単語の出現頻度ベースの文書検索のランキングアルゴリズムのひとつ．文書検索周りの調査の過程でOkapi BM25を実装したのでその解説とともに記事にした．</description>
     </item>
     
     <item>
@@ -47,18 +35,7 @@ from typing import Dict, List import MeCab import numpy as np from okapi_bm25 im
       <pubDate>Mon, 06 Jul 2020 01:54:23 +0900</pubDate>
       
       <guid>https://yutayamazaki.github.io/posts/polygon_rnn/</guid>
-      <description>概要  主要な画像のタスクだと領域検出 &amp;gt; 物体検出 &amp;gt; 分類の順でアノテーションのコストがかかる Polygon RNNは最もアノテーションにコストがかかる領域検出のアノテーションを多角形で半自動で生成しようという試み CNNで画像から特徴抽出を行い，ConvLSTMレイヤーを通して多角形の頂点を系列として予測する この結果をアノテーターが微調整することで，必要なコストを下げることができる  Polygon RNN Annotating Object Instances with a Polygon-RNN
-領域検出のアノテーションをピクセル単位ではなく，多角形の頂点を予測することでアノテーションの半自動化を試みた論文で，2017年のCVPRに採択されている．以下の画像のように物体を多角形で囲うことが提案手法の出力である．(再現実装したもので動かした推論結果)
-Polygon RNNの出力を調整することで，4.7倍の作業速度になったらしい．
-モデルのアーキテクチャは以下．
-流れとしてはCNNに画像の特徴を抽出させ，ConvLSTMで多角形の頂点を系列として予測していくだけ．
-VGG16から異なる解像度の特徴マップを取り出し，畳み込みやMaxPoolingによってサイズを28×28に統一する．その後畳み込みを挟んで128×28×28(C, H, W)にしたあとにConvLSTMに突っ込む．各系列では直前2つの頂点の座標を入力として受け取ることで，より系列らしく頂点の予測を行っている．
-実装した所感  PyTorchによる再現実装は ここ VGGで28×28に畳み込まれるため解像度が精度に悪影響を与えてそう 本来はアノテーションとのIoUが最大化されるように学習するならIoUベースのLossを組み込む必要がある(CrossEntropyで学習しているため)  Polygon RNN++ Efficient Interactive Annotation of Segmentation Datasets with Polygon-RNN++
-CVPR2018に採択されたPolygonRNNの改良版．PolygonRNNの以下の問題を克服した．
- 形状を適切に捉えていても，アノテーションと一致していなければペナルティ 正解とのIoUを最大化したいが，目的関数はIoUと特に関係がない VGG16で28 * 28まで畳み込まれて解像度が下がるので，予測精度に悪影響を与えている  1と2はIoUを報酬として強化学習を用いて学習させることで解決し，3はGGNNを利用して解決．またVGGからResNetに変更してより良い特徴を抽出するようにした．
-(画像は公式実装のデモを動かしたもの)
-アノテーターの修正ありきで考えるなら，PolygonRNN++は精度は良く見えるが実装コスト高すぎではと感じる．
-参考  効率的な教師データ作成(アノテーション)のための研究サーベイ - ABEJA Tech Blog アノテーションを支援するPolygon rnn fidler-lab/polyrnn-pp: Inference Code for Polygon-RNN++ (CVPR 2018)  </description>
+      <description>主要な画像のタスクだと領域検出 &amp;gt; 物体検出 &amp;gt; 分類の順でアノテーションのコストがかかる．Polygon RNNは最もアノテーションにコストがかかる領域検出のアノテーションを多角形で半自動で生成しようという試み．CNNで画像から特徴抽出を行い，ConvLSTMレイヤーを通して多角形の頂点を系列として予測する．この結果をアノテーターが微調整することで，必要なコストを下げることができる．</description>
     </item>
     
     <item>
@@ -67,15 +44,7 @@ CVPR2018に採択されたPolygonRNNの改良版．PolygonRNNの以下の問題�
       <pubDate>Mon, 06 Jul 2020 01:53:23 +0900</pubDate>
       
       <guid>https://yutayamazaki.github.io/posts/gradient_boosting/</guid>
-      <description>概要・背景  Gradient Boosting Decision Treeのアルゴリズムをまとめる  アンサンブル学習まわり アンサンブル学習には大きく分けるとバギングとブースティングがある．バギングの拡張がランダムフォレストで，ブースティングの拡張が勾配ブースティングであり，現在Kaggleなどのコンペティションで大きな成果を上げているのが勾配ブースティングモデルである．
-また勾配ブースティング以外のアンサンブルに関してはこちらの記事にまとめている．
-勾配ブースティングの学習アルゴリズム 勾配ブースティングの学習アルゴリズムを簡単に書き出す．勾配ブースティングのNumPy実装はこちら．
- 最初の予測値を学習データの目的変数の平均で初期化する 弱識別器の数だけ以下の手順を繰り返す  サンプルの目的変数ごとに予測値との損失関数の負の勾配を計算する 損失関数の負の勾配を目的変数として弱識別器を学習する 各ノード毎に損失関数を最小化する係数をline searchで探す(固定の学習率でもあまり問題ないと思うが) 学習済みの識別器を用いて予測値を3で探した係数とshrinkageと呼ばれる学習率をかけて更新する    勾配ブースティングのアルゴリズムで最も重要なのは弱識別器を損失関数の負の勾配にフィットさせることである．直前の弱識別器までの残差などを目的変数とする場合と比較し，損失関数の負の勾配にフィットさせることで微分可能であれば様々な損失関数を利用することができ，分類・回帰・ランク学習など様々な用途で各タスクに適した損失関数を利用できる．
-本筋ではないが一般的な勾配ブースティングの実装では弱識別器の多様性を担保するため，ランダムフォレストのようにブートストラップサンプリングやノード分割時の特徴量選択も行われる．
-ただしXGBoostなどでは損失関数の近似にテイラー展開の2次の近似を用いるため，ヘシアンが存在する損失関数でなければならない．
-勾配ブースティングによる回帰の例 勾配ブースティングで回帰問題を二乗誤差を最小化するように解く場合
-損失関数の勾配が予測値と目的変数の差となるため，各弱識別器は単に直前までの残差にフィットさせれば良い．このように必要な損失関数の勾配があれば学習できることが勾配にフィットさせるメリットである．
-参考  XGBoost: A Scalable Tree Boosting System Gradient boosting - Wikipedia Gradient Boosting Explained Gradient Boosting in Python from Scratch - Towards Data Science 有名ライブラリと比較した LightGBM の現在 勾配ブースティング Gradient Boosting  </description>
+      <description>Gradient Boosting Decision Treeのアルゴリズムを理解する．</description>
     </item>
     
     <item>
@@ -84,9 +53,7 @@ CVPR2018に採択されたPolygonRNNの改良版．PolygonRNNの以下の問題�
       <pubDate>Mon, 06 Jul 2020 01:52:23 +0900</pubDate>
       
       <guid>https://yutayamazaki.github.io/posts/python_remote_logging/</guid>
-      <description>概要・背景  複数台のサーバーでアプリケーションを運用する際にログを1箇所にまとめる必要がるのでその手法のメモ logging.handlers.HTTPHandlerを用いると簡単に実現できる 結論としてはリモートサーバーからログのメッセージをHTTP通信で受けとり，それを受け手のアプリでloggingするだけ  構成  ログを取得したいシステムが稼働している複数台のサーバー(今回はPythonスクリプトで代用) ログを書き込むサーバー(本記事ではFlaskで構築)  ログの受け取り側のコード APIの挙動はメッセージを受け取ってlogger.infoするだけ．(実務レベルではログのレベルはdebug, info, &amp;hellip;など複数の切り替えを行う必要があるため，受け取ったlevelnameに応じてloggerの挙動を変更する必要がある)
-受け取ったメッセージはoutput.logに書き込まれる．
-import logging from flask import Flask, jsonify, request app = Flask(__name__) logger = logging.getLogger(&amp;#39;receiver&amp;#39;) logger.setLevel(logging.INFO) fh = logging.FileHandler(&amp;#39;output.log&amp;#39;) fh.setLevel(logging.INFO) formatter = logging.Formatter(&amp;#39;%(asctime)s- %(name)s- %(levelname)s: %(message)s&amp;#39;) fh.setFormatter(formatter) logger.addHandler(fh) @app.route(&amp;#39;/receive&amp;#39;, methods=[&amp;#39;POST&amp;#39;]) def receive_log(): print(request.form) if request.method != &amp;#39;POST&amp;#39;: out_msg: str = f&amp;#39;Method [{request.method}] is not allowed.&amp;#39; return jsonify({&amp;#39;msg&amp;#39;: out_msg}), 400 data: dict = request.form msg: str = data.</description>
+      <description>複数台のサーバーでアプリケーションを運用する際にログを1箇所にまとめる必要がるのでその手法のメモ．&lt;code&gt;logging.handlers.HTTPHandler&lt;/code&gt;を用いると簡単に実現できる．結論としてはリモートサーバーからログのメッセージをHTTP通信で受けとり，それを受け手のアプリでloggingするだけ．</description>
     </item>
     
     <item>
@@ -95,13 +62,7 @@ import logging from flask import Flask, jsonify, request app = Flask(__name__) l
       <pubDate>Mon, 06 Jul 2020 01:51:23 +0900</pubDate>
       
       <guid>https://yutayamazaki.github.io/posts/nuxt_lambda/</guid>
-      <description>概要・背景  Nuxt.jsのプロジェクトをAWS Lambdaでデプロイすることに関するメモ チームのプロダクトの保守性と可用性向上，またコスト削減のために導入 導入にあたって初期の工数はかかるが，運用の容易さからすぐに元を取れると判断して導入に至った 周辺ファイルの変更は必要だがNuxt.jsのアプリケーション部分は通常のサーバー上にデプロイするものと同じでいいため，いつでもEC2などでのデプロイに戻せるのもメリット 利用するAWSサービスの構成は Lambda + API Gateway + S3 + CloudFront  アーキテクチャ 今回利用するAWSサービスの構成を以下に示す．
-Nuxt.jsがLambda上で稼働しSSRを行う．そしてAPI GatewayをエンドポイントとせずにCloudFrontを利用することで，キャッシュによる処理速度向上とS3からの静的ファイル配信が独自ドメインで容易に可能となる．
-いくつかのNuxt.js + Lambdaなプロジェクトの例を見たが，プロダクションレベルでCloudFrontを利用していないケースはなかったため，やはり大人しくCloudFrontの恩恵に預かるのが妥当だろう．
-Lambdaを利用するメリット 導入する上でのサーバーレスの一番のメリットは運用・保守性の高さと，サーバーレス故の可用性の高さである．実際にサーバーを運用するわけではないため，必要なのはLambdaのサービス自体の障害や仕様変更への対応と，Nuxt.jsやnode.jsなどのバージョンアップによる修正作業に絞られる．
-またEC2のように常時サーバーが稼働するわけではないため，ユーザー数が相当数増加しない限りはコストも低く抑えられる．
-Serverless Framework LambdaへのデプロイにはServerless Frameworkを用いた．Serverless FrameworkはAWS Lambdaなどへのサーバーレスなアプリケーション構築を設定ファイルを書くだけで容易に行ってくれるツールで，tonyfromundefined/nuxt-serverless: Nuxt.js Serverless SSR Starter on AWS (Lambda + API Gateway + S3) with Serverless Frameworkと同様にLambda関数の新規作成(または更新)，静的ファイルのS3へのアップロードを担う．
-Lambda上でのNuxt.js Lambda上ではnode.jsのフレームワークであるExpressを用いてNuxt.jsのSSRを行っている．Expressでサーバーを立ち上げ，Nuxt.jsをミドルウェアとして利用してNuxtの描画したサイトを返す．Lambda上ではAWSの提供するawslabs/aws-serverless-express: Run serverless applications and REST APIs using your existing Node.js application framework, on top of AWS Lambda and Amazon API Gatewayが利用できるためExpressを利用する．</description>
+      <description>Nuxt.jsのプロジェクトをAWS Lambdaでデプロイすることに関するメモ．</description>
     </item>
     
     <item>
@@ -110,25 +71,7 @@ Lambda上でのNuxt.js Lambda上ではnode.jsのフレームワークであるEx
       <pubDate>Mon, 06 Jul 2020 01:50:33 +0900</pubDate>
       
       <guid>https://yutayamazaki.github.io/posts/ensemble/</guid>
-      <description>本記事ではアンサンブル学習の導入として以下の項目について記述する．
- バギング Random Forest ブースティング  AdaBoost    概要 アンサンブル学習は大まかには複数のモデルを組み合わせ，各モデルの多様性によって様々なデータで汎化性能のある推論を行うための学習またはアルゴリズムの枠組みのことをいう．アンサンブルで利用される複数のモデルのことを一般に弱識別器と呼び，弱識別器には決定木がよく利用される．
-アンサンブル学習には大きく分けてバギングとブースティングがある．ランダムフォレストはバギングを基に改良を加えたモデルで，勾配ブースティングがブースティングを基に改良を加えたモデルである．
-KaggleにおけるアンサンブルについてはKaggle Ensembling Guide | MLWaveが詳しい．
-バギング | Bagging バギングはBootstrap AGGregatINGから命名されている通り，学習データのブートストラップサンプルを利用して各弱識別器の学習を行う手法のことで，1994年にLeo Breimanによって発表された．
-ブートストラップサンプリングでは母集団から離散一様分布でランダムに重複を許してデータを抽出し，新たな標本を作成する手法である．このブートストラップサンプルのばらつきにより弱識別器にもばらつきが生じ，結果的に単一のモデルでの予測と比較して安定して性能の良いモデルを得やすい．
-しかしブートストラップサンプルのばらつきのみでしか弱識別器のばらつきが生じないためモデル間の相関が大きくなりやすく，十分に性能が向上しないことが多い．
-またブースティングとの比較として，ブートストラップサンプルから各弱識別器を独立に訓練するため，学習を並列に行えて高速であるという特徴がある．
-numpyを利用したバギングのスクラッチ実装
-Random Forest ランダムフォレストはバギングを改良した手法で2001年に提案された．各弱識別器を構築する際にブートストラップサンプリングを行った上で，決定木のノードを分割する際に学習に用いるカラムをいくつかランダムに選択して各弱識別器の訓練を行う．学習するカラムによるばらつきが加わることで，相関の低い多様な弱識別器を構築できるため，バギングと比較して一般的に性能が良い．またバギング同様学習を並列に行えるという利点がある．
-Random Forests
-Random Forestの個人的な解釈 ランダムフォレストはブートストラップサンプリングでデータの行方向への頑健性を獲得し，ノード分割時の特徴量選択でデータの列方向への頑健性を獲得しているため過剰適合が起こりにくく，また一般的に精度が高いと考えている．
-Random Forestの学習アルゴリズム  ある弱識別器に対してブートストラップサンプリングしたデータで学習を行う  決定木のノード分割ごとに特徴量をランダムに選択し，抽出された特徴量で最適な分割を行う   1と2の手順を回繰り返す  ブースティング | Boosting ブースティングは学習時に弱識別器を直列に訓練していく手法である．代表的な手法にAdaBoostがあり，AdaBoostではある弱識別器を訓練しその弱識別器が誤って予測したデータに対して重みを大きくして次の弱識別器を訓練する．
-バギングと比較したとき，これまでの弱識別器の性質を考慮して異なる重みで学習を行う機構があるため多様な弱識別器を構築しやすい．したがって比較的精度が高くなるが，以前の弱識別器の学習結果を踏まえて次の弱識別器の学習を行うため，学習時間は長くなる．
-AdaBoost AdaBoostはブースティングの代表的なアルゴリズムであり，1996年に提案された．
-A desicion-theoretic generalization of on-line learning and an application to boosting
-弱識別器を直列に学習する際，直前の弱識別器が誤って識別した学習データに対して重みが大きくなるよう更新する仕組みがあり，各弱識別器が様々なデータに対してフィットするような機構を持つ．よって各モデル間にばらつきが生じ，結果的に性能の良いアンサンブルモデルとなりやすい．推論時は各弱識別器の重み付き平均を用いる．この重みは学習段階のエラーによって決まる．
-また直列に弱識別器を構築するという性質上，アンサンブルするモデルの数を増やしすぎると過剰適合するため，交差検証法などで適切なモデル数を決める必要がある．
-AdaBoostの学習アルゴリズム  最初の弱識別器の学習データに対する各重みを以下の式で初期化する．  は学習データに対する重みであり，はm個目弱識別器に対する学習データの重みであることを示す．</description>
+      <description>バギング・ランダムフォレスト・ブースティングの主要な手法に関してまとめる．</description>
     </item>
     
     <item>
@@ -137,14 +80,7 @@ AdaBoostの学習アルゴリズム  最初の弱識別器の学習データに�
       <pubDate>Mon, 06 Jul 2020 01:50:23 +0900</pubDate>
       
       <guid>https://yutayamazaki.github.io/posts/decision_tree/</guid>
-      <description>本記事では決定木アルゴリズムについてまとめる．
-決定木とは 決定木は大まかにはあるデータに対して全てif, else ifのような条件分岐から予測を行うアルゴリズムである．この性質上人間の解釈性が高く，また学習と予測が高速に動作するという利点がある．ある特徴量の閾値でデータを分割した際の不純度の減少量から特徴量の重要度を算出することができ，機械学習のモデル構築において広く利用されている．2020年現在主流の勾配ブースティング系アルゴリズムの弱識別器にはほとんど決定木が利用されている．
-NumPyによる決定木の実装
-不純度 決定木は各ノードである特徴量のある閾値に基づいてデータを2つに分割する．この分割を行う点を決めるために不純度という指標を用いる．決定木では学習時に終端ノードに割り当てられたデータの多数決・または平均で予測を行う．理想的には各終端ノードに属するデータが同一のクラスのみであったり正解ラベルの分散が0であることが望ましい．これを実現するために各ノードで不純度を最小化するように木を構築していく．
-決定技を構築する際には主にジニ係数かエントロピーを利用する．
-ジニ係数 あるノードtにおけるジニ係数は以下の式で計算される．
-ジニ係数はあるノードにおける識別の誤り率であるため，ジニ係数を最小化するようにノードの分割を行うのは妥当である．またあるデータがクラスに属するか否かのベルヌーイ試行と考えた場合，ジニ係数はその分散と一致する．
-アルゴリズム概要  あるノードに属するデータの不純度が最も小さくなる分割点を探す  全ての特徴量の全てのデータ点から最低な分割点を探す 一度のノード分割に用いる特徴量の数を制限して過剰適合を防ぐ実装が一般的(scikit-learnのmax_featuresなど)   その点でデータを2つに分割し，2つの子ノードを生成する 上記の手順を繰り返し，1つのノードに属するデータ点が一定以下になるか不純度の減少量がある閾値を下回る場合に子ノードの生成を打ち切る 各終端ノードに属するデータの正解ラベルの多数決または平均を予測値とする  </description>
+      <description>決定木は大まかにはあるデータに対して全てif, else ifのような条件分岐から予測を行うアルゴリズムである．この性質上人間の解釈性が高く，また学習と予測が高速に動作するという利点がある．ある特徴量の閾値でデータを分割した際の不純度の減少量から特徴量の重要度を算出することができ，機械学習のモデル構築において広く利用されている．2020年現在主流の勾配ブースティング系アルゴリズムの弱識別器にはほとんど決定木が利用されている．</description>
     </item>
     
     <item>
@@ -153,20 +89,7 @@ NumPyによる決定木の実装
       <pubDate>Mon, 06 Jul 2020 01:37:23 +0900</pubDate>
       
       <guid>https://yutayamazaki.github.io/posts/factorization_machines/</guid>
-      <description>概要  先日AWSのレコメンドシステム構築記事を読んでいた知人の方から質問されたことへの回答を自分用のメモとしてまとめる kNNをアイテム潜在ベクトルで学習し，ユーザー潜在ベクトルを入力として推論を行なった結果がなぜレコメンドとして妥当なのかという内容の質問 考えてみると単純なことだが忘れないためにメモ 結論としては  FMではあるユーザーとそのユーザーが高く評価したアイテムは潜在空間上で近くなるように値が更新される アイテムのみで学習を行いユーザーのみで推論を行うため，ユーザー毎やアイテム毎の方が距離が近くなっても問題がない    Factorization Machines FMは主にレコメンドシステムで利用される機械学習アルゴリズムであるが，Titanicの生存者予測のような通常のタスクに対しても利用は可能である．FMのモデルは次の数式で定義されている．
- ：各特徴量に対応する重み ：各アイテム・ユーザーの潜在ベクトルがまとまった行列 ：入力サイズで一般にはアイテム数とユーザー数(と追加した特徴量)の和 ：各特徴量の潜在ベクトルの次元数  FMは各特徴量に次元の潜在ベクトルを持たせ，第三項で内積を取ることで特徴量間の関係性を捉えた予測が可能となっている．
-Factorization Machinesの定義の解釈 ここではFMの定義式を項ごとに考えていく．
-第一項  第一項では入力の値に依らない重みが与えられる．これはECサイトなどにおける評価の平均的な高さを表現する項であり，そのサイト全体が高く(または低く)評価されがちな傾向を表現する項であると考えることができる．
-第二項  第二項は各ユーザーやアイテムとそれに対応するスカラーの重みの積の和である．この項では各アイテムが高く(または低く)評価されがちであることや，各ユーザーがアイテムを高く(または低く)評価しがちであることを表現する項と考えることができる．
-第三項  この項ではアイテム・ユーザーの潜在ベクトルの内積が入力への重みとなっている．内積はベクトル間の類似度を表現するため，特徴量の潜在ベクトルが類似する場合にこの項の値が大きくなる．
-例えばユーザーAがアイテムaを高く評価した場合，出力が大きくなるようにパラメータを更新する必要があるため，ユーザーAとアイテムaのそれぞれの潜在ベクトルの類似度が高くなるように更新される．一方でユーザーBがアイテムbを低く評価した場合，出力が小さくなるようにパラメータを更新するため，ユーザーBとアイテムbの潜在ベクトルの類似度が小さくなるように更新される．
-つまり学習が進むにつれて類似するアイテム同士，類似するユーザー同士，類似するアイテム・ユーザー同士の潜在ベクトルの類似度が高くなる．
-kNNをアイテムベクトルで学習させてユーザーベクトルで推論した結果がなぜレコメンドとして妥当なのか 先ほどのFMの第三項の解釈から，類似する特徴量の潜在ベクトルが潜在空間上で近くに位置するように学習が進むことがわかった．潜在空間上では類似するアイテム同士やユーザー同士の方が類似するアイテム・ユーザーの関係より近くに位置することが予想されれるが，kNNの学習時にアイテムベクトルのみ，推論時にユーザーベクトルのみを利用することでその問題を気にする必要がなくなる．
-またレコメンドシステムではあるユーザーを入力した場合にそのユーザーの好みのアイテムを抽出することが狙いである．そのためkNNで距離の近いものから上位N件を抽出するのは極めて妥当である．
-ユーザーベクトルの重みを1でpaddingする理由 記事中では予測を行う前にユーザーベクトルの潜在行列を1でpaddingしている．paddingしている部分は本来であれば各ユーザーに対応する重みが入る部分であり，それをpaddingにより全て1で統一している．
-各ユーザーやアイテムに対応する重みは第二項の解釈で述べたようにそのアイテムが平均的に高い評価を受けている傾向があるかや，そのユーザーが平均的に高い評価をする傾向があるかを表現するバイアスであると考えられる．つまり，
- アイテムベクトルを1 paddingしないのは，  一般に高く評価されているアイテムをなるべく推薦したい   ユーザーベクトルを1 paddingするのは，  ユーザーがアイテムを厳しく評価をするか否かでレコメンドする内容を変えたくない(各ユーザーの好みだけで判断したい) 低い評価を下しがちなユーザーに評価の低いアイテムが優先的にレコメンドされることを防ぎたい    という意図があると考えられる．
-参考  Amazon SageMaker の因数分解機械アルゴリズムを拡張し、レコメンデーション上位 x 件を予測しています。 | Amazon Web Services ブログ DeepなFactorization Machinesの最新動向 (2018) - Gunosyデータ分析ブログ Factorization Machinesを今更読みました - EchizenBlog-Drei  </description>
+      <description>先日&lt;a href=&#34;https://aws.amazon.com/jp/blogs/news/extending-amazon-sagemaker-factorization-machines-algorithm-to-predict-top-x-recommendations/&#34;&gt;AWSのレコメンドシステム構築記事&lt;/a&gt;を読んでいた知人の方から質問されたことへの回答を自分用のメモとしてまとめる．kNNをアイテム潜在ベクトルで学習し，ユーザー潜在ベクトルを入力として推論を行なった結果がなぜレコメンドとして妥当なのかという内容の質問．結論としてはFMではあるユーザーとそのユーザーが高く評価したアイテムは潜在空間上で近くなるように値が更新される，アイテムのみで学習を行いユーザーのみで推論を行うため，ユーザー毎やアイテム毎の方が距離が近くなっても問題がない．</description>
     </item>
     
     <item>
@@ -175,7 +98,7 @@ kNNをアイテムベクトルで学習させてユーザーベクトルで推�
       <pubDate>Mon, 06 Jul 2020 01:37:23 +0900</pubDate>
       
       <guid>https://yutayamazaki.github.io/posts/kaggle_siim_acr/</guid>
-      <description>概要  仕事で領域検出をやる必要に駆られているのでサーベイする SIIM-ACR Pneumothorax Segmentationは2019年8月28日まで開催していた領域検出コンペ  コンペ概要  https://www.kaggle.com/c/siim-acr-pneumothorax-segmentation 評価指標はDiceCoefficient  解法一覧  1st place solution 2nd place solution 3rd place solution 4th place solution 5th place solution  1st place solution  Links  Discussion on Kaggle GitHub Slides   モデルは UNet + (ResNet34, ResNet50, SEResNeXt50) Data augumentation: Horizontal Flip, RandomContrast, RandomGamma, RandomBrightness, ElasticTransform, GridDistortion, OpticalDistortion, ShiftScaleRotate, Resize 気胸が写っていないデータが全体の約80%もあったため，写っていないデータをサンプリング ComboLoss(BCELoss, DiceLoss, FocalLoss)を利用し，それぞれの重みは  UNet + ResNet34: (1, 1, 1) UNet + ResNet50: (2, 1, 2) UNet + SEResNeXt50: (3, 1, 4)   最初の10epochは学習率を高く設定(1e-4)し，サンプルの割合を8割と多くしてなるべく早くそれなりにいいモデルを得るために学習を行う 1e-5程度の学習率と6割程度のサンプルを用いてにCosineAnneringWarmRestartsを用いて学習  2nd place solution  Links  Discussion on Kaggle GitHub   気胸があるモデルか否かを分類するモデルと通常の領域検出を行う2つのモデルからなる 分類モデルは領域検出と分類のマルチタスクモデルで分類をBCE + FocalLossで，領域検出をBCEで学習 領域検出モデルはDiceLoss hflip, scale, rotate, bright, blur Models: UNet + (SEResNeXt50, SEResNeXt101, EfficientNet-b3, EfficientNet-b5)とDeepLab + SEResNeXt50の平均で予測 データは与えられたデータセットのみ利用  3rd place solution  Links  Discussion on Kaggle GitHub   肺の位置を検出するUNet + ResNet34モデルで肺を検出して画像をcrop  UNet + SEResneXt50とUNet + ResNet34でcropとリサイズした画像で予測を行なってサイズを元に戻す おそらく画像の解像度が高い方が検出精度が高くなるから   モデル1: 704x704 images with no pseudo モデル2: 576x576 images with CheXpert Pseudo モデル3: 576x576 images with CheXpert and NIH Pseudo Symmetric Lovasz Loss (Lung detection), Lovasz Loss 類似データセットをPseudo Labelとして利用  4th place solution  Links  Discussion on Kaggle GitHub   UNet + ResNet34 (512, 512)で学習して(768, 768)で推論 ShiftScaleRotate, RandomBrightnessContrast, ElasticTransform, HorizontalFlip バッチサイズは8でAdamにCosineAnnealingLR 2.</description>
+      <description>仕事で領域検出をやる必要に駆られているので領域検出の過去コンペ解放をサーベイする．SIIM-ACR Pneumothorax Segmentationは2019年8月28日まで開催していた領域検出コンペで評価指標はDiceCoefficient.</description>
     </item>
     
     <item>
@@ -184,10 +107,7 @@ kNNをアイテムベクトルで学習させてユーザーベクトルで推�
       <pubDate>Mon, 06 Jul 2020 01:35:23 +0900</pubDate>
       
       <guid>https://yutayamazaki.github.io/posts/docker_pytorch/</guid>
-      <description>概要  PyTorchによるDeep Learningの実行環境をDockerコンテナで整備する Docker version19.03以降，ホストOSのGPUドライバとnvidia-container-runtimeさえあれば他はコンテナに閉じ込められる これで大体の場合コマンド一発で環境を再現できる  準備 ざっくりと以下の用意が必要．
- dockerのversion19.03以降  公式ドキュメントを参照(このリンクはUbuntuの場合のドキュメント)   nvidia-container-runtime  GitHubのREADME.mdを参考にインストール   NVIDIA Driver  公式サイトを参考に自分のGPUに合わせたドライバをインストール    Dockerfileを作成する コンテナにはCUDAとCuDNNが入り，ホスト側のGPU Driverを利用する形になる．
-このDockerfileではUbuntu:18.04にCUDA:10.1とCuDNN:7が入ったイメージをベースにPython 3.7.1とPythonのパッケージをインストールしている．
-FROMnvidia/cuda:10.1-cudnn7-devel-ubuntu18.04 WORKDIR/codeENV PYTHON_VERSION 3.7.1ENV HOME /rootENV PYTHON_ROOT $HOME/local/python-$PYTHON_VERSIONENV PATH $PYTHON_ROOT/bin:$PATHENV PYENV_ROOT $HOME/.pyenvENV TZ=Asia/TokyoADD requirements.txt /codeRUN export DEBIAN_FRONTEND=noninteractive &amp;amp;&amp;amp; \  apt-get -y update &amp;amp;&amp;amp; \  apt-get -y upgrade &amp;amp;&amp;amp; \  apt-get -y install tzdataRUN apt-get -y install git make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev &amp;amp;&amp;amp; \  apt-get -y install wget curl llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev &amp;amp;&amp;amp; \  git clone https://github.</description>
+      <description>PyTorchによるDeep Learningの実行環境をDockerコンテナで整備する．Docker version19.03以降，ホストOSのGPUドライバとnvidia-container-runtimeさえあれば他はコンテナに閉じ込められる．</description>
     </item>
     
     <item>
@@ -196,16 +116,7 @@ FROMnvidia/cuda:10.1-cudnn7-devel-ubuntu18.04 WORKDIR/codeENV PYTHON_VERSION 3.7
       <pubDate>Mon, 06 Jul 2020 01:35:23 +0900</pubDate>
       
       <guid>https://yutayamazaki.github.io/posts/serverless/</guid>
-      <description>概要・背景  Serverless Frameworkを使う上で気をつけるべきことをまとめる  ログの有効期限を設定する Override AWS CloudFormation Resource
-LambdaのログはCloudWatch Logsに記録されていく．Serverless Frameworkの設定を特に何もしない場合はログの有効期限がないため，無限にログが記録されCloudWatch Logsの料金が嵩んでしまう．resources.extentionsを編集することで任意の日数だけログを保持しておくことができる．以下の例では30日分のログを保持する設定となっている．
-resources: extensions: WriteDashPostLogGroup: Properties: RetentionInDays: &amp;#39;30&amp;#39; Serverless Frameworkのv1.26.0以降はproviderに直接記入してログの保存日数を設定できるようになった．
-以下のPRで実装されている．
-Add logRetentionInDays property to provider level by horike37 · Pull Request #4591 · serverless/serverless
-provider: name: aws logRetentionInDays: 30 古いLambda関数を削除する Serverless Frameworkを用いたデプロイではデプロイの度に新たなファイルがアップロードされ，自動で関数の新しいバージョンが作成される．そのため以前の関数が全てLambda上のストレージに残ってしまうため，それらを自動で削除する設定を行う必要がある．
-serverless-prune-pluginというプラグインを用いることで容易に解決できる．
-まずはpluginsにserverless-prune-pluginを追加し，customで詳細な設定を行う．以下の設定ではデプロイ時に自動で過去のバージョンを削除し，直近の3つの関数を残すようにしている．
-plugins: - serverless-prune-plugin custom: prune: automatic: true number: 3 過去のバージョンを一切保存しない婆は特にプラグインなどを使用せずに以下の設定でok ．
-provider: versionFunctions: false 参考  serverless/docs/providers/aws/guide at master · serverless/serverless AWS Lambdaで運用した実績から得られた、serverless frameworkのオススメ設定とプラグインの知見 - GA technologies Tech Blog Serverless Frameworkを本番運用する際にやっておいたほうが良い事 - Qiita  </description>
+      <description>Serverless Frameworkを使う上で気をつけるべきことをまとめる．</description>
     </item>
     
   </channel>
