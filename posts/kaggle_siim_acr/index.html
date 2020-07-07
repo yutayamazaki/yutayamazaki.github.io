@@ -83,13 +83,14 @@
     <h2 id="概要">概要</h2>
 <ul>
 <li>仕事で領域検出をやる必要に駆られているのでサーベイする</li>
-<li>SIIM-ACR Pneumothorax Segmentationは2019年8月28日まで開催していた領域検出コンペ</li>
+<li>SIIM-ACR Pneumothorax Segmentationは2019年8月28日まで開催していた領域検出コンペでいわゆる「気胸コンペ」</li>
 </ul>
 <h2 id="コンペ概要">コンペ概要</h2>
 <ul>
 <li><a href="https://www.kaggle.com/c/siim-acr-pneumothorax-segmentation">https://www.kaggle.com/c/siim-acr-pneumothorax-segmentation</a></li>
-<li>評価指標は<a href="https://en.wikipedia.org/wiki/S%C3%B8rensen%E2%80%93Dice_coefficient">DiceCoefficient</a></li>
 </ul>
+<p>胸部X線画像から気胸の領域を検出するSemantic Segmentationのコンペティション．評価指標は<a href="https://en.wikipedia.org/wiki/S%C3%B8rensen%E2%80%93Dice_coefficient">Dice Coefficient</a>だが，気胸がないデータに対して1pixelでも気胸ありと判定するとその画像に対するスコアが0になるため，偽陽性(FP)に対して厳しい評価が行われる．そのためsolutionには気胸であるか否かを判定する分類モデルと領域検出モデルの両方が用いられたものもいくつか散見された．</p>
+<p>また外部データの利用も可能であり<a href="https://www.kaggle.com/nih-chest-xrays/data">NIH Chest X-rays</a>と<a href="https://stanfordmlgroup.github.io/competitions/chexpert/">CheXPert</a>の2つが主に利用された．</p>
 <h3 id="解法一覧">解法一覧</h3>
 <ul>
 <li><a href="https://www.kaggle.com/c/siim-acr-pneumothorax-segmentation/discussion/107824">1st place solution</a></li>
@@ -118,7 +119,7 @@
 </ul>
 </li>
 <li>最初の10epochは学習率を高く設定(1e-4)し，サンプルの割合を8割と多くしてなるべく早くそれなりにいいモデルを得るために学習を行う</li>
-<li>1e-5程度の学習率と6割程度のサンプルを用いてにCosineAnneringWarmRestartsを用いて学習</li>
+<li>その後1e-5程度の学習率と6割程度のサンプルを用いてCosineAnneringWarmRestartsを用いて学習</li>
 </ul>
 <h3 id="2nd-place-solution">2nd place solution</h3>
 <ul>
@@ -130,7 +131,7 @@
 </li>
 <li>気胸があるモデルか否かを分類するモデルと通常の領域検出を行う2つのモデルからなる</li>
 <li>分類モデルは領域検出と分類のマルチタスクモデルで分類をBCE + FocalLossで，領域検出をBCEで学習</li>
-<li>領域検出モデルはDiceLoss</li>
+<li>領域検出モデルはDiceLossで学習</li>
 <li>hflip, scale, rotate, bright, blur</li>
 <li>Models: UNet + (SEResNeXt50, SEResNeXt101, EfficientNet-b3, EfficientNet-b5)とDeepLab + SEResNeXt50の平均で予測</li>
 <li>データは与えられたデータセットのみ利用</li>
@@ -153,7 +154,7 @@
 <li>モデル2: 576x576 images with CheXpert Pseudo</li>
 <li>モデル3: 576x576 images with CheXpert and NIH Pseudo</li>
 <li>Symmetric Lovasz Loss (Lung detection), Lovasz Loss</li>
-<li>類似データセットをPseudo Labelとして利用</li>
+<li>CheXpertとNIHをPseudo Labelingのための外部データセットとして利用</li>
 </ul>
 <h3 id="4th-place-solution">4th place solution</h3>
 <ul>
@@ -187,6 +188,7 @@
 <h2 id="参考">参考</h2>
 <ul>
 <li><a href="https://www.kaggle.com/sudalairajkumar/winning-solutions-of-kaggle-competitions">Winning solutions of kaggle competitions</a></li>
+<li><a href="https://fam-taro.hatenablog.com/entry/2019/11/23/175328#41-SIIM-ACR-Pneumothorax-Segmentation%E6%B0%97%E8%83%B8%E3%82%B3%E3%83%B3%E3%83%9ATeam-Gold12--1475">Kaggle Master になりました（ポエム） - ふぁむたろうのブログ</a></li>
 </ul>
 
   </section>
