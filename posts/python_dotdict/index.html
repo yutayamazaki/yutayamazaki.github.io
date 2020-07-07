@@ -106,7 +106,7 @@
 <li>dictを入れるだけですぐにdotでアクセスできるDotDictというクラスを作ったのでそのスニペットを置く</li>
 </ul>
 <h2 id="dotdictの実装">DotDictの実装</h2>
-<p>参考にしたサイトのスニペットはネストされた辞書の要素までdotでアクセスできないものだったので，再起的にDotDictの初期化を行いネストされた要素もdotでアクセスできるようにした</p>
+<p>参考にしたサイトのスニペットはネストされた辞書の要素までdotでアクセスできないものだったので，再起的にDotDictの初期化を行いネストされた要素もdotでアクセスできるようにした．またtodictメソッドでネストされたDotDictを通常の辞書へ変換できる．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> typing <span style="color:#f92672">import</span> Any, Dict
 
 
@@ -127,6 +127,16 @@
                 self[k] <span style="color:#f92672">=</span> DotDict(v)
                 <span style="color:#66d9ef">continue</span>
             self[k] <span style="color:#f92672">=</span> v
+
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">todict</span>(self) <span style="color:#f92672">-&gt;</span> Dict[Any, Any]:
+        <span style="color:#e6db74">&#34;&#34;&#34;Convert DotDict to default dict.&#34;&#34;&#34;</span>
+        dic: Dict[Any, Any] <span style="color:#f92672">=</span> {}
+        <span style="color:#66d9ef">for</span> k, v <span style="color:#f92672">in</span> self<span style="color:#f92672">.</span>items():
+            <span style="color:#66d9ef">if</span> isinstance(v, DotDict):
+                dic[k] <span style="color:#f92672">=</span> v<span style="color:#f92672">.</span>todict()
+                <span style="color:#66d9ef">continue</span>
+            dic[k] <span style="color:#f92672">=</span> v
+        <span style="color:#66d9ef">return</span> dic
 
     <span style="color:#66d9ef">def</span> __getattr__(self, attr):
         <span style="color:#66d9ef">return</span> self<span style="color:#f92672">.</span>get(attr)
@@ -162,6 +172,15 @@
         self<span style="color:#f92672">.</span>assertEqual(dotdict<span style="color:#f92672">.</span>integer, dic[<span style="color:#e6db74">&#39;integer&#39;</span>])
         self<span style="color:#f92672">.</span>assertEqual(dotdict<span style="color:#f92672">.</span>dict<span style="color:#f92672">.</span>key, dic[<span style="color:#e6db74">&#39;dict&#39;</span>][<span style="color:#e6db74">&#39;key&#39;</span>])
         self<span style="color:#f92672">.</span>assertEqual(dotdict<span style="color:#f92672">.</span>list, dic[<span style="color:#e6db74">&#39;list&#39;</span>])
+
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test_todict</span>(self):
+        dic: Dict[str, Any] <span style="color:#f92672">=</span> {
+            <span style="color:#e6db74">&#39;nested&#39;</span>: {<span style="color:#e6db74">&#39;key&#39;</span>: {<span style="color:#e6db74">&#39;key&#39;</span>: <span style="color:#e6db74">&#39;val&#39;</span>}}
+        }
+        dotdict <span style="color:#f92672">=</span> utils<span style="color:#f92672">.</span>DotDict(dic)
+        ret: Dict[Any, Any] <span style="color:#f92672">=</span> dotdict<span style="color:#f92672">.</span>todict()
+
+        self<span style="color:#f92672">.</span>assertDictEqual(ret, dic)
 </code></pre></div><h2 id="参考">参考</h2>
 <ul>
 <li><a href="https://stackoverflow.com/questions/2352181/how-to-use-a-dot-to-access-members-of-dictionary">python - How to use a dot &quot;.&quot; to access members of dictionary? - Stack Overflow</a></li>
