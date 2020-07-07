@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Machine Learning on ざきメモ</title>
+    <link>https://yutayamazaki.github.io/tags/machine-learning/</link>
+    <description>Recent content in Machine Learning on ざきメモ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 06 Jul 2020 01:53:23 +0900</lastBuildDate>
+    
+	<atom:link href="https://yutayamazaki.github.io/tags/machine-learning/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>勾配ブースティングを理解する</title>
+      <link>https://yutayamazaki.github.io/posts/gradient_boosting/</link>
+      <pubDate>Mon, 06 Jul 2020 01:53:23 +0900</pubDate>
+      
+      <guid>https://yutayamazaki.github.io/posts/gradient_boosting/</guid>
+      <description>Gradient Boosting Decision Treeのアルゴリズムを理解する．</description>
+    </item>
+    
+    <item>
+      <title>アンサンブル学習</title>
+      <link>https://yutayamazaki.github.io/posts/ensemble/</link>
+      <pubDate>Mon, 06 Jul 2020 01:50:33 +0900</pubDate>
+      
+      <guid>https://yutayamazaki.github.io/posts/ensemble/</guid>
+      <description>バギング・ランダムフォレスト・ブースティングの主要な手法に関してまとめる．</description>
+    </item>
+    
+    <item>
+      <title>決定木</title>
+      <link>https://yutayamazaki.github.io/posts/decision_tree/</link>
+      <pubDate>Mon, 06 Jul 2020 01:50:23 +0900</pubDate>
+      
+      <guid>https://yutayamazaki.github.io/posts/decision_tree/</guid>
+      <description>決定木は大まかにはあるデータに対して全てif, else ifのような条件分岐から予測を行うアルゴリズムである．この性質上人間の解釈性が高く，また学習と予測が高速に動作するという利点がある．ある特徴量の閾値でデータを分割した際の不純度の減少量から特徴量の重要度を算出することができ，機械学習のモデル構築において広く利用されている．2020年現在主流の勾配ブースティング系アルゴリズムの弱識別器にはほとんど決定木が利用されている．</description>
+    </item>
+    
+    <item>
+      <title>Factorization Machinesによるレコメンドの仕組み</title>
+      <link>https://yutayamazaki.github.io/posts/factorization_machines/</link>
+      <pubDate>Mon, 06 Jul 2020 01:37:23 +0900</pubDate>
+      
+      <guid>https://yutayamazaki.github.io/posts/factorization_machines/</guid>
+      <description>先日&lt;a href=&#34;https://aws.amazon.com/jp/blogs/news/extending-amazon-sagemaker-factorization-machines-algorithm-to-predict-top-x-recommendations/&#34;&gt;AWSのレコメンドシステム構築記事&lt;/a&gt;を読んでいた知人の方から質問されたことへの回答を自分用のメモとしてまとめる．kNNをアイテム潜在ベクトルで学習し，ユーザー潜在ベクトルを入力として推論を行なった結果がなぜレコメンドとして妥当なのかという内容の質問．結論としてはFMではあるユーザーとそのユーザーが高く評価したアイテムは潜在空間上で近くなるように値が更新される，アイテムのみで学習を行いユーザーのみで推論を行うため，ユーザー毎やアイテム毎の方が距離が近くなっても問題がない．</description>
+    </item>
+    
+  </channel>
+</rss>

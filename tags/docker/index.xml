@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Docker on ざきメモ</title>
+    <link>https://yutayamazaki.github.io/tags/docker/</link>
+    <description>Recent content in Docker on ざきメモ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 06 Jul 2020 01:35:23 +0900</lastBuildDate>
+    
+	<atom:link href="https://yutayamazaki.github.io/tags/docker/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>DockerでPyTorchの実行環境を整備する 2019年11月</title>
+      <link>https://yutayamazaki.github.io/posts/docker_pytorch/</link>
+      <pubDate>Mon, 06 Jul 2020 01:35:23 +0900</pubDate>
+      
+      <guid>https://yutayamazaki.github.io/posts/docker_pytorch/</guid>
+      <description>PyTorchによるDeep Learningの実行環境をDockerコンテナで整備する．Docker version19.03以降，ホストOSのGPUドライバとnvidia-container-runtimeさえあれば他はコンテナに閉じ込められる．</description>
+    </item>
+    
+  </channel>
+</rss>

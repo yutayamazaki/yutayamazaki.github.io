@@ -6,9 +6,100 @@
     <description>Recent content in Tags on ざきメモ</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
+    <lastBuildDate>Mon, 06 Jul 2020 01:56:23 +0900</lastBuildDate>
     
 	<atom:link href="https://yutayamazaki.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Computer Vision</title>
+      <link>https://yutayamazaki.github.io/tags/computer-vision/</link>
+      <pubDate>Mon, 06 Jul 2020 01:56:23 +0900</pubDate>
+      
+      <guid>https://yutayamazaki.github.io/tags/computer-vision/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>NLP</title>
+      <link>https://yutayamazaki.github.io/tags/nlp/</link>
+      <pubDate>Mon, 06 Jul 2020 01:55:23 +0900</pubDate>
+      
+      <guid>https://yutayamazaki.github.io/tags/nlp/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Machine Learning</title>
+      <link>https://yutayamazaki.github.io/tags/machine-learning/</link>
+      <pubDate>Mon, 06 Jul 2020 01:53:23 +0900</pubDate>
+      
+      <guid>https://yutayamazaki.github.io/tags/machine-learning/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Python</title>
+      <link>https://yutayamazaki.github.io/tags/python/</link>
+      <pubDate>Mon, 06 Jul 2020 01:52:23 +0900</pubDate>
+      
+      <guid>https://yutayamazaki.github.io/tags/python/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>AWS Lambda</title>
+      <link>https://yutayamazaki.github.io/tags/aws-lambda/</link>
+      <pubDate>Mon, 06 Jul 2020 01:51:23 +0900</pubDate>
+      
+      <guid>https://yutayamazaki.github.io/tags/aws-lambda/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Nuxt.js</title>
+      <link>https://yutayamazaki.github.io/tags/nuxt.js/</link>
+      <pubDate>Mon, 06 Jul 2020 01:51:23 +0900</pubDate>
+      
+      <guid>https://yutayamazaki.github.io/tags/nuxt.js/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Factorization Machines</title>
+      <link>https://yutayamazaki.github.io/tags/factorization-machines/</link>
+      <pubDate>Mon, 06 Jul 2020 01:37:23 +0900</pubDate>
+      
+      <guid>https://yutayamazaki.github.io/tags/factorization-machines/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Kaggle</title>
+      <link>https://yutayamazaki.github.io/tags/kaggle/</link>
+      <pubDate>Mon, 06 Jul 2020 01:37:23 +0900</pubDate>
+      
+      <guid>https://yutayamazaki.github.io/tags/kaggle/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Docker</title>
+      <link>https://yutayamazaki.github.io/tags/docker/</link>
+      <pubDate>Mon, 06 Jul 2020 01:35:23 +0900</pubDate>
+      
+      <guid>https://yutayamazaki.github.io/tags/docker/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Serverless</title>
+      <link>https://yutayamazaki.github.io/tags/serverless/</link>
+      <pubDate>Mon, 06 Jul 2020 01:35:23 +0900</pubDate>
+      
+      <guid>https://yutayamazaki.github.io/tags/serverless/</guid>
+      <description></description>
+    </item>
     
   </channel>
 </rss>

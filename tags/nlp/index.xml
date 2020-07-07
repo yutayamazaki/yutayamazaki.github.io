@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>NLP on ざきメモ</title>
+    <link>https://yutayamazaki.github.io/tags/nlp/</link>
+    <description>Recent content in NLP on ざきメモ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 06 Jul 2020 01:55:23 +0900</lastBuildDate>
+    
+	<atom:link href="https://yutayamazaki.github.io/tags/nlp/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Okapi BM25を動かしてみる</title>
+      <link>https://yutayamazaki.github.io/posts/okapi_bm25/</link>
+      <pubDate>Mon, 06 Jul 2020 01:55:23 +0900</pubDate>
+      
+      <guid>https://yutayamazaki.github.io/posts/okapi_bm25/</guid>
+      <description>Okapi BM25は単語の出現頻度ベースの文書検索のランキングアルゴリズムのひとつ．文書検索周りの調査の過程でOkapi BM25を実装したのでその解説とともに記事にした．</description>
+    </item>
+    
+  </channel>
+</rss>

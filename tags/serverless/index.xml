@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Serverless on ざきメモ</title>
+    <link>https://yutayamazaki.github.io/tags/serverless/</link>
+    <description>Recent content in Serverless on ざきメモ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 06 Jul 2020 01:35:23 +0900</lastBuildDate>
+    
+	<atom:link href="https://yutayamazaki.github.io/tags/serverless/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Serverless Frameworkの運用Tips</title>
+      <link>https://yutayamazaki.github.io/posts/serverless/</link>
+      <pubDate>Mon, 06 Jul 2020 01:35:23 +0900</pubDate>
+      
+      <guid>https://yutayamazaki.github.io/posts/serverless/</guid>
+      <description>Serverless Frameworkを使う上で気をつけるべきことをまとめる．</description>
+    </item>
+    
+  </channel>
+</rss>
