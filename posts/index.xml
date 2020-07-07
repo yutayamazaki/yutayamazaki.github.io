@@ -6,10 +6,19 @@
     <description>Recent content in Posts on ざきメモ</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 07 Jul 2020 16:14:23 +0900</lastBuildDate>
+    <lastBuildDate>Wed, 08 Jul 2020 00:20:23 +0900</lastBuildDate>
     
 	<atom:link href="https://yutayamazaki.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Faster R-CNNを理解する</title>
+      <link>https://yutayamazaki.github.io/posts/faster_rcnn/</link>
+      <pubDate>Wed, 08 Jul 2020 00:20:23 +0900</pubDate>
+      
+      <guid>https://yutayamazaki.github.io/posts/faster_rcnn/</guid>
+      <description>Faster R-CNNのアーキテクチャの詳細を知らなかったので自分で実装できるレベルまで調べる．</description>
+    </item>
     
     <item>
       <title>Kaggle解法まとめ Understanding Clouds from Satellite Images</title>
