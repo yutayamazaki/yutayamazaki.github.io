@@ -4,9 +4,9 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
   
-  <title>Pythonの辞書にdot演算子でアクセスしたい</title>
-  <meta property="og:title" content="Pythonの辞書にdot演算子でアクセスしたい" />
-  <meta name="twitter:title" content="Pythonの辞書にdot演算子でアクセスしたい" />
+  <title>Kaggle解法まとめ Understanding Clouds from Satellite Images</title>
+  <meta property="og:title" content="Kaggle解法まとめ Understanding Clouds from Satellite Images" />
+  <meta name="twitter:title" content="Kaggle解法まとめ Understanding Clouds from Satellite Images" />
   
 
   
@@ -17,7 +17,7 @@
 
   <meta name="author" content=""/>
   <meta property="og:site_name" content="ざきメモ" />
-  <meta property="og:url" content="https://yutayamazaki.github.io/posts/python_dotdict/" />
+  <meta property="og:url" content="https://yutayamazaki.github.io/posts/kaggle_understanding_clouds_from_satellite_images/" />
 
   
   <meta name="twitter:card" content="summary" />
@@ -78,112 +78,181 @@
 
 <article class="p-article">
   <header>
-    <h1>Pythonの辞書にdot演算子でアクセスしたい</h1>
+    <h1>Kaggle解法まとめ Understanding Clouds from Satellite Images</h1>
     <div>
       
         <div class="c-time">
           Posted on
-<time datetime="2020-07-07T13:56:23&#43;09:00">
+<time datetime="2020-07-07T16:14:23&#43;09:00">
   Jul 7, 2020
 </time>
 
         </div>
       
       
-      <a href="https://yutayamazaki.github.io/tags/python" class="c-tag">Python</a>
+      <a href="https://yutayamazaki.github.io/tags/kaggle" class="c-tag">Kaggle</a>
+      
+      <a href="https://yutayamazaki.github.io/tags/computer-vision" class="c-tag">Computer Vision</a>
       
     </div>
   </header>
   
   <section id="js-article" class="p-article__body">
-    <h2 id="概要">概要</h2>
+    <h2 id="コンペ概要">コンペ概要</h2>
 <ul>
-<li>機械学習の実験などyamlで実験管理しているプロジェクトで辞書にdotでアクセスしたくなった
+<li><a href="https://www.kaggle.com/c/understanding_cloud_organization">https://www.kaggle.com/c/understanding_cloud_organization</a></li>
+</ul>
+<p>Understanding Clouds from Satellite Imagesは2019年8月から2019年11月まで開催された画像の領域検出の通称「雲コンペ」．評価指標はDice Coefficientで雲の形状に応じて4クラスへの分類を行うSemantic Segmentationコンペ．4クラスの詳細はSugar,Flower,Fish,Gravelであり大体の見てくれは以下のgif参照．</p>
+<p><img src="https://storage.googleapis.com/kaggle-media/competitions/MaxPlanck/Teaser_AnimationwLabels.gif" alt=""></p>
+<p>アノテーションがbounding boxで与えられてそれを元にピクセル単位の予測を行うという少し変なコンペ．</p>
+<p>あまりいいsolutionがなかったので主に2ndを中心に．</p>
+<h3 id="2nd-place-solution">2nd place solution</h3>
 <ul>
-<li>辞書だとdic[&lsquo;key&rsquo;]となり文字数がかさむため</li>
+<li>
+<p>Links</p>
+<ul>
+<li><a href="https://www.kaggle.com/c/understanding_cloud_organization/discussion/118255">Discussion on Kaggle</a></li>
 </ul>
 </li>
-<li>dictを入れるだけですぐにdotでアクセスできるDotDictというクラスを作ったのでそのスニペットを置く</li>
+<li>
+<p>画像が1400x2100と大きかったが単純にresizeすると精度に影響するため，何層かのconvで画像サイズを352x544にしてbackboneに入れた</p>
+</li>
 </ul>
-<h2 id="dotdictの実装">DotDictの実装</h2>
-<p>参考にしたサイトのスニペットはネストされた辞書の要素までdotでアクセスできないものだったので，再起的にDotDictの初期化を行いネストされた要素もdotでアクセスできるようにした．またtodictメソッドでネストされたDotDictを通常の辞書へ変換できる．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> typing <span style="color:#f92672">import</span> Any, Dict
-
-
-<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DotDict</span>(dict):
-
-    <span style="color:#66d9ef">def</span> __init__(self, <span style="color:#f92672">*</span>args, <span style="color:#f92672">**</span>kwargs):
-        super(DotDict, self)<span style="color:#f92672">.</span>__init__(<span style="color:#f92672">*</span>args, <span style="color:#f92672">**</span>kwargs)
-        <span style="color:#66d9ef">for</span> arg <span style="color:#f92672">in</span> args:
-            <span style="color:#66d9ef">if</span> isinstance(arg, dict):
-                self<span style="color:#f92672">.</span>_parse_nested_dict(arg)
-
-        <span style="color:#66d9ef">if</span> kwargs:
-            self<span style="color:#f92672">.</span>_parse_nested_dict(kwargs)
-
-    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">_parse_nested_dict</span>(self, dic: Dict[Any, Any]):
-        <span style="color:#66d9ef">for</span> k, v <span style="color:#f92672">in</span> dic<span style="color:#f92672">.</span>items():
-            <span style="color:#66d9ef">if</span> isinstance(v, dict):
-                self[k] <span style="color:#f92672">=</span> DotDict(v)
-                <span style="color:#66d9ef">continue</span>
-            self[k] <span style="color:#f92672">=</span> v
-
-    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">todict</span>(self) <span style="color:#f92672">-&gt;</span> Dict[Any, Any]:
-        <span style="color:#e6db74">&#34;&#34;&#34;Convert DotDict to default dict.&#34;&#34;&#34;</span>
-        dic: Dict[Any, Any] <span style="color:#f92672">=</span> {}
-        <span style="color:#66d9ef">for</span> k, v <span style="color:#f92672">in</span> self<span style="color:#f92672">.</span>items():
-            <span style="color:#66d9ef">if</span> isinstance(v, DotDict):
-                dic[k] <span style="color:#f92672">=</span> v<span style="color:#f92672">.</span>todict()
-                <span style="color:#66d9ef">continue</span>
-            dic[k] <span style="color:#f92672">=</span> v
-        <span style="color:#66d9ef">return</span> dic
-
-    <span style="color:#66d9ef">def</span> __getattr__(self, attr):
-        <span style="color:#66d9ef">return</span> self<span style="color:#f92672">.</span>get(attr)
-
-    <span style="color:#66d9ef">def</span> __setattr__(self, key, value):
-        self<span style="color:#f92672">.</span>__setitem__(key, value)
-
-    <span style="color:#66d9ef">def</span> __setitem__(self, key, value):
-        super(DotDict, self)<span style="color:#f92672">.</span>__setitem__(key, value)
-        self<span style="color:#f92672">.</span>__dict__<span style="color:#f92672">.</span>update({key: value})
-
-    <span style="color:#66d9ef">def</span> __delattr__(self, item):
-        self<span style="color:#f92672">.</span>__delitem__(item)
-
-    <span style="color:#66d9ef">def</span> __delitem__(self, key):
-        super(DotDict, self)<span style="color:#f92672">.</span>__delitem__(key)
-        <span style="color:#66d9ef">del</span> self<span style="color:#f92672">.</span>__dict__[key]
-
-</code></pre></div><ul>
-<li>このようにdotでアクセスできる</li>
-</ul>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DotDictTests</span>(unittest<span style="color:#f92672">.</span>TestCase):
-
-    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test_simple</span>(self):
-        dic: Dict[str, Any] <span style="color:#f92672">=</span> {
-            <span style="color:#e6db74">&#39;string&#39;</span>: <span style="color:#e6db74">&#39;aaa&#39;</span>,
-            <span style="color:#e6db74">&#39;integer&#39;</span>: <span style="color:#ae81ff">12</span>,
-            <span style="color:#e6db74">&#39;dict&#39;</span>: {<span style="color:#e6db74">&#39;key&#39;</span>: <span style="color:#e6db74">&#39;value&#39;</span>},
-            <span style="color:#e6db74">&#39;list&#39;</span>: [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>]
-        }
-        dotdict <span style="color:#f92672">=</span> DotDict(dic)
-        self<span style="color:#f92672">.</span>assertEqual(dotdict<span style="color:#f92672">.</span>string, dic[<span style="color:#e6db74">&#39;string&#39;</span>])
-        self<span style="color:#f92672">.</span>assertEqual(dotdict<span style="color:#f92672">.</span>integer, dic[<span style="color:#e6db74">&#39;integer&#39;</span>])
-        self<span style="color:#f92672">.</span>assertEqual(dotdict<span style="color:#f92672">.</span>dict<span style="color:#f92672">.</span>key, dic[<span style="color:#e6db74">&#39;dict&#39;</span>][<span style="color:#e6db74">&#39;key&#39;</span>])
-        self<span style="color:#f92672">.</span>assertEqual(dotdict<span style="color:#f92672">.</span>list, dic[<span style="color:#e6db74">&#39;list&#39;</span>])
-
-    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">test_todict</span>(self):
-        dic: Dict[str, Any] <span style="color:#f92672">=</span> {
-            <span style="color:#e6db74">&#39;nested&#39;</span>: {<span style="color:#e6db74">&#39;key&#39;</span>: {<span style="color:#e6db74">&#39;key&#39;</span>: <span style="color:#e6db74">&#39;val&#39;</span>}}
-        }
-        dotdict <span style="color:#f92672">=</span> utils<span style="color:#f92672">.</span>DotDict(dic)
-        ret: Dict[Any, Any] <span style="color:#f92672">=</span> dotdict<span style="color:#f92672">.</span>todict()
-
-        self<span style="color:#f92672">.</span>assertDictEqual(ret, dic)
-</code></pre></div><h2 id="参考">参考</h2>
+<p><img src="https://www.googleapis.com/download/storage/v1/b/kaggle-user-content/o/inbox%2F505196%2F953479a06dbb81adbf16320caadf44e7%2Fcompressor.png?generation=1574249239505220&amp;alt=media" alt=""></p>
 <ul>
-<li><a href="https://stackoverflow.com/questions/2352181/how-to-use-a-dot-to-access-members-of-dictionary">python - How to use a dot &quot;.&quot; to access members of dictionary? - Stack Overflow</a></li>
+<li>
+<p>Optimizer: Adam</p>
+</li>
+<li>
+<p>Loss Function: FocalLoss</p>
+</li>
+<li>
+<p>Batch Size: 4</p>
+</li>
+<li>
+<p>Hflip, VFlip, Equalize, CLAHE, RandomBrightnessContrast, RandomGamma, Cutout, ShiftScaleRotate, GridDistortion, GaussNoise</p>
+</li>
+<li>
+<p>30epochを以下のような学習率で学習させた</p>
+</li>
+</ul>
+<p><img src="https://www.googleapis.com/download/storage/v1/b/kaggle-user-content/o/inbox%2F505196%2F2f8acf3439d405a4d13cde0fa28d6378%2FLearning%20profile.png?generation=1574249719812217&amp;alt=media" alt=""></p>
+<ul>
+<li>Dice CoefficientはFPに敏感なので後処理としてtriplet ruleを採用した
+<ul>
+<li>下限の閾値(bottom_score_threshold)以下のものをまず切り捨てる，そして確信度の高いピクセル(top_score_threshold以上の値のピクセル)が一定の閾値(area_threshold)よりも数が少ない場合はそのピクセルも切り捨てて残ったもののみを予測とする</li>
+<li>おそらくこれで局所的に検出されている部分を取り除くことができ，FPに対して頑健な予測になる</li>
+<li>手法の詳細は<a href="https://www.youtube.com/watch?v=Wuf0wE3Mrxg&amp;feature=youtu.be">この動画</a>で紹介されている</li>
+<li>また<a href="https://github.com/sneddy/pneumothorax-segmentation#triplet-scheme-of-inference-and-validation">解説</a>と<a href="https://github.com/sneddy/pneumothorax-segmentation/blob/master/unet_pipeline/MaskBinarizers.py#L26">コード</a>が公開されている</li>
+<li>UNetでマスクか否かを予測させるモデルも他にはあったがこの人の場合は効かなかったらしい</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">MaskBinarization</span>():
+    <span style="color:#66d9ef">def</span> __init__(self):
+        self<span style="color:#f92672">.</span>thresholds <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.5</span>
+
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">transform</span>(self, predicted):
+        <span style="color:#66d9ef">yield</span> predicted <span style="color:#f92672">&gt;</span> self<span style="color:#f92672">.</span>thresholds
+
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TripletMaskBinarization</span>(MaskBinarization):
+    <span style="color:#66d9ef">def</span> __init__(self, triplets, with_channels<span style="color:#f92672">=</span>True):
+        super()<span style="color:#f92672">.</span>__init__()
+        self<span style="color:#f92672">.</span>thresholds <span style="color:#f92672">=</span> triplets
+        self<span style="color:#f92672">.</span>dims <span style="color:#f92672">=</span> (<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>) <span style="color:#66d9ef">if</span> with_channels <span style="color:#66d9ef">else</span> (<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>)
+
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">transform</span>(self, predicted):
+        <span style="color:#66d9ef">for</span> top_score_threshold, area_threshold, bottom_score_threshold <span style="color:#f92672">in</span> self<span style="color:#f92672">.</span>thresholds:     
+            clf_mask <span style="color:#f92672">=</span> predicted <span style="color:#f92672">&gt;</span> top_score_threshold
+            pred_mask <span style="color:#f92672">=</span> predicted <span style="color:#f92672">&gt;</span> bottom_score_threshold
+            pred_mask[clf_mask<span style="color:#f92672">.</span>sum(dim<span style="color:#f92672">=</span>self<span style="color:#f92672">.</span>dims) <span style="color:#f92672">&lt;</span> area_threshold] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+            <span style="color:#66d9ef">yield</span> pred_mask
+</code></pre></div><ul>
+<li>有効じゃなかったアイデア: Mask classifiers, mmdetection / FasterRCNN, BCE-DICE, lovasz, triple_loss, Adversarial validation, Pseudo labeling</li>
+</ul>
+<h2 id="10th-place-solution">10th place solution</h2>
+<ul>
+<li>
+<p>Links</p>
+<ul>
+<li><a href="https://www.kaggle.com/c/understanding_cloud_organization/discussion/118262">Discussion on Kaggle</a></li>
+</ul>
+</li>
+<li>
+<p>前処理は(320x512へのresize)のみ</p>
+</li>
+<li>
+<p>アノテーションが良くない21枚の画像をデータセットから取り除いた</p>
+</li>
+<li>
+<p>Data augumentationはalbumentationsでHorizontalFlip, VerticalFlip, ShiftScaleRotate, GridDistortion, Blur, MedianBlur, GaussianBlur, CLAHE, RandomBrightnessContrast, HueSaturationValue, IAASharpenを利用</p>
+</li>
+<li>
+<p>モデルはdensenet169 Unet with classificationとefficientnet-b4 FPN with classification</p>
+</li>
+<li>
+<p>予測は4つに切ったcv(か4つのsnapshot ensemble)と2つのモデルの計8モデルの平均</p>
+</li>
+<li>
+<p>TTA: None, h-flip, v-flip, h-flip and v-flip</p>
+</li>
+<li>
+<p>閾値はOptunaでcvが最大になるように</p>
+</li>
+<li>
+<p>Optimizer: RAdam</p>
+</li>
+<li>
+<p>Loss:</p>
+<ul>
+<li>Pre training:
+<ul>
+<li>segmentation: BCE + Dice</li>
+<li>classification: FocalLoss</li>
+</ul>
+</li>
+<li>Main training:
+<ul>
+<li>(classification)( FocalLoss * 0.5 + BCEWithLogits * 0.5 ) * 0.05 + (segmentation)( BCE + Dice ) * 0.95</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>GPUはRTX2080Ti x 1</p>
+</li>
+</ul>
+<h2 id="19th-place-solution">19th place solution</h2>
+<ul>
+<li>
+<p>Links</p>
+<ul>
+<li><a href="https://www.kaggle.com/c/understanding_cloud_organization/discussion/117975">Discussion on Kaggle</a></li>
+<li><a href="https://github.com/bamps53/kaggle-cloud-2019">GitHub</a></li>
+</ul>
+</li>
+<li>
+<p>Model: UNet &amp; FPN</p>
+</li>
+<li>
+<p>Loss: BCE + Dice loss</p>
+</li>
+<li>
+<p>heavy augmentation(including mixup)</p>
+</li>
+<li>
+<p>cosine anealing</p>
+</li>
+<li>
+<p>Triplet thresholding</p>
+</li>
+</ul>
+<h2 id="参考">参考</h2>
+<ul>
+<li><a href="https://www.kaggle.com/sudalairajkumar/winning-solutions-of-kaggle-competitions">Winning solutions of kaggle competitions</a></li>
+<li><a href="https://st1990.hatenablog.com/entry/2019/12/22/184017">Kaggleの雲コンペ(Understanding Clouds from Satellite Images)についての記録 - statsuのblog</a></li>
+<li><a href="https://yukoishizaki.hatenablog.com/entry/2019/11/19/111936">Kaggle 雲コンペ 反省録 - 機械学習  Memo φ(・ω・ )</a></li>
 </ul>
 
   </section>
@@ -193,12 +262,11 @@
       <div class="c-pagination__ctrl">
         <div class="c-pagination__newer">
           
-          <a href="https://yutayamazaki.github.io/posts/kaggle_understanding_clouds_from_satellite_images/">Newer</a>
           
         </div>
         <div class="c-pagination__older">
           
-          <a href="https://yutayamazaki.github.io/posts/mask_rcnn/">Older</a>
+          <a href="https://yutayamazaki.github.io/posts/python_dotdict/">Older</a>
           
         </div>
       </div>
@@ -210,9 +278,23 @@
   <ul id="slider" class="p-related__list">
     
     <li class="p-related__item js-related__item">
-      <a href="/posts/python_remote_logging/"
+      <a href="/posts/kaggle_siim_acr/"
         >
-        <span>Pythonでサーバーのログを1箇所に集約する</span>
+        <span>Kaggle解法まとめ SIIM-ACR Pneumothorax Segmentation</span>
+      </a>
+    </li>
+    
+    <li class="p-related__item js-related__item">
+      <a href="/posts/mask_rcnn/"
+        >
+        <span>Mask R-CNNをちょっと知る</span>
+      </a>
+    </li>
+    
+    <li class="p-related__item js-related__item">
+      <a href="/posts/polygon_rnn/"
+        >
+        <span>アノテーションを半自動で生成するPolygonRNNとPolygon RNN&#43;&#43;</span>
       </a>
     </li>
     

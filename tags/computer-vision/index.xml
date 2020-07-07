@@ -6,10 +6,19 @@
     <description>Recent content in Computer Vision on ざきメモ</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 06 Jul 2020 01:56:23 +0900</lastBuildDate>
+    <lastBuildDate>Tue, 07 Jul 2020 16:14:23 +0900</lastBuildDate>
     
 	<atom:link href="https://yutayamazaki.github.io/tags/computer-vision/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Kaggle解法まとめ Understanding Clouds from Satellite Images</title>
+      <link>https://yutayamazaki.github.io/posts/kaggle_understanding_clouds_from_satellite_images/</link>
+      <pubDate>Tue, 07 Jul 2020 16:14:23 +0900</pubDate>
+      
+      <guid>https://yutayamazaki.github.io/posts/kaggle_understanding_clouds_from_satellite_images/</guid>
+      <description>Kaggleの「雲コンペ」ことUnderstanding Clouds from Satellite Imagesコンペの解放をまとめる．雲コンペは衛生写真から雲の形状を4種類に分類するSemantic Segmentationsのタスクで評価指標はDice Coefficient.</description>
+    </item>
     
     <item>
       <title>Mask R-CNNをちょっと知る</title>
