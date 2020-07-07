@@ -6,10 +6,19 @@
     <description>Recent content in Tags on ざきメモ</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 06 Jul 2020 01:56:23 +0900</lastBuildDate>
+    <lastBuildDate>Tue, 07 Jul 2020 13:56:23 +0900</lastBuildDate>
     
 	<atom:link href="https://yutayamazaki.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Python</title>
+      <link>https://yutayamazaki.github.io/tags/python/</link>
+      <pubDate>Tue, 07 Jul 2020 13:56:23 +0900</pubDate>
+      
+      <guid>https://yutayamazaki.github.io/tags/python/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Computer Vision</title>
@@ -35,15 +44,6 @@
       <pubDate>Mon, 06 Jul 2020 01:53:23 +0900</pubDate>
       
       <guid>https://yutayamazaki.github.io/tags/machine-learning/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Python</title>
-      <link>https://yutayamazaki.github.io/tags/python/</link>
-      <pubDate>Mon, 06 Jul 2020 01:52:23 +0900</pubDate>
-      
-      <guid>https://yutayamazaki.github.io/tags/python/</guid>
       <description></description>
     </item>
     
