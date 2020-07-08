@@ -120,10 +120,13 @@
 <h2 id="1-画像をcnnで畳み込んで特徴マップを得る">1. 画像をCNNで畳み込んで特徴マップを得る</h2>
 <p>Faster R-CNNでは特徴マップとRoIsから固定長のベクトルを取得できるので，画像の入力サイズは畳み込みによって縦横が消滅しない限りはどのサイズでもok．2020年現在KaggleなどではResNetベースのbackboneを利用することが多い．</p>
 <p>R-CNNでは取得されたRoIsの数だけCNNの推論を行っており，それをFast R-CNNでは元画像に対して一度だけCNNの推論を行ったのちSelective Searchで取得したRoIsに対してRoI Poolingを行い矩形を検出するように高速化されており，Faster R-CNNでもFast R-CNN同様に1回CNNで特徴マップを得てそれを使い回す方針を採用している．</p>
+<p>以下の画像のように入力画像からCNNで一度特徴マップを取得し，それをもとにRPNによるRoIsの出力とRoI Poolingからクラス分類とboxの回帰の両方を行う．</p>
+<p><img src="/images/faster_rcnn_fig1.png" alt=""></p>
 <h2 id="2-rpnで特徴マップからroisを得る">2. RPNで特徴マップからRoIsを得る</h2>
 <p>Fast R-CNNでRoIsを取得するSelective Searchが推論時間全体の86%を占めていたため，Faster R-CNNではRegion Proposalを1層の畳み込み演算(boxのoffsetsとconfideneでそれぞれ1層ずつ)のみで行うRegion Proposal Networkを提案し，高速化を行うとともにDeepなモデルとしてend2endの学習を可能にした．</p>
 <p>特徴マップの各点をAnchorとし各Anchorに対してAnchor Boxesを9個提案する．9個は基準となる長さ3通りと縦横比3通りの3x3の結果で，状況によっては数を増やしても問題ない．Height x Width x 9のAnchor Boxesを出力し，Ground Truthのbounding boxとIoUを計算し，IoUが0.3未満の領域を物体が存在しない教師データ，0.7より大きい大きい領域を物体が存在する教師データとしてRegion Proposal Networkの学習を行う．損失関数はCross Entropyとsmooth L1の重み付き和を用いる．</p>
-<p>RPN自体は特徴マップを入力として受け取り，各Anchor Boxesに対応する物体があることへの確信度(confidence score)とAnchor Boxesの補正値を出力する．そのままRoIsを全て出力すると重複する領域が多すぎるので，後処理としてconfidence scoreに応じたnon-maximum supression(NMS)で冗長性を抑制する．</p>
+<p><img src="/images/faster_rcnn_fig2.png" alt=""></p>
+<p>RPN自体は特徴マップを入力として受け取り，k個の各Anchor Boxesに対応する物体があることへの2xkの確信度(confidence score)とAnchor Boxesの4xkの補正値を出力する．そのままRoIsを全て出力すると重複する領域が多すぎるので，後処理としてconfidence scoreに応じたnon-maximum supression(NMS)で冗長性を抑制する．</p>
 <p>ここでRPNのRoIsを出力する際の処理の流れをまとめる．</p>
 <ul>
 <li>offsetsの出力をbounding box形式に変換する</li>
