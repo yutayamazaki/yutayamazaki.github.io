@@ -12,6 +12,16 @@
     
     
     <item>
+      <title>About Me</title>
+      <link>https://yutayamazaki.github.io/about/</link>
+      <pubDate>Wed, 08 Jul 2020 22:41:23 +0900</pubDate>
+      
+      <guid>https://yutayamazaki.github.io/about/</guid>
+      <description>神戸在住の個人事業主，仕事のオファー待ってます！
+よく使う(好きな)技術  機械学習  画像 自然言語処理   web開発  Nuxt.js Django   Golang  </description>
+    </item>
+    
+    <item>
       <title>Faster R-CNNを理解する</title>
       <link>https://yutayamazaki.github.io/posts/faster_rcnn/</link>
       <pubDate>Wed, 08 Jul 2020 00:20:23 +0900</pubDate>

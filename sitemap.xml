@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://yutayamazaki.github.io/about/</loc>
+    <lastmod>2020-07-08T22:41:23+09:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://yutayamazaki.github.io/tags/computer-vision/</loc>
     <lastmod>2020-07-08T00:20:23+09:00</lastmod>
   </url>
