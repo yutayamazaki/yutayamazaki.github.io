@@ -6,10 +6,19 @@
     <description>Recent content on ざきメモ</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 08 Jul 2020 00:20:23 +0900</lastBuildDate>
+    <lastBuildDate>Fri, 10 Jul 2020 01:37:23 +0900</lastBuildDate>
     
 	<atom:link href="https://yutayamazaki.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Kaggle解法まとめ SIIM-ACR Pneumothorax Segmentation</title>
+      <link>https://yutayamazaki.github.io/posts/kaggle_siim_acr/</link>
+      <pubDate>Fri, 10 Jul 2020 01:37:23 +0900</pubDate>
+      
+      <guid>https://yutayamazaki.github.io/posts/kaggle_siim_acr/</guid>
+      <description>仕事で領域検出をやる必要に駆られているので領域検出の過去コンペ解放をサーベイする．SIIM-ACR Pneumothorax Segmentationは2019年8月28日まで開催していた領域検出コンペで評価指標はDiceCoefficient.</description>
+    </item>
     
     <item>
       <title>About Me</title>
@@ -127,15 +136,6 @@
       
       <guid>https://yutayamazaki.github.io/posts/factorization_machines/</guid>
       <description>先日&lt;a href=&#34;https://aws.amazon.com/jp/blogs/news/extending-amazon-sagemaker-factorization-machines-algorithm-to-predict-top-x-recommendations/&#34;&gt;AWSのレコメンドシステム構築記事&lt;/a&gt;を読んでいた知人の方から質問されたことへの回答を自分用のメモとしてまとめる．kNNをアイテム潜在ベクトルで学習し，ユーザー潜在ベクトルを入力として推論を行なった結果がなぜレコメンドとして妥当なのかという内容の質問．結論としてはFMではあるユーザーとそのユーザーが高く評価したアイテムは潜在空間上で近くなるように値が更新される，アイテムのみで学習を行いユーザーのみで推論を行うため，ユーザー毎やアイテム毎の方が距離が近くなっても問題がない．</description>
-    </item>
-    
-    <item>
-      <title>Kaggle解法まとめ SIIM-ACR Pneumothorax Segmentation</title>
-      <link>https://yutayamazaki.github.io/posts/kaggle_siim_acr/</link>
-      <pubDate>Mon, 06 Jul 2020 01:37:23 +0900</pubDate>
-      
-      <guid>https://yutayamazaki.github.io/posts/kaggle_siim_acr/</guid>
-      <description>仕事で領域検出をやる必要に駆られているので領域検出の過去コンペ解放をサーベイする．SIIM-ACR Pneumothorax Segmentationは2019年8月28日まで開催していた領域検出コンペで評価指標はDiceCoefficient.</description>
     </item>
     
     <item>

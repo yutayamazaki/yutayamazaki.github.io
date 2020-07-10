@@ -6,10 +6,19 @@
     <description>Recent content in Computer Vision on ざきメモ</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 08 Jul 2020 00:20:23 +0900</lastBuildDate>
+    <lastBuildDate>Fri, 10 Jul 2020 01:37:23 +0900</lastBuildDate>
     
 	<atom:link href="https://yutayamazaki.github.io/tags/computer-vision/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Kaggle解法まとめ SIIM-ACR Pneumothorax Segmentation</title>
+      <link>https://yutayamazaki.github.io/posts/kaggle_siim_acr/</link>
+      <pubDate>Fri, 10 Jul 2020 01:37:23 +0900</pubDate>
+      
+      <guid>https://yutayamazaki.github.io/posts/kaggle_siim_acr/</guid>
+      <description>仕事で領域検出をやる必要に駆られているので領域検出の過去コンペ解放をサーベイする．SIIM-ACR Pneumothorax Segmentationは2019年8月28日まで開催していた領域検出コンペで評価指標はDiceCoefficient.</description>
+    </item>
     
     <item>
       <title>Faster R-CNNを理解する</title>
@@ -45,15 +54,6 @@
       
       <guid>https://yutayamazaki.github.io/posts/polygon_rnn/</guid>
       <description>主要な画像のタスクだと領域検出 &amp;gt; 物体検出 &amp;gt; 分類の順でアノテーションのコストがかかる．Polygon RNNは最もアノテーションにコストがかかる領域検出のアノテーションを多角形で半自動で生成しようという試み．CNNで画像から特徴抽出を行い，ConvLSTMレイヤーを通して多角形の頂点を系列として予測する．この結果をアノテーターが微調整することで，必要なコストを下げることができる．</description>
-    </item>
-    
-    <item>
-      <title>Kaggle解法まとめ SIIM-ACR Pneumothorax Segmentation</title>
-      <link>https://yutayamazaki.github.io/posts/kaggle_siim_acr/</link>
-      <pubDate>Mon, 06 Jul 2020 01:37:23 +0900</pubDate>
-      
-      <guid>https://yutayamazaki.github.io/posts/kaggle_siim_acr/</guid>
-      <description>仕事で領域検出をやる必要に駆られているので領域検出の過去コンペ解放をサーベイする．SIIM-ACR Pneumothorax Segmentationは2019年8月28日まで開催していた領域検出コンペで評価指標はDiceCoefficient.</description>
     </item>
     
   </channel>

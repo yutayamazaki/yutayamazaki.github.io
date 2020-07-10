@@ -89,8 +89,8 @@
       
         <div class="c-time">
           Posted on
-<time datetime="2020-07-06T01:37:23&#43;09:00">
-  Jul 6, 2020
+<time datetime="2020-07-10T01:37:23&#43;09:00">
+  Jul 10, 2020
 </time>
 
         </div>
@@ -104,25 +104,54 @@
   </header>
   
   <section id="js-article" class="p-article__body">
-    <h2 id="概要">概要</h2>
-<ul>
-<li>仕事で領域検出をやる必要に駆られているのでサーベイする</li>
-<li>SIIM-ACR Pneumothorax Segmentationは2019年8月28日まで開催していた領域検出コンペでいわゆる「気胸コンペ」</li>
-</ul>
-<h2 id="コンペ概要">コンペ概要</h2>
+    <h2 id="コンペ概要">コンペ概要</h2>
 <ul>
 <li><a href="https://www.kaggle.com/c/siim-acr-pneumothorax-segmentation">https://www.kaggle.com/c/siim-acr-pneumothorax-segmentation</a></li>
+<li>SIIM-ACR Pneumothorax Segmentationは2019年8月28日まで開催していた領域検出コンペでいわゆる「気胸コンペ」</li>
+<li>2stage制</li>
 </ul>
-<p>胸部X線画像から気胸の領域を検出するSemantic Segmentationのコンペティション．評価指標は<a href="https://en.wikipedia.org/wiki/S%C3%B8rensen%E2%80%93Dice_coefficient">Dice Coefficient</a>だが，気胸がないデータに対して1pixelでも気胸ありと判定するとその画像に対するスコアが0になるため，偽陽性(FP)に対して厳しい評価が行われる．そのためsolutionには気胸であるか否かを判定する分類モデルと領域検出モデルの両方が用いられたものもいくつか散見された．</p>
-<p>また外部データの利用も可能であり<a href="https://www.kaggle.com/nih-chest-xrays/data">NIH Chest X-rays</a>と<a href="https://stanfordmlgroup.github.io/competitions/chexpert/">CheXPert</a>の2つが主に利用された．</p>
-<h3 id="解法一覧">解法一覧</h3>
+<h2 id="データ">データ</h2>
+<p>2stage制のコンペで，stage1の学習データとテストデータがstage2の学習データに含まれる．画像は3000枚程度でファルサイズも400MB程度であった．また外部データセットの利用が可能であり，<a href="https://www.kaggle.com/nih-chest-xrays/data">NIH Chest X-rays</a>と<a href="https://stanfordmlgroup.github.io/competitions/chexpert/">CheXPert</a>の2つが主に利用された．</p>
+<h2 id="タスク">タスク</h2>
+<p>気胸か否かの2値分類のSemantic Segmentationタスク．</p>
+<h2 id="評価指標">評価指標</h2>
+<p>Dice coefficientをテストデータ中の全画像で平均した領域検出における一般的な指標．</p>
+<p><img src="https://latex.codecogs.com/svg.latex?%5Cfrac%7B2*%7CX%5Ccap%7BY%7D%7C%7D%7B%7CX%7C+%7CY%7C%7D" alt=""></p>
+<h2 id="参考になるkernel-discussion">参考になるKernel, Discussion</h2>
+<h3 id="discussion">Discussion</h3>
 <ul>
-<li><a href="https://www.kaggle.com/c/siim-acr-pneumothorax-segmentation/discussion/107824">1st place solution</a></li>
-<li><a href="https://www.kaggle.com/c/siim-acr-pneumothorax-segmentation/discussion/108009">2nd place solution</a></li>
-<li><a href="https://www.kaggle.com/c/siim-acr-pneumothorax-segmentation/discussion/107981">3rd place solution</a></li>
-<li><a href="https://www.kaggle.com/c/siim-acr-pneumothorax-segmentation/discussion/108397">4th place solution</a></li>
-<li><a href="https://www.kaggle.com/c/siim-acr-pneumothorax-segmentation/discussion/107603">5th place solution</a></li>
+<li><a href="https://www.kaggle.com/c/siim-acr-pneumothorax-segmentation/discussion/108308">🏅Gold Medal Solutions 🏅</a>
+<ul>
+<li>1位から12位までのsolutionのリンクとGitHubリポジトリへのリンク</li>
 </ul>
+</li>
+<li><a href="https://www.kaggle.com/c/siim-acr-pneumothorax-segmentation/discussion/100391">Research Papers With Code for Medical Image Segmentation</a>
+<ul>
+<li>papers with codeの医療画像領域検出に関する論文がまとまっている</li>
+</ul>
+</li>
+<li><a href="https://www.kaggle.com/c/siim-acr-pneumothorax-segmentation/discussion/101429">some workable loss function</a>
+<ul>
+<li>良さげなlossをPyTorchの実装付きで公開している</li>
+</ul>
+</li>
+<li><a href="https://www.kaggle.com/c/siim-acr-pneumothorax-segmentation/discussion/108956">Winners Base Models</a>
+<ul>
+<li>上位入賞者の利用モデルまとめ</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://www.googleapis.com/download/storage/v1/b/kaggle-user-content/o/inbox%2F1670024%2F3e19a4aa34a4734404885e51ee19281c%2F2019-09-15%2016.13.19.png?generation=1568532678768625&amp;alt=media" alt="">
+<a href="https://www.kaggle.com/c/siim-acr-pneumothorax-segmentation/discussion/108956">Winners Base Models</a>から拝借</p>
+<h3 id="kernel">Kernel</h3>
+<ul>
+<li><a href="https://www.kaggle.com/meaninglesslives/nested-unet-with-efficientnet-encoder">Unet Plus Plus with EfficientNet Encoder</a>
+<ul>
+<li>Keras実装だが&hellip;</li>
+</ul>
+</li>
+</ul>
+<h2 id="上位解放">上位解放</h2>
 <h3 id="1st-place-solution">1st place solution</h3>
 <ul>
 <li>Links
@@ -222,17 +251,51 @@
       <div class="c-pagination__ctrl">
         <div class="c-pagination__newer">
           
-          <a href="https://yutayamazaki.github.io/posts/factorization_machines/">Newer</a>
           
         </div>
         <div class="c-pagination__older">
           
-          <a href="https://yutayamazaki.github.io/posts/docker_pytorch/">Older</a>
+          <a href="https://yutayamazaki.github.io/posts/faster_rcnn/">Older</a>
           
         </div>
       </div>
     </nav>
     
+
+<section class="p-related">
+  <h3>See Also</h3>
+  <ul id="slider" class="p-related__list">
+    
+    <li class="p-related__item js-related__item">
+      <a href="/posts/kaggle_understanding_clouds_from_satellite_images/"
+        >
+        <span>Kaggle解法まとめ Understanding Clouds from Satellite Images</span>
+      </a>
+    </li>
+    
+    <li class="p-related__item js-related__item">
+      <a href="/posts/faster_rcnn/"
+        >
+        <span>Faster R-CNNを理解する</span>
+      </a>
+    </li>
+    
+    <li class="p-related__item js-related__item">
+      <a href="/posts/mask_rcnn/"
+        >
+        <span>Mask R-CNNをちょっと知る</span>
+      </a>
+    </li>
+    
+    <li class="p-related__item js-related__item">
+      <a href="/posts/polygon_rnn/"
+        >
+        <span>アノテーションを半自動で生成するPolygonRNNとPolygon RNN&#43;&#43;</span>
+      </a>
+    </li>
+    
+  </ul>
+</section>
 
 
     
