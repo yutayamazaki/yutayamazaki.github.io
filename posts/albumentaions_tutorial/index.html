@@ -4,9 +4,9 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
   
-  <title>Kaggle解法まとめ SIIM-ACR Pneumothorax Segmentation</title>
-  <meta property="og:title" content="Kaggle解法まとめ SIIM-ACR Pneumothorax Segmentation" />
-  <meta name="twitter:title" content="Kaggle解法まとめ SIIM-ACR Pneumothorax Segmentation" />
+  <title>Albumentations 入門</title>
+  <meta property="og:title" content="Albumentations 入門" />
+  <meta name="twitter:title" content="Albumentations 入門" />
   
 
   
@@ -17,7 +17,7 @@
 
   <meta name="author" content=""/>
   <meta property="og:site_name" content="ざきメモ" />
-  <meta property="og:url" content="https://yutayamazaki.github.io/posts/kaggle_siim_acr/" />
+  <meta property="og:url" content="https://yutayamazaki.github.io/posts/albumentaions_tutorial/" />
 
   
   <meta name="twitter:card" content="summary" />
@@ -84,19 +84,17 @@
 
 <article class="p-article">
   <header>
-    <h1>Kaggle解法まとめ SIIM-ACR Pneumothorax Segmentation</h1>
+    <h1>Albumentations 入門</h1>
     <div>
       
         <div class="c-time">
           Posted on
-<time datetime="2020-07-10T01:37:23&#43;09:00">
-  Jul 10, 2020
+<time datetime="2020-07-11T03:00:23&#43;09:00">
+  Jul 11, 2020
 </time>
 
         </div>
       
-      
-      <a href="https://yutayamazaki.github.io/tags/kaggle" class="c-tag">Kaggle</a>
       
       <a href="https://yutayamazaki.github.io/tags/computer-vision" class="c-tag">Computer Vision</a>
       
@@ -104,144 +102,145 @@
   </header>
   
   <section id="js-article" class="p-article__body">
-    <h2 id="コンペ概要">コンペ概要</h2>
+    <h2 id="albumentationsとは">Albumentationsとは</h2>
 <ul>
-<li><a href="https://www.kaggle.com/c/siim-acr-pneumothorax-segmentation">https://www.kaggle.com/c/siim-acr-pneumothorax-segmentation</a></li>
-<li>SIIM-ACR Pneumothorax Segmentationは2019年8月28日まで開催していた領域検出コンペでいわゆる「気胸コンペ」</li>
-<li>2stage制</li>
+<li><a href="https://github.com/albumentations-team/albumentations">Albumentations Repository</a></li>
+<li><a href="https://albumentations.readthedocs.io/en/latest/index.html">Albumentations Docs</a></li>
 </ul>
-<h2 id="データ">データ</h2>
-<p>2stage制のコンペで，stage1の学習データとテストデータがstage2の学習データに含まれる．画像は3000枚程度でファルサイズも400MB程度であった．また外部データセットの利用が可能であり，<a href="https://www.kaggle.com/nih-chest-xrays/data">NIH Chest X-rays</a>と<a href="https://stanfordmlgroup.github.io/competitions/chexpert/">CheXPert</a>の2つが主に利用された．</p>
-<h2 id="タスク">タスク</h2>
-<p>気胸か否かの2値分類のSemantic Segmentationタスク．</p>
-<h2 id="評価指標">評価指標</h2>
-<p>Dice coefficientをテストデータ中の全画像で平均した領域検出における一般的な指標．</p>
-<p><img src="https://latex.codecogs.com/svg.latex?%5Cfrac%7B2*%7CX%5Ccap%7BY%7D%7C%7D%7B%7CX%7C+%7CY%7C%7D" alt=""></p>
-<h2 id="参考になるkernel-discussion">参考になるKernel, Discussion</h2>
-<h3 id="discussion">Discussion</h3>
+<p>Data augumentationで広く使われているPythonライブラリで基本的には画像をNumpy NdArrayとして扱う．2020年現在のKaggleの上位解法でもほとんどAlbumentationsが利用されている(気がする)．様々なaugumentaion手法が実装されており，各変換のcallbackの引数にmaskやbounding box，keypointsなどを取ることができ，領域検出や物体検出などの様々なタスクで利用できる．</p>
+<h2 id="albumentations-tutorials">Albumentations tutorials</h2>
+<h3 id="albumentationsの基本的なapi">Albumentationsの基本的なAPI</h3>
+<p>Semantic SegmentationまたはInstance Segmentationタスクを仮定して，mask画像付きでHorizontalFlipさせる例．<code>albumentations.HogeTransform</code>という形で各変換を呼び出す．<code>__call__</code>の引数にimage, mask, masks, bboxes, keypointsを取ることができ，imageに対する変換とアノテーションに対する変換を実行できる．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> typing <span style="color:#f92672">import</span> Callable, Dict
+
+<span style="color:#f92672">import</span> albumentations <span style="color:#f92672">as</span> albu
+<span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
+<span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+<span style="color:#f92672">from</span> PIL <span style="color:#f92672">import</span> Image
+
+<span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;__main__&#39;</span>:
+    img <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>open(<span style="color:#e6db74">&#39;../../FudanPed00001.png&#39;</span>)
+    mask <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>open(<span style="color:#e6db74">&#39;../../FudanPed00001_mask.png&#39;</span>)
+    img_arr <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(img)
+    mask_arr <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(mask)
+
+    transform: Callable <span style="color:#f92672">=</span> albu<span style="color:#f92672">.</span>HorizontalFlip(p<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+    aug: Dict[str, np<span style="color:#f92672">.</span>ndarray] <span style="color:#f92672">=</span> transform(image<span style="color:#f92672">=</span>img_arr, mask<span style="color:#f92672">=</span>mask_arr)
+
+    fig <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>figure()
+    ax1 <span style="color:#f92672">=</span> fig<span style="color:#f92672">.</span>add_subplot(<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>)
+    ax2 <span style="color:#f92672">=</span> fig<span style="color:#f92672">.</span>add_subplot(<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>)
+    ax3 <span style="color:#f92672">=</span> fig<span style="color:#f92672">.</span>add_subplot(<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>)
+    ax4 <span style="color:#f92672">=</span> fig<span style="color:#f92672">.</span>add_subplot(<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">4</span>)
+
+    ax1<span style="color:#f92672">.</span>imshow(img)
+    ax1<span style="color:#f92672">.</span>set_title(<span style="color:#e6db74">&#39;Original image&#39;</span>)
+    ax2<span style="color:#f92672">.</span>imshow(mask)
+    ax2<span style="color:#f92672">.</span>set_title(<span style="color:#e6db74">&#39;Original mask&#39;</span>)
+    ax3<span style="color:#f92672">.</span>imshow(aug[<span style="color:#e6db74">&#39;image&#39;</span>])
+    ax3<span style="color:#f92672">.</span>set_title(<span style="color:#e6db74">&#39;HorizontalFlip image&#39;</span>)
+    ax4<span style="color:#f92672">.</span>imshow(aug[<span style="color:#e6db74">&#39;mask&#39;</span>])
+    ax4<span style="color:#f92672">.</span>set_title(<span style="color:#e6db74">&#39;HorizontalFlip mask&#39;</span>)
+    plt<span style="color:#f92672">.</span>tight_layout()
+    plt<span style="color:#f92672">.</span>show()
+
+</code></pre></div><p><img src="/images/albu1.png" alt=""></p>
+<h3 id="複数の変換をまとめる">複数の変換をまとめる</h3>
+<p>torchvision.transforms.Composeのように複数の変換をひとつの__call__インターフェイスを通じて利用できるクラス，albumentations.core.composition.Composeがある．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> typing <span style="color:#f92672">import</span> Callable, Dict
+
+<span style="color:#f92672">import</span> albumentations <span style="color:#f92672">as</span> albu
+<span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
+<span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+<span style="color:#f92672">from</span> PIL <span style="color:#f92672">import</span> Image
+
+<span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;__main__&#39;</span>:
+    img <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>open(<span style="color:#e6db74">&#39;../../FudanPed00001.png&#39;</span>)
+    img_arr <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(img)
+
+    transform: Callable <span style="color:#f92672">=</span> albu<span style="color:#f92672">.</span>Compose([
+        albu<span style="color:#f92672">.</span>VerticalFlip(p<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>),
+        albu<span style="color:#f92672">.</span>HorizontalFlip(p<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+    ])
+    aug: Dict[str, np<span style="color:#f92672">.</span>ndarray] <span style="color:#f92672">=</span> transform(image<span style="color:#f92672">=</span>img_arr)
+
+    fig <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>figure()
+    ax1 <span style="color:#f92672">=</span> fig<span style="color:#f92672">.</span>add_subplot(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>)
+    ax2 <span style="color:#f92672">=</span> fig<span style="color:#f92672">.</span>add_subplot(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>)
+
+    ax1<span style="color:#f92672">.</span>imshow(img)
+    ax1<span style="color:#f92672">.</span>set_title(<span style="color:#e6db74">&#39;Original image&#39;</span>)
+    ax2<span style="color:#f92672">.</span>imshow(aug[<span style="color:#e6db74">&#39;image&#39;</span>])
+    ax2<span style="color:#f92672">.</span>set_title(<span style="color:#e6db74">&#39;Transformed image&#39;</span>)
+    plt<span style="color:#f92672">.</span>tight_layout()
+    plt<span style="color:#f92672">.</span>show()
+
+</code></pre></div><p><img src="/images/albu2.png" alt=""></p>
+<h3 id="json-yaml-dictからcomposeを生成する">json, yaml, dictからComposeを生成する</h3>
+<p>Albumentationsの便利な機能にjsonやyamlなどで記述された設定ファイルからalbumentations.loadという関数を用いて，設定通りの変換を呼び出す機能がある．</p>
 <ul>
-<li><a href="https://www.kaggle.com/c/siim-acr-pneumothorax-segmentation/discussion/108308">🏅Gold Medal Solutions 🏅</a>
+<li><a href="https://albumentations.readthedocs.io/en/latest/api/core.html#module-albumentations.core.serialization">Core API (albumentations.core) — albumentations 0.4.6 documentation</a></li>
+</ul>
+<p>albumentations.core.serialization以下に</p>
 <ul>
-<li>1位から12位までのsolutionのリンクとGitHubリポジトリへのリンク</li>
+<li>辞書からの読み込み・書き出し</li>
+<li>jsonまたはyamlからの読み込み・書き出し</li>
 </ul>
-</li>
-<li><a href="https://www.kaggle.com/c/siim-acr-pneumothorax-segmentation/discussion/100391">Research Papers With Code for Medical Image Segmentation</a>
-<ul>
-<li>papers with codeの医療画像領域検出に関する論文がまとまっている</li>
-</ul>
-</li>
-<li><a href="https://www.kaggle.com/c/siim-acr-pneumothorax-segmentation/discussion/101429">some workable loss function</a>
-<ul>
-<li>良さげなlossをPyTorchの実装付きで公開している</li>
-</ul>
-</li>
-<li><a href="https://www.kaggle.com/c/siim-acr-pneumothorax-segmentation/discussion/108956">Winners Base Models</a>
-<ul>
-<li>上位入賞者の利用モデルまとめ</li>
-</ul>
-</li>
-</ul>
-<p><img src="https://www.googleapis.com/download/storage/v1/b/kaggle-user-content/o/inbox%2F1670024%2F3e19a4aa34a4734404885e51ee19281c%2F2019-09-15%2016.13.19.png?generation=1568532678768625&amp;alt=media" alt="">
-<a href="https://www.kaggle.com/c/siim-acr-pneumothorax-segmentation/discussion/108956">Winners Base Models</a>から拝借</p>
-<h3 id="kernel">Kernel</h3>
-<ul>
-<li><a href="https://www.kaggle.com/meaninglesslives/nested-unet-with-efficientnet-encoder">Unet Plus Plus with EfficientNet Encoder</a>
-<ul>
-<li>Keras実装だが&hellip;</li>
-</ul>
-</li>
-</ul>
-<h2 id="上位解放">上位解放</h2>
-<h3 id="1st-place-solution">1st place solution</h3>
-<ul>
-<li>Links
-<ul>
-<li><a href="https://www.kaggle.com/c/siim-acr-pneumothorax-segmentation/discussion/107824">Discussion on Kaggle</a></li>
-<li><a href="https://github.com/sneddy/pneumothorax-segmentation">GitHub</a></li>
-<li><a href="https://yadi.sk/i/oDYnpvMhqi8a7w">Slides</a></li>
-</ul>
-</li>
-<li>モデルは UNet + (ResNet34, ResNet50, <a href="https://github.com/SpaceNetChallenge/SpaceNet_Off_Nadir_Solutions/tree/master/selim_sef/zoo">SEResNeXt50</a>)</li>
-<li>Data augumentation: Horizontal Flip, RandomContrast, RandomGamma, RandomBrightness, ElasticTransform, GridDistortion, OpticalDistortion, ShiftScaleRotate, Resize</li>
-<li>気胸が写っていないデータが全体の約80%もあったため，写っていないデータをサンプリング</li>
-<li>ComboLoss(BCELoss, DiceLoss, FocalLoss)を利用し，それぞれの重みは
-<ul>
-<li>UNet + ResNet34: (1, 1, 1)</li>
-<li>UNet + ResNet50: (2, 1, 2)</li>
-<li>UNet + SEResNeXt50: (3, 1, 4)</li>
-</ul>
-</li>
-<li>最初の10epochは学習率を高く設定(1e-4)し，サンプルの割合を8割と多くしてなるべく早くそれなりにいいモデルを得るために学習を行う</li>
-<li>その後1e-5程度の学習率と6割程度のサンプルを用いてCosineAnneringWarmRestartsを用いて学習</li>
-</ul>
-<h3 id="2nd-place-solution">2nd place solution</h3>
-<ul>
-<li>Links
-<ul>
-<li><a href="https://www.kaggle.com/c/siim-acr-pneumothorax-segmentation/discussion/108009">Discussion on Kaggle</a></li>
-<li><a href="https://github.com/yelanlan/Pneumothorax-Segmentation-2nd-place-solution">GitHub</a></li>
-</ul>
-</li>
-<li>気胸があるモデルか否かを分類するモデルと通常の領域検出を行う2つのモデルからなる</li>
-<li>分類モデルは領域検出と分類のマルチタスクモデルで分類をBCE + FocalLossで，領域検出をBCEで学習</li>
-<li>領域検出モデルはDiceLossで学習</li>
-<li>hflip, scale, rotate, bright, blur</li>
-<li>Models: UNet + (SEResNeXt50, SEResNeXt101, EfficientNet-b3, EfficientNet-b5)とDeepLab + SEResNeXt50の平均で予測</li>
-<li>データは与えられたデータセットのみ利用</li>
-</ul>
-<h3 id="3rd-place-solution">3rd place solution</h3>
-<ul>
-<li>Links
-<ul>
-<li><a href="https://www.kaggle.com/c/siim-acr-pneumothorax-segmentation/discussion/107981">Discussion on Kaggle</a></li>
-<li><a href="https://github.com/bestfitting/kaggle/tree/master/siim_acr">GitHub</a></li>
-</ul>
-</li>
-<li>肺の位置を検出するUNet + ResNet34モデルで肺を検出して画像をcrop
-<ul>
-<li>UNet + SEResneXt50とUNet + ResNet34でcropとリサイズした画像で予測を行なってサイズを元に戻す</li>
-<li>おそらく画像の解像度が高い方が検出精度が高くなるから</li>
-</ul>
-</li>
-<li>モデル1: 704x704 images with no pseudo</li>
-<li>モデル2: 576x576 images with CheXpert Pseudo</li>
-<li>モデル3: 576x576 images with CheXpert and NIH Pseudo</li>
-<li>Symmetric Lovasz Loss (Lung detection), Lovasz Loss</li>
-<li>CheXpertとNIHをPseudo Labelingのための外部データセットとして利用</li>
-</ul>
-<h3 id="4th-place-solution">4th place solution</h3>
-<ul>
-<li>Links
-<ul>
-<li><a href="https://www.kaggle.com/c/siim-acr-pneumothorax-segmentation/discussion/108397">Discussion on Kaggle</a></li>
-<li><a href="https://github.com/amirassov/kaggle-pneumothorax">GitHub</a></li>
-</ul>
-</li>
-<li>UNet + ResNet34</li>
-<li>(512, 512)で学習して(768, 768)で推論</li>
-<li>ShiftScaleRotate, RandomBrightnessContrast, ElasticTransform, HorizontalFlip</li>
-<li>バッチサイズは8でAdamにCosineAnnealingLR</li>
-<li>2.7 * BCE(pred_mask, gt_mask) + 0.9 * DICE(pred_mask, gt_mask) + 0.1 * BCE(pred_empty, gt_empty)</li>
-<li>8foldsのベストなモデルを平均でアンサンブルしてTTAにHorizontalFlip</li>
-</ul>
-<h3 id="5th-place-solution">5th place solution</h3>
-<ul>
-<li>Links
-<ul>
-<li><a href="https://www.kaggle.com/c/siim-acr-pneumothorax-segmentation/discussion/107603">Discussion on Kaggle</a></li>
-<li><a href="https://github.com/earhian/SIIM-ACR-Pneumothorax-Segmentation-5th">GitHub</a></li>
-</ul>
-</li>
-<li>UNet + (SEResNeXt50, SEResNeXt101)</li>
-<li>Image size: 1024×1024</li>
-<li>Optimizer: Adam</li>
-<li>Loss: 1024 * BCE(results, masks) + BCE(cls, cls_target)</li>
-<li>Semi-supervision: mean-teacher[1-2] with NIH Dataset （0.874 &mdash;&gt; 0.880）</li>
-</ul>
+<p>の関数が実装されている．</p>
+<p>今回の例では以下のyamlファイルから変換を呼び出す．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">__version__</span>: <span style="color:#e6db74">&#39;0.4.6&#39;</span>
+<span style="color:#66d9ef">transform</span>:
+  <span style="color:#66d9ef">__class_fullname__</span>: <span style="color:#e6db74">&#39;albumentations.core.composition.Compose&#39;</span>
+  <span style="color:#66d9ef">p</span>: <span style="color:#ae81ff">1.0</span>
+  <span style="color:#66d9ef">transforms</span>:
+    - <span style="color:#66d9ef">__class_fullname__</span>: <span style="color:#e6db74">&#39;albumentations.augmentations.transforms.HorizontalFlip&#39;</span>
+      <span style="color:#66d9ef">always_apply</span>: False
+      <span style="color:#66d9ef">p</span>: <span style="color:#ae81ff">1.0</span>
+    - <span style="color:#66d9ef">__class_fullname__</span>: <span style="color:#e6db74">&#39;albumentations.augmentations.transforms.VerticalFlip&#39;</span>
+      <span style="color:#66d9ef">always_apply</span>: False
+      <span style="color:#66d9ef">p</span>: <span style="color:#ae81ff">1.0</span>
+    - <span style="color:#66d9ef">__class_fullname__</span>: <span style="color:#e6db74">&#39;albumentations.augmentations.transforms.Blur&#39;</span>
+      <span style="color:#66d9ef">blur_limit</span>: <span style="color:#ae81ff">7</span>
+      <span style="color:#66d9ef">always_apply</span>: False
+      <span style="color:#66d9ef">p</span>: <span style="color:#ae81ff">1.0</span>
+</code></pre></div><p>以下のようにload一行で設定された変換が呼び出せる．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> typing <span style="color:#f92672">import</span> Callable, Dict
+
+<span style="color:#f92672">import</span> albumentations <span style="color:#f92672">as</span> albu
+<span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
+<span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+<span style="color:#f92672">from</span> PIL <span style="color:#f92672">import</span> Image
+
+<span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;__main__&#39;</span>:
+    img <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>open(<span style="color:#e6db74">&#39;../../FudanPed00001.png&#39;</span>)
+    mask <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>open(<span style="color:#e6db74">&#39;../../FudanPed00001_mask.png&#39;</span>)
+    img_arr <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(img)
+    mask_arr <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(mask)
+
+    transform: Callable <span style="color:#f92672">=</span> albu<span style="color:#f92672">.</span>core<span style="color:#f92672">.</span>serialization<span style="color:#f92672">.</span>load(
+        <span style="color:#e6db74">&#39;albu_cfg.yml&#39;</span>,
+        data_format<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;yaml&#39;</span>
+    )
+    aug: Dict[str, np<span style="color:#f92672">.</span>ndarray] <span style="color:#f92672">=</span> transform(image<span style="color:#f92672">=</span>img_arr, mask<span style="color:#f92672">=</span>mask_arr)
+
+    fig <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>figure()
+    ax1 <span style="color:#f92672">=</span> fig<span style="color:#f92672">.</span>add_subplot(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>)
+    ax2 <span style="color:#f92672">=</span> fig<span style="color:#f92672">.</span>add_subplot(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>)
+
+    ax1<span style="color:#f92672">.</span>imshow(img)
+    ax1<span style="color:#f92672">.</span>set_title(<span style="color:#e6db74">&#39;Original image&#39;</span>)
+    ax2<span style="color:#f92672">.</span>imshow(aug[<span style="color:#e6db74">&#39;image&#39;</span>])
+    ax2<span style="color:#f92672">.</span>set_title(<span style="color:#e6db74">&#39;Transformed image&#39;</span>)
+    plt<span style="color:#f92672">.</span>show()
+
+</code></pre></div><p><img src="/images/albu3.png" alt=""></p>
+<h2 id="変換一覧">変換一覧</h2>
+<p>Albumentationsに実装されている変換一覧は以下のドキュメントを参照．</p>
+<p><a href="https://albumentations.readthedocs.io/en/latest/api/augmentations.html">Augmentations (albumentations.augmentations) — albumentations 0.4.6 documentation</a></p>
 <h2 id="参考">参考</h2>
 <ul>
-<li><a href="https://www.kaggle.com/sudalairajkumar/winning-solutions-of-kaggle-competitions">Winning solutions of kaggle competitions</a></li>
-<li><a href="https://fam-taro.hatenablog.com/entry/2019/11/23/175328#41-SIIM-ACR-Pneumothorax-Segmentation%E6%B0%97%E8%83%B8%E3%82%B3%E3%83%B3%E3%83%9ATeam-Gold12--1475">Kaggle Master になりました（ポエム） - ふぁむたろうのブログ</a></li>
+<li><a href="https://albumentations.readthedocs.io/en/latest/index.html">albumentations — albumentations 0.4.6 documentation</a></li>
+<li><a href="https://github.com/albumentations-team/albumentations">albumentations-team/albumentations: fast image augmentation library and easy to use wrapper around other libraries</a></li>
 </ul>
 
   </section>
@@ -251,12 +250,11 @@
       <div class="c-pagination__ctrl">
         <div class="c-pagination__newer">
           
-          <a href="https://yutayamazaki.github.io/posts/albumentaions_tutorial/">Newer</a>
           
         </div>
         <div class="c-pagination__older">
           
-          <a href="https://yutayamazaki.github.io/posts/faster_rcnn/">Older</a>
+          <a href="https://yutayamazaki.github.io/posts/kaggle_siim_acr/">Older</a>
           
         </div>
       </div>
@@ -268,9 +266,9 @@
   <ul id="slider" class="p-related__list">
     
     <li class="p-related__item js-related__item">
-      <a href="/posts/kaggle_understanding_clouds_from_satellite_images/"
+      <a href="/posts/kaggle_siim_acr/"
         >
-        <span>Kaggle解法まとめ Understanding Clouds from Satellite Images</span>
+        <span>Kaggle解法まとめ SIIM-ACR Pneumothorax Segmentation</span>
       </a>
     </li>
     
@@ -278,6 +276,13 @@
       <a href="/posts/faster_rcnn/"
         >
         <span>Faster R-CNNを理解する</span>
+      </a>
+    </li>
+    
+    <li class="p-related__item js-related__item">
+      <a href="/posts/kaggle_understanding_clouds_from_satellite_images/"
+        >
+        <span>Kaggle解法まとめ Understanding Clouds from Satellite Images</span>
       </a>
     </li>
     
