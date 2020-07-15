@@ -126,7 +126,10 @@
 <p>Lambda上ではnode.jsのフレームワークであるExpressを用いてNuxt.jsのSSRを行っている．Expressでサーバーを立ち上げ，Nuxt.jsをミドルウェアとして利用してNuxtの描画したサイトを返す．Lambda上ではAWSの提供する<a href="https://github.com/awslabs/aws-serverless-express">awslabs/aws-serverless-express: Run serverless applications and REST APIs using your existing Node.js application framework, on top of AWS Lambda and Amazon API Gateway</a>が利用できるためExpressを利用する．</p>
 <h2 id="cloudfrontの設定のつまりどころ">CloudFrontの設定のつまりどころ</h2>
 <p>CLoudFrontのCache Behavior設定のCache Based on Selected Request HeadersをWhishlistにして&rsquo;Authorization&rsquo;を追加する．この設定でHTTPリクエストのヘッダのAuthorizationの種類ごと(認証OK，認証NG，認証情報なし)にキャッシュを作成してくれる．</p>
-<p>また<code>npm run deploy:xxx</code>ですでにデプロイされたプロジェクトを更新する場合，CloudFrontでキャッシュを設定しているとキャッシュの有効時間内は旧バージョンが配信されるので注意．</p>
+<p>また<code>npm run deploy:xxx</code>ですでにデプロイされたプロジェクトを更新する場合，CloudFrontでキャッシュを設定しているとキャッシュの有効時間内は旧バージョンが配信されるので注意．自分の運用しているプロジェクトではaws cliのキャッシュ削除機能を利用して常に最新版が配信されるようにした．</p>
+<ul>
+<li><a href="https://docs.aws.amazon.com/cli/latest/reference/cloudfront/create-invalidation.html">create-invalidation — AWS CLI 1.18.97 Command Reference</a></li>
+</ul>
 <h2 id="その他tips">その他Tips</h2>
 <p>Nuxt.jsのstaticディレクトリはfaviconなど基本的に変更が加わらないものを配信する用のファイルを置く．今回の設定でもそれに倣って同じファイル名のファイルがすでにS3上に存在する場合，上書きされないようになっている．つまりstaticディレクトリにJavaScriptやCSSのファイルを置いて更新を行ってもserverlessによるデプロイでは反映されない．</p>
 <h2 id="参考">参考</h2>
