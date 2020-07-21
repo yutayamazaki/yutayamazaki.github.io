@@ -4,9 +4,9 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
   
-  <title>Albumentations 入門</title>
-  <meta property="og:title" content="Albumentations 入門" />
-  <meta name="twitter:title" content="Albumentations 入門" />
+  <title>物体検出の評価指標mAPを知る</title>
+  <meta property="og:title" content="物体検出の評価指標mAPを知る" />
+  <meta name="twitter:title" content="物体検出の評価指標mAPを知る" />
   
 
   
@@ -17,7 +17,7 @@
 
   <meta name="author" content=""/>
   <meta property="og:site_name" content="ざきメモ" />
-  <meta property="og:url" content="https://yutayamazaki.github.io/posts/albumentaions_tutorial/" />
+  <meta property="og:url" content="https://yutayamazaki.github.io/posts/object_detection_metrics/" />
 
   
   <meta name="twitter:card" content="summary" />
@@ -84,13 +84,13 @@
 
 <article class="p-article">
   <header>
-    <h1>Albumentations 入門</h1>
+    <h1>物体検出の評価指標mAPを知る</h1>
     <div>
       
         <div class="c-time">
           Posted on
-<time datetime="2020-07-11T03:00:23&#43;09:00">
-  Jul 11, 2020
+<time datetime="2020-07-21T03:00:23&#43;09:00">
+  Jul 21, 2020
 </time>
 
         </div>
@@ -102,145 +102,66 @@
   </header>
   
   <section id="js-article" class="p-article__body">
-    <h2 id="albumentationsとは">Albumentationsとは</h2>
+    <h2 id="物体検出とは">物体検出とは</h2>
+<p>物体検出は画像中の物体がある領域を矩形で囲み，またその物体が何であるかのクラス判定も行うタスクである．</p>
+<p><img src="/images/od_metric_dog.png" alt=""></p>
+<h2 id="物体検出の評価指標">物体検出の評価指標</h2>
+<p>物体検出モデル提案の論文では主にmAP(mean Average Precision)という指標で性能を評価する．mAPはその名の通り各Recallに対するPrecisionの平均(average)を各クラスで平均(mean)したものである．</p>
+<p>ここではmAPを理解する上で必要な知識であるRecall, Precisionやそれら指標を計算するための要素であるTP, TN, FP, FNを解説する．</p>
 <ul>
-<li><a href="https://github.com/albumentations-team/albumentations">Albumentations Repository</a></li>
-<li><a href="https://albumentations.readthedocs.io/en/latest/index.html">Albumentations Docs</a></li>
+<li>TP (True Positive): 実際が正であるものを正と予測した数</li>
+<li>TN (True Negative): 実際が負であるものを負と予測した数</li>
+<li>FP (False Positive): 実際が負であるものを正と予測した数</li>
+<li>FN (False Negative): 実際が正であるものを負と予測した数</li>
 </ul>
-<p>Data augumentationで広く使われているPythonライブラリで基本的には画像をNumpy NdArrayとして扱う．2020年現在のKaggleの上位解法でもほとんどAlbumentationsが利用されている(気がする)．様々なaugumentaion手法が実装されており，各変換のcallbackの引数にmaskやbounding box，keypointsなどを取ることができ，領域検出や物体検出などの様々なタスクで利用できる．</p>
-<h2 id="albumentations-tutorials">Albumentations tutorials</h2>
-<h3 id="albumentationsの基本的なapi">Albumentationsの基本的なAPI</h3>
-<p>Semantic SegmentationまたはInstance Segmentationタスクを仮定して，mask画像付きでHorizontalFlipさせる例．<code>albumentations.HogeTransform</code>という形で各変換を呼び出す．<code>__call__</code>の引数にimage, mask, masks, bboxes, keypointsを取ることができ，imageに対する変換とアノテーションに対する変換を実行できる．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> typing <span style="color:#f92672">import</span> Callable, Dict
-
-<span style="color:#f92672">import</span> albumentations <span style="color:#f92672">as</span> albu
-<span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
-<span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
-<span style="color:#f92672">from</span> PIL <span style="color:#f92672">import</span> Image
-
-<span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;__main__&#39;</span>:
-    img <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>open(<span style="color:#e6db74">&#39;../../FudanPed00001.png&#39;</span>)
-    mask <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>open(<span style="color:#e6db74">&#39;../../FudanPed00001_mask.png&#39;</span>)
-    img_arr <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(img)
-    mask_arr <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(mask)
-
-    transform: Callable <span style="color:#f92672">=</span> albu<span style="color:#f92672">.</span>HorizontalFlip(p<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
-    aug: Dict[str, np<span style="color:#f92672">.</span>ndarray] <span style="color:#f92672">=</span> transform(image<span style="color:#f92672">=</span>img_arr, mask<span style="color:#f92672">=</span>mask_arr)
-
-    fig <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>figure()
-    ax1 <span style="color:#f92672">=</span> fig<span style="color:#f92672">.</span>add_subplot(<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>)
-    ax2 <span style="color:#f92672">=</span> fig<span style="color:#f92672">.</span>add_subplot(<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>)
-    ax3 <span style="color:#f92672">=</span> fig<span style="color:#f92672">.</span>add_subplot(<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>)
-    ax4 <span style="color:#f92672">=</span> fig<span style="color:#f92672">.</span>add_subplot(<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">4</span>)
-
-    ax1<span style="color:#f92672">.</span>imshow(img)
-    ax1<span style="color:#f92672">.</span>set_title(<span style="color:#e6db74">&#39;Original image&#39;</span>)
-    ax2<span style="color:#f92672">.</span>imshow(mask)
-    ax2<span style="color:#f92672">.</span>set_title(<span style="color:#e6db74">&#39;Original mask&#39;</span>)
-    ax3<span style="color:#f92672">.</span>imshow(aug[<span style="color:#e6db74">&#39;image&#39;</span>])
-    ax3<span style="color:#f92672">.</span>set_title(<span style="color:#e6db74">&#39;HorizontalFlip image&#39;</span>)
-    ax4<span style="color:#f92672">.</span>imshow(aug[<span style="color:#e6db74">&#39;mask&#39;</span>])
-    ax4<span style="color:#f92672">.</span>set_title(<span style="color:#e6db74">&#39;HorizontalFlip mask&#39;</span>)
-    plt<span style="color:#f92672">.</span>tight_layout()
-    plt<span style="color:#f92672">.</span>show()
-
-</code></pre></div><p><img src="/images/albu1.png" alt=""></p>
-<h3 id="複数の変換をまとめる">複数の変換をまとめる</h3>
-<p>torchvision.transforms.Composeのように複数の変換をひとつの__call__インターフェイスを通じて利用できるクラス，albumentations.core.composition.Composeがある．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> typing <span style="color:#f92672">import</span> Callable, Dict
-
-<span style="color:#f92672">import</span> albumentations <span style="color:#f92672">as</span> albu
-<span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
-<span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
-<span style="color:#f92672">from</span> PIL <span style="color:#f92672">import</span> Image
-
-<span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;__main__&#39;</span>:
-    img <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>open(<span style="color:#e6db74">&#39;../../FudanPed00001.png&#39;</span>)
-    img_arr <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(img)
-
-    transform: Callable <span style="color:#f92672">=</span> albu<span style="color:#f92672">.</span>Compose([
-        albu<span style="color:#f92672">.</span>VerticalFlip(p<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>),
-        albu<span style="color:#f92672">.</span>HorizontalFlip(p<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
-    ])
-    aug: Dict[str, np<span style="color:#f92672">.</span>ndarray] <span style="color:#f92672">=</span> transform(image<span style="color:#f92672">=</span>img_arr)
-
-    fig <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>figure()
-    ax1 <span style="color:#f92672">=</span> fig<span style="color:#f92672">.</span>add_subplot(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>)
-    ax2 <span style="color:#f92672">=</span> fig<span style="color:#f92672">.</span>add_subplot(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>)
-
-    ax1<span style="color:#f92672">.</span>imshow(img)
-    ax1<span style="color:#f92672">.</span>set_title(<span style="color:#e6db74">&#39;Original image&#39;</span>)
-    ax2<span style="color:#f92672">.</span>imshow(aug[<span style="color:#e6db74">&#39;image&#39;</span>])
-    ax2<span style="color:#f92672">.</span>set_title(<span style="color:#e6db74">&#39;Transformed image&#39;</span>)
-    plt<span style="color:#f92672">.</span>tight_layout()
-    plt<span style="color:#f92672">.</span>show()
-
-</code></pre></div><p><img src="/images/albu2.png" alt=""></p>
-<h3 id="json-yaml-dictからcomposeを生成する">json, yaml, dictからComposeを生成する</h3>
-<p>Albumentationsの便利な機能にjsonやyamlなどで記述された設定ファイルからalbumentations.loadという関数を用いて，設定通りの変換を呼び出す機能がある．</p>
+<p>これらの要素を用いてRecallとPrecisionは以下のように定義される．</p>
+<p><img src="https://latex.codecogs.com/svg.latex?Recall=%5Cfrac%7BTP%7D%7BTP+FN%7D" alt=""></p>
+<p><img src="https://latex.codecogs.com/svg.latex?Precision=%5Cfrac%7BTP%7D%7BTP+FP%7D" alt=""></p>
+<p>上記定義からRecallは実際が正であるものをどれだけ正と判定できたかを評価でき，Precisionは正と予測したもののうち実施に正のものがどれだけあったかを評価できる指標であると考えられる．</p>
+<h2 id="物体検出における正解判定">物体検出における正解判定</h2>
+<p>実際が正であるものを正と予測した数がTPと呼ばれると言ったことはわかったが，物体検出の場合は何をもって正解とするのかという問題が残る．</p>
+<p>物体検出では正解として</p>
 <ul>
-<li><a href="https://albumentations.readthedocs.io/en/latest/api/core.html#module-albumentations.core.serialization">Core API (albumentations.core) — albumentations 0.4.6 documentation</a></li>
+<li>物体のクラス名</li>
+<li>物体がある矩形座標</li>
 </ul>
-<p>albumentations.core.serialization以下に</p>
+<p>があり，モデルの予測は</p>
 <ul>
-<li>辞書からの読み込み・書き出し</li>
-<li>jsonまたはyamlからの読み込み・書き出し</li>
+<li>物体のクラス名前</li>
+<li>物体がありそうな位置の矩形座標</li>
+<li>物体があるとした領域に物体がある確信度(confidence score)</li>
 </ul>
-<p>の関数が実装されている．</p>
-<p>今回の例では以下のyamlファイルから変換を呼び出す．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">__version__</span>: <span style="color:#e6db74">&#39;0.4.6&#39;</span>
-<span style="color:#66d9ef">transform</span>:
-  <span style="color:#66d9ef">__class_fullname__</span>: <span style="color:#e6db74">&#39;albumentations.core.composition.Compose&#39;</span>
-  <span style="color:#66d9ef">p</span>: <span style="color:#ae81ff">1.0</span>
-  <span style="color:#66d9ef">transforms</span>:
-    - <span style="color:#66d9ef">__class_fullname__</span>: <span style="color:#e6db74">&#39;albumentations.augmentations.transforms.HorizontalFlip&#39;</span>
-      <span style="color:#66d9ef">always_apply</span>: False
-      <span style="color:#66d9ef">p</span>: <span style="color:#ae81ff">1.0</span>
-    - <span style="color:#66d9ef">__class_fullname__</span>: <span style="color:#e6db74">&#39;albumentations.augmentations.transforms.VerticalFlip&#39;</span>
-      <span style="color:#66d9ef">always_apply</span>: False
-      <span style="color:#66d9ef">p</span>: <span style="color:#ae81ff">1.0</span>
-    - <span style="color:#66d9ef">__class_fullname__</span>: <span style="color:#e6db74">&#39;albumentations.augmentations.transforms.Blur&#39;</span>
-      <span style="color:#66d9ef">blur_limit</span>: <span style="color:#ae81ff">7</span>
-      <span style="color:#66d9ef">always_apply</span>: False
-      <span style="color:#66d9ef">p</span>: <span style="color:#ae81ff">1.0</span>
-</code></pre></div><p>以下のようにload一行で設定された変換が呼び出せる．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> typing <span style="color:#f92672">import</span> Callable, Dict
-
-<span style="color:#f92672">import</span> albumentations <span style="color:#f92672">as</span> albu
-<span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
-<span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
-<span style="color:#f92672">from</span> PIL <span style="color:#f92672">import</span> Image
-
-<span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;__main__&#39;</span>:
-    img <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>open(<span style="color:#e6db74">&#39;../../FudanPed00001.png&#39;</span>)
-    mask <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>open(<span style="color:#e6db74">&#39;../../FudanPed00001_mask.png&#39;</span>)
-    img_arr <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(img)
-    mask_arr <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(mask)
-
-    transform: Callable <span style="color:#f92672">=</span> albu<span style="color:#f92672">.</span>core<span style="color:#f92672">.</span>serialization<span style="color:#f92672">.</span>load(
-        <span style="color:#e6db74">&#39;albu_cfg.yml&#39;</span>,
-        data_format<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;yaml&#39;</span>
-    )
-    aug: Dict[str, np<span style="color:#f92672">.</span>ndarray] <span style="color:#f92672">=</span> transform(image<span style="color:#f92672">=</span>img_arr, mask<span style="color:#f92672">=</span>mask_arr)
-
-    fig <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>figure()
-    ax1 <span style="color:#f92672">=</span> fig<span style="color:#f92672">.</span>add_subplot(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>)
-    ax2 <span style="color:#f92672">=</span> fig<span style="color:#f92672">.</span>add_subplot(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>)
-
-    ax1<span style="color:#f92672">.</span>imshow(img)
-    ax1<span style="color:#f92672">.</span>set_title(<span style="color:#e6db74">&#39;Original image&#39;</span>)
-    ax2<span style="color:#f92672">.</span>imshow(aug[<span style="color:#e6db74">&#39;image&#39;</span>])
-    ax2<span style="color:#f92672">.</span>set_title(<span style="color:#e6db74">&#39;Transformed image&#39;</span>)
-    plt<span style="color:#f92672">.</span>show()
-
-</code></pre></div><p><img src="/images/albu3.png" alt=""></p>
-<h2 id="変換一覧">変換一覧</h2>
-<p>Albumentationsに実装されている変換一覧は以下のドキュメントを参照．</p>
-<p><a href="https://albumentations.readthedocs.io/en/latest/api/augmentations.html">Augmentations (albumentations.augmentations) — albumentations 0.4.6 documentation</a></p>
+<p>が出力される．</p>
+<p>これらの評価を行うために以下の手順で正解の矩形と予測の矩形を紐付ける．</p>
+<ul>
+<li>予測結果からconfidence scoreが一定の閾値以下のものを省く</li>
+<li>正解データを繰り返す
+<ul>
+<li>予測結果を繰り返す
+<ul>
+<li>同じラベルでかつIoUが一定の閾値以上のものの中から最もIoUが大きい予測結果と正解データを紐づける</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>この手順に基づいて</p>
+<ul>
+<li>正解に対する予測のIoUの閾値が一定以上のものをTP</li>
+<li>正解に対する予測のIoUの閾値が一定以下のものをFN</li>
+<li>予測に対する正解のIoUの閾値が一定以下のものをFP</li>
+</ul>
+<p>としてRecallとPrecisionの計算を行う．</p>
+<h2 id="iouintersection-over-union">IoU(Intersection over Union)</h2>
+<p>物体検出の正解と予測の対応するbounding boxは一般にIoUで評価される．</p>
+<p><img src="/images/od_metric_iou.png" alt=""></p>
+<p>またIoUはmAPの計算を行う上で，正解と予測のbounding boxの対応づけを行うためにも利用される．</p>
+<h2 id="ap-map">AP, mAP</h2>
+<p>Pascal VOCデータセットではRecallが0から1まで0.1間隔の11点に対応するPrecisionの平均をとってAPを計算する．このAPをクラスで平均したものがmAPである．</p>
+<p>論文中ではIoUの閾値を0.5や0.75などいくつか設定して複数のmAPを表に示すことが多い．</p>
 <h2 id="参考">参考</h2>
 <ul>
-<li><a href="https://albumentations.readthedocs.io/en/latest/index.html">albumentations — albumentations 0.4.6 documentation</a></li>
-<li><a href="https://github.com/albumentations-team/albumentations">albumentations-team/albumentations: fast image augmentation library and easy to use wrapper around other libraries</a></li>
+<li><a href="https://qiita.com/mdo4nt6n/items/08e11426e2fac8433fed">【物体検出】mAP ( mean Average Precision ) の算出方法 - Qiita</a></li>
 </ul>
 
   </section>
@@ -250,12 +171,11 @@
       <div class="c-pagination__ctrl">
         <div class="c-pagination__newer">
           
-          <a href="https://yutayamazaki.github.io/posts/object_detection_metrics/">Newer</a>
           
         </div>
         <div class="c-pagination__older">
           
-          <a href="https://yutayamazaki.github.io/posts/kaggle_siim_acr/">Older</a>
+          <a href="https://yutayamazaki.github.io/posts/albumentaions_tutorial/">Older</a>
           
         </div>
       </div>
@@ -265,6 +185,13 @@
 <section class="p-related">
   <h3>See Also</h3>
   <ul id="slider" class="p-related__list">
+    
+    <li class="p-related__item js-related__item">
+      <a href="/posts/albumentaions_tutorial/"
+        >
+        <span>Albumentations 入門</span>
+      </a>
+    </li>
     
     <li class="p-related__item js-related__item">
       <a href="/posts/kaggle_siim_acr/"
