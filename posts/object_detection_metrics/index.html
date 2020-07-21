@@ -102,8 +102,10 @@
   </header>
   
   <section id="js-article" class="p-article__body">
-    <h2 id="物体検出とは">物体検出とは</h2>
-<p>物体検出は画像中の物体がある領域を矩形で囲み，またその物体が何であるかのクラス判定も行うタスクである．</p>
+    <h2 id="概要">概要</h2>
+<p>物体検出の評価指標の実装があまり転がっていなかったので自前で実装するために調べたものをまとめる．</p>
+<p>mAPの実装はこのリポジトリに公開している．</p>
+<p><a href="https://github.com/yutayamazaki/instance-segmentation-pytorch/blob/master/src/metrics.py#L204">yutayamazaki/instance-segmentation-pytorch</a></p>
 <p><img src="/images/od_metric_dog.png" alt=""></p>
 <h2 id="物体検出の評価指標">物体検出の評価指標</h2>
 <p>物体検出モデル提案の論文では主にmAP(mean Average Precision)という指標で性能を評価する．mAPはその名の通り各Recallに対するPrecisionの平均(average)を各クラスで平均(mean)したものである．</p>
