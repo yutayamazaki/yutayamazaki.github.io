@@ -3,6 +3,31 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://yutayamazaki.github.io/posts/</loc>
+    <lastmod>2020-07-23T03:00:23+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://yutayamazaki.github.io/tags/python/</loc>
+    <lastmod>2020-07-23T03:00:23+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://yutayamazaki.github.io/posts/python_mutable_immutable_reference/</loc>
+    <lastmod>2020-07-23T03:00:23+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://yutayamazaki.github.io/tags/</loc>
+    <lastmod>2020-07-23T03:00:23+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://yutayamazaki.github.io/</loc>
+    <lastmod>2020-07-23T03:00:23+09:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://yutayamazaki.github.io/tags/linux/</loc>
     <lastmod>2020-07-22T03:00:23+09:00</lastmod>
   </url>
@@ -13,22 +38,7 @@
   </url>
   
   <url>
-    <loc>https://yutayamazaki.github.io/posts/</loc>
-    <lastmod>2020-07-22T03:00:23+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://yutayamazaki.github.io/tags/</loc>
-    <lastmod>2020-07-22T03:00:23+09:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://yutayamazaki.github.io/tags/ubuntu/</loc>
-    <lastmod>2020-07-22T03:00:23+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://yutayamazaki.github.io/</loc>
     <lastmod>2020-07-22T03:00:23+09:00</lastmod>
   </url>
   
@@ -70,11 +80,6 @@
   <url>
     <loc>https://yutayamazaki.github.io/posts/kaggle_understanding_clouds_from_satellite_images/</loc>
     <lastmod>2020-07-07T16:14:23+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://yutayamazaki.github.io/tags/python/</loc>
-    <lastmod>2020-07-07T13:56:23+09:00</lastmod>
   </url>
   
   <url>
