@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Lambda on ざきメモ</title>
+    <link>https://yutayamazaki.github.io/tags/lambda/</link>
+    <description>Recent content in Lambda on ざきメモ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 27 Jul 2020 03:00:23 +0900</lastBuildDate>
+    
+	<atom:link href="https://yutayamazaki.github.io/tags/lambda/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>AWS LambdaでPythonの外部パッケージを利用する</title>
+      <link>https://yutayamazaki.github.io/posts/use_python_package_in_lambda/</link>
+      <pubDate>Mon, 27 Jul 2020 03:00:23 +0900</pubDate>
+      
+      <guid>https://yutayamazaki.github.io/posts/use_python_package_in_lambda/</guid>
+      <description>AWS LambdaのPythonのデフォルトのランタイムでは標準パッケージしか利用できないため，外部パッケージを利用するための方法をまとめる．結論としてはlambda関数を記述しているPythonファイルと同じディレクトリにpipでコードをとってくるだけ．</description>
+    </item>
+    
+    <item>
+      <title>Nuxt.jsをAWS Lambdaにデプロイする</title>
+      <link>https://yutayamazaki.github.io/posts/nuxt_lambda/</link>
+      <pubDate>Mon, 06 Jul 2020 01:51:23 +0900</pubDate>
+      
+      <guid>https://yutayamazaki.github.io/posts/nuxt_lambda/</guid>
+      <description>Nuxt.jsのプロジェクトをAWS Lambdaでデプロイすることに関するメモ．</description>
+    </item>
+    
+  </channel>
+</rss>
