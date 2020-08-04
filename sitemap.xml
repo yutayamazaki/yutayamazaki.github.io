@@ -3,33 +3,43 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://yutayamazaki.github.io/posts/pip_command/</loc>
-    <lastmod>2020-08-03T03:00:23+09:00</lastmod>
+    <loc>https://yutayamazaki.github.io/tags/computer-vision/</loc>
+    <lastmod>2020-08-03T10:14:23+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://yutayamazaki.github.io/tags/kaggle/</loc>
+    <lastmod>2020-08-03T10:14:23+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://yutayamazaki.github.io/posts/kaggle_serverstal_steel_defect_detection/</loc>
+    <lastmod>2020-08-03T10:14:23+09:00</lastmod>
   </url>
   
   <url>
     <loc>https://yutayamazaki.github.io/posts/</loc>
+    <lastmod>2020-08-03T10:14:23+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://yutayamazaki.github.io/tags/</loc>
+    <lastmod>2020-08-03T10:14:23+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://yutayamazaki.github.io/</loc>
+    <lastmod>2020-08-03T10:14:23+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://yutayamazaki.github.io/posts/pip_command/</loc>
     <lastmod>2020-08-03T03:00:23+09:00</lastmod>
   </url>
   
   <url>
     <loc>https://yutayamazaki.github.io/tags/python/</loc>
     <lastmod>2020-08-03T03:00:23+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://yutayamazaki.github.io/tags/</loc>
-    <lastmod>2020-08-03T03:00:23+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://yutayamazaki.github.io/</loc>
-    <lastmod>2020-08-03T03:00:23+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://yutayamazaki.github.io/tags/computer-vision/</loc>
-    <lastmod>2020-07-29T02:00:23+09:00</lastmod>
   </url>
   
   <url>
@@ -80,11 +90,6 @@
   <url>
     <loc>https://yutayamazaki.github.io/posts/albumentaions_tutorial/</loc>
     <lastmod>2020-07-11T03:00:23+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://yutayamazaki.github.io/tags/kaggle/</loc>
-    <lastmod>2020-07-10T01:37:23+09:00</lastmod>
   </url>
   
   <url>
