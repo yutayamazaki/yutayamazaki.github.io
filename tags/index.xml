@@ -6,7 +6,7 @@
     <description>Recent content in Tags on ざきメモ</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 12 Aug 2020 03:00:23 +0900</lastBuildDate>
+    <lastBuildDate>Thu, 13 Aug 2020 03:00:23 +0900</lastBuildDate>
     
 	<atom:link href="https://yutayamazaki.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,9 +14,18 @@
     <item>
       <title>Computer Vision</title>
       <link>https://yutayamazaki.github.io/tags/computer-vision/</link>
-      <pubDate>Wed, 12 Aug 2020 03:00:23 +0900</pubDate>
+      <pubDate>Thu, 13 Aug 2020 03:00:23 +0900</pubDate>
       
       <guid>https://yutayamazaki.github.io/tags/computer-vision/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Paper</title>
+      <link>https://yutayamazaki.github.io/tags/paper/</link>
+      <pubDate>Thu, 13 Aug 2020 03:00:23 +0900</pubDate>
+      
+      <guid>https://yutayamazaki.github.io/tags/paper/</guid>
       <description></description>
     </item>
     

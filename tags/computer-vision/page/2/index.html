@@ -4,9 +4,9 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
   
-  <title>Posts</title>
-  <meta property="og:title" content="Posts" />
-  <meta name="twitter:title" content="Posts" />
+  <title>Computer Vision</title>
+  <meta property="og:title" content="Computer Vision" />
+  <meta name="twitter:title" content="Computer Vision" />
   
 
   
@@ -17,7 +17,7 @@
 
   <meta name="author" content=""/>
   <meta property="og:site_name" content="ざきメモ" />
-  <meta property="og:url" content="https://yutayamazaki.github.io/posts/" />
+  <meta property="og:url" content="https://yutayamazaki.github.io/tags/computer-vision/" />
 
   
   <meta name="twitter:card" content="summary" />
@@ -80,124 +80,24 @@
 
   <main id="main" class="l-main">
 
-<h2 class="c-title p-tag-title">Posts</h2>
+<h2 class="c-title p-tag-title">Computer Vision</h2>
 
 
 
 
 <article class="c-article p-list-article">
   <header>
-    <h2 class="c-title c-article__title"><a href="https://yutayamazaki.github.io/posts/nuxt_lambda/">Nuxt.jsをAWS Lambdaにデプロイする</a></h2>
+    <h2 class="c-title c-article__title"><a href="https://yutayamazaki.github.io/posts/polygon_rnn/">アノテーションを半自動で生成するPolygonRNNとPolygon RNN&#43;&#43;</a></h2>
     <p class="c-article__meta">
       Posted on
-<time datetime="2020-07-06T01:51:23&#43;09:00">
+<time datetime="2020-07-06T01:54:23&#43;09:00">
   Jul 6, 2020
 </time>
 
     </p>
   </header>
   <div class="c-article__summary">
-    Nuxt.jsのプロジェクトをAWS Lambdaでデプロイすることに関するメモ．
-  </div>
-  
-</article>
-
-
-
-
-<article class="c-article p-list-article">
-  <header>
-    <h2 class="c-title c-article__title"><a href="https://yutayamazaki.github.io/posts/ensemble/">アンサンブル学習</a></h2>
-    <p class="c-article__meta">
-      Posted on
-<time datetime="2020-07-06T01:50:33&#43;09:00">
-  Jul 6, 2020
-</time>
-
-    </p>
-  </header>
-  <div class="c-article__summary">
-    バギング・ランダムフォレスト・ブースティングの主要な手法に関してまとめる．
-  </div>
-  
-</article>
-
-
-
-
-<article class="c-article p-list-article">
-  <header>
-    <h2 class="c-title c-article__title"><a href="https://yutayamazaki.github.io/posts/decision_tree/">決定木</a></h2>
-    <p class="c-article__meta">
-      Posted on
-<time datetime="2020-07-06T01:50:23&#43;09:00">
-  Jul 6, 2020
-</time>
-
-    </p>
-  </header>
-  <div class="c-article__summary">
-    決定木は大まかにはあるデータに対して全てif, else ifのような条件分岐から予測を行うアルゴリズムである．この性質上人間の解釈性が高く，また学習と予測が高速に動作するという利点がある．ある特徴量の閾値でデータを分割した際の不純度の減少量から特徴量の重要度を算出することができ，機械学習のモデル構築において広く利用されている．2020年現在主流の勾配ブースティング系アルゴリズムの弱識別器にはほとんど決定木が利用されている．
-  </div>
-  
-</article>
-
-
-
-
-<article class="c-article p-list-article">
-  <header>
-    <h2 class="c-title c-article__title"><a href="https://yutayamazaki.github.io/posts/factorization_machines/">Factorization Machinesによるレコメンドの仕組み</a></h2>
-    <p class="c-article__meta">
-      Posted on
-<time datetime="2020-07-06T01:37:23&#43;09:00">
-  Jul 6, 2020
-</time>
-
-    </p>
-  </header>
-  <div class="c-article__summary">
-    先日AWSのレコメンドシステム構築記事を読んでいた知人の方から質問されたことへの回答を自分用のメモとしてまとめる．kNNをアイテム潜在ベクトルで学習し，ユーザー潜在ベクトルを入力として推論を行なった結果がなぜレコメンドとして妥当なのかという内容の質問．結論としてはFMではあるユーザーとそのユーザーが高く評価したアイテムは潜在空間上で近くなるように値が更新される，アイテムのみで学習を行いユーザーのみで推論を行うため，ユーザー毎やアイテム毎の方が距離が近くなっても問題がない．
-  </div>
-  
-</article>
-
-
-
-
-<article class="c-article p-list-article">
-  <header>
-    <h2 class="c-title c-article__title"><a href="https://yutayamazaki.github.io/posts/docker_pytorch/">DockerでPyTorchの実行環境を整備する 2019年11月</a></h2>
-    <p class="c-article__meta">
-      Posted on
-<time datetime="2020-07-06T01:35:23&#43;09:00">
-  Jul 6, 2020
-</time>
-
-    </p>
-  </header>
-  <div class="c-article__summary">
-    PyTorchによるDeep Learningの実行環境をDockerコンテナで整備する．Docker version19.03以降，ホストOSのGPUドライバとnvidia-container-runtimeさえあれば他はコンテナに閉じ込められる．
-  </div>
-  
-</article>
-
-
-
-
-<article class="c-article p-list-article">
-  <header>
-    <h2 class="c-title c-article__title"><a href="https://yutayamazaki.github.io/posts/serverless/">Serverless Frameworkの運用Tips</a></h2>
-    <p class="c-article__meta">
-      Posted on
-<time datetime="2020-07-06T01:35:23&#43;09:00">
-  Jul 6, 2020
-</time>
-
-    </p>
-  </header>
-  <div class="c-article__summary">
-    Serverless Frameworkを使う上で気をつけるべきことをまとめる．
+    主要な画像のタスクだと領域検出 &gt; 物体検出 &gt; 分類の順でアノテーションのコストがかかる．Polygon RNNは最もアノテーションにコストがかかる領域検出のアノテーションを多角形で半自動で生成しようという試み．CNNで画像から特徴抽出を行い，ConvLSTMレイヤーを通して多角形の頂点を系列として予測する．この結果をアノテーターが微調整することで，必要なコストを下げることができる．
   </div>
   
 </article>
@@ -208,14 +108,14 @@
   <div class="c-pagination__ctrl">
     <div class="c-pagination__newer">
       
-      <a href="/posts/page/2/">Newer</a>
+      <a href="/tags/computer-vision/">Newer</a>
       
     </div>
     <div class="c-pagination__older">
       
     </div>
   </div>
-  <span class="c-pagination__count p-pagination__count">Page 3 of 3</span>
+  <span class="c-pagination__count p-pagination__count">Page 2 of 2</span>
 </nav>
 
 

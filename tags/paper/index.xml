@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Paper on ざきメモ</title>
+    <link>https://yutayamazaki.github.io/tags/paper/</link>
+    <description>Recent content in Paper on ざきメモ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 13 Aug 2020 03:00:23 +0900</lastBuildDate>
+    
+	<atom:link href="https://yutayamazaki.github.io/tags/paper/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>論文メモ Funnel Activation for Visual Recognition</title>
+      <link>https://yutayamazaki.github.io/posts/papers_frelu/</link>
+      <pubDate>Thu, 13 Aug 2020 03:00:23 +0900</pubDate>
+      
+      <guid>https://yutayamazaki.github.io/posts/papers_frelu/</guid>
+      <description>ReLUやPReLUに着想を得て改良したactivationのFReLUの提案．簡単な構造ながら実験ではSwish, PReLU, ReLUより精度が良い．</description>
+    </item>
+    
+  </channel>
+</rss>
