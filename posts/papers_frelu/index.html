@@ -144,7 +144,7 @@
             in_channels<span style="color:#f92672">=</span>in_channels, out_channels<span style="color:#f92672">=</span>in_channels, kernel_size<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span>,
             padding<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, stride<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, groups<span style="color:#f92672">=</span>in_channels
         )
-        self<span style="color:#f92672">.</span>bn <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>BatchNorm2d(in_channels<span style="color:#f92672">=</span>in_channels)
+        self<span style="color:#f92672">.</span>bn <span style="color:#f92672">=</span> nn<span style="color:#f92672">.</span>BatchNorm2d(num_features<span style="color:#f92672">=</span>in_channels)
 
     <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">forward</span>(self, x):
         t_x <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>bn(self<span style="color:#f92672">.</span>conv(x))
