@@ -109,7 +109,8 @@
 <p>このxxx&hellip;に概要する部分がGoogle Drive上のファイルIDであり，このIDを利用してファイルのダウンロードを行う．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">wget <span style="color:#e6db74">&#34;https://drive.google.com/uc?export=download&amp;id=&lt;FILE_ID&gt;&#34;</span> -o &lt;OUTPUT_PATH&gt;
 </code></pre></div><h2 id="サイズの大きなファイルのダウンロード">サイズの大きなファイルのダウンロード</h2>
-<p>サイズの大きなファイルの場合，ダウンロード前に「ウイルススキャンができないがダウンロードして問題ないか」と言う確認のページが表示されることもあり，ダウンロードが少し複雑になる．大きなサイズのファイルをダウンロードするのに必要な手順は以下．</p>
+<p>サイズの大きなファイルの場合，一度リクエストするとランダムな4文字からなるトークンが発行され，それを利用して再度リクエストすることでダウンロードできる．</p>
+<p>大きなサイズのファイルをダウンロードするのに必要な手順は以下．</p>
 <ul>
 <li>ファイルIDの確認</li>
 <li>IDに基づいてGoogle Driveにアクセスし，トークンを取得する</li>
