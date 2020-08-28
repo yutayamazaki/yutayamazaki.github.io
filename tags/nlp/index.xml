@@ -6,10 +6,19 @@
     <description>Recent content in NLP on ざきメモ</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 06 Jul 2020 01:55:23 +0900</lastBuildDate>
+    <lastBuildDate>Fri, 28 Aug 2020 03:00:23 +0900</lastBuildDate>
     
 	<atom:link href="https://yutayamazaki.github.io/tags/nlp/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>gensimのWord2Vecモデルをなるべく軽量にして利用する</title>
+      <link>https://yutayamazaki.github.io/posts/gensim-light-w2v/</link>
+      <pubDate>Fri, 28 Aug 2020 03:00:23 +0900</pubDate>
+      
+      <guid>https://yutayamazaki.github.io/posts/gensim-light-w2v/</guid>
+      <description>gensimのWord2Vecモデルを運用面を考えてなるべく軽量にする方法をまとめる．</description>
+    </item>
     
     <item>
       <title>Okapi BM25を動かしてみる</title>

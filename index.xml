@@ -12,6 +12,15 @@
     
     
     <item>
+      <title>gensimのWord2Vecモデルをなるべく軽量にして利用する</title>
+      <link>https://yutayamazaki.github.io/posts/gensim-light-w2v/</link>
+      <pubDate>Fri, 28 Aug 2020 03:00:23 +0900</pubDate>
+      
+      <guid>https://yutayamazaki.github.io/posts/gensim-light-w2v/</guid>
+      <description>gensimのWord2Vecモデルを運用面を考えてなるべく軽量にする方法をまとめる．</description>
+    </item>
+    
+    <item>
       <title>Google Driveのファイルを勝手にダウンロードする</title>
       <link>https://yutayamazaki.github.io/posts/download-file-from-google-drive/</link>
       <pubDate>Fri, 28 Aug 2020 03:00:23 +0900</pubDate>

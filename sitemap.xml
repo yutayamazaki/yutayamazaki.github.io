@@ -3,12 +3,27 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://yutayamazaki.github.io/tags/gensim/</loc>
+    <lastmod>2020-08-28T03:00:23+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://yutayamazaki.github.io/posts/gensim-light-w2v/</loc>
+    <lastmod>2020-08-28T03:00:23+09:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://yutayamazaki.github.io/tags/google-drive/</loc>
     <lastmod>2020-08-28T03:00:23+09:00</lastmod>
   </url>
   
   <url>
     <loc>https://yutayamazaki.github.io/posts/download-file-from-google-drive/</loc>
+    <lastmod>2020-08-28T03:00:23+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://yutayamazaki.github.io/tags/nlp/</loc>
     <lastmod>2020-08-28T03:00:23+09:00</lastmod>
   </url>
   
@@ -165,11 +180,6 @@
   <url>
     <loc>https://yutayamazaki.github.io/posts/mask_rcnn/</loc>
     <lastmod>2020-07-06T01:56:23+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://yutayamazaki.github.io/tags/nlp/</loc>
-    <lastmod>2020-07-06T01:55:23+09:00</lastmod>
   </url>
   
   <url>
