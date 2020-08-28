@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Google Drive on ざきメモ</title>
+    <link>https://yutayamazaki.github.io/tags/google-drive/</link>
+    <description>Recent content in Google Drive on ざきメモ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 28 Aug 2020 03:00:23 +0900</lastBuildDate>
+    
+	<atom:link href="https://yutayamazaki.github.io/tags/google-drive/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Google Driveのファイルを勝手にダウンロードする</title>
+      <link>https://yutayamazaki.github.io/posts/download-file-from-google-drive/</link>
+      <pubDate>Fri, 28 Aug 2020 03:00:23 +0900</pubDate>
+      
+      <guid>https://yutayamazaki.github.io/posts/download-file-from-google-drive/</guid>
+      <description>Google Driveのファイルを共有などの手順やGoogle Drive APIの利用なしに勝手にダウンロードする方法のメモ．</description>
+    </item>
+    
+  </channel>
+</rss>
