@@ -6,10 +6,19 @@
     <description>Recent content in Kaggle on ざきメモ</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 03 Aug 2020 10:14:23 +0900</lastBuildDate>
+    <lastBuildDate>Mon, 31 Aug 2020 03:00:23 +0900</lastBuildDate>
     
 	<atom:link href="https://yutayamazaki.github.io/tags/kaggle/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Kaggle解法まとめ Toxic Comment Classification Challenge</title>
+      <link>https://yutayamazaki.github.io/posts/kaggle-jigsaw-toxic-comment-classification/</link>
+      <pubDate>Mon, 31 Aug 2020 03:00:23 +0900</pubDate>
+      
+      <guid>https://yutayamazaki.github.io/posts/kaggle-jigsaw-toxic-comment-classification/</guid>
+      <description>Kaggleで2018年3月まで行われたJigsaw主催の有害コメント検出コンペの概要・解法などをまとめる．</description>
+    </item>
     
     <item>
       <title>Kaggle解法まとめ Serverstal: Steel Defect Detection</title>

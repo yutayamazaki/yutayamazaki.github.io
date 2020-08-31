@@ -6,10 +6,28 @@
     <description>Recent content in Tags on ざきメモ</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 28 Aug 2020 03:00:23 +0900</lastBuildDate>
+    <lastBuildDate>Mon, 31 Aug 2020 03:00:23 +0900</lastBuildDate>
     
 	<atom:link href="https://yutayamazaki.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Kaggle</title>
+      <link>https://yutayamazaki.github.io/tags/kaggle/</link>
+      <pubDate>Mon, 31 Aug 2020 03:00:23 +0900</pubDate>
+      
+      <guid>https://yutayamazaki.github.io/tags/kaggle/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>NLP</title>
+      <link>https://yutayamazaki.github.io/tags/nlp/</link>
+      <pubDate>Mon, 31 Aug 2020 03:00:23 +0900</pubDate>
+      
+      <guid>https://yutayamazaki.github.io/tags/nlp/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>gensim</title>
@@ -26,15 +44,6 @@
       <pubDate>Fri, 28 Aug 2020 03:00:23 +0900</pubDate>
       
       <guid>https://yutayamazaki.github.io/tags/google-drive/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>NLP</title>
-      <link>https://yutayamazaki.github.io/tags/nlp/</link>
-      <pubDate>Fri, 28 Aug 2020 03:00:23 +0900</pubDate>
-      
-      <guid>https://yutayamazaki.github.io/tags/nlp/</guid>
       <description></description>
     </item>
     
@@ -80,15 +89,6 @@
       <pubDate>Tue, 11 Aug 2020 03:00:23 +0900</pubDate>
       
       <guid>https://yutayamazaki.github.io/tags/yaml/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Kaggle</title>
-      <link>https://yutayamazaki.github.io/tags/kaggle/</link>
-      <pubDate>Mon, 03 Aug 2020 10:14:23 +0900</pubDate>
-      
-      <guid>https://yutayamazaki.github.io/tags/kaggle/</guid>
       <description></description>
     </item>
     

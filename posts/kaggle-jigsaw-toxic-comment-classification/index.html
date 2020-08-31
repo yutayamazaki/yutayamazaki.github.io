@@ -4,9 +4,9 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
   
-  <title>gensimのWord2Vecモデルをなるべく軽量にして利用する</title>
-  <meta property="og:title" content="gensimのWord2Vecモデルをなるべく軽量にして利用する" />
-  <meta name="twitter:title" content="gensimのWord2Vecモデルをなるべく軽量にして利用する" />
+  <title>Kaggle解法まとめ Toxic Comment Classification Challenge</title>
+  <meta property="og:title" content="Kaggle解法まとめ Toxic Comment Classification Challenge" />
+  <meta name="twitter:title" content="Kaggle解法まとめ Toxic Comment Classification Challenge" />
   
 
   
@@ -17,7 +17,7 @@
 
   <meta name="author" content=""/>
   <meta property="og:site_name" content="ざきメモ" />
-  <meta property="og:url" content="https://yutayamazaki.github.io/posts/gensim-light-w2v/" />
+  <meta property="og:url" content="https://yutayamazaki.github.io/posts/kaggle-jigsaw-toxic-comment-classification/" />
 
   
   <meta name="twitter:card" content="summary" />
@@ -84,155 +84,183 @@
 
 <article class="p-article">
   <header>
-    <h1>gensimのWord2Vecモデルをなるべく軽量にして利用する</h1>
+    <h1>Kaggle解法まとめ Toxic Comment Classification Challenge</h1>
     <div>
       
         <div class="c-time">
           Posted on
-<time datetime="2020-08-28T03:00:23&#43;09:00">
-  Aug 28, 2020
+<time datetime="2020-08-31T03:00:23&#43;09:00">
+  Aug 31, 2020
 </time>
 
         </div>
       
       
-      <a href="https://yutayamazaki.github.io/tags/nlp" class="c-tag">NLP</a>
+      <a href="https://yutayamazaki.github.io/tags/kaggle" class="c-tag">Kaggle</a>
       
-      <a href="https://yutayamazaki.github.io/tags/gensim" class="c-tag">gensim</a>
+      <a href="https://yutayamazaki.github.io/tags/nlp" class="c-tag">NLP</a>
       
     </div>
   </header>
   
   <section id="js-article" class="p-article__body">
-    <h2 id="gensimのword2vecとkeyedvectors">gensimのWord2VecとKeyedVectors</h2>
-<p>本記事は基本的に<a href="https://radimrehurek.com/gensim/models/keyedvectors.html">gensim公式ドキュメントのKeyedVectorsに関する記事</a>と同じ内容．</p>
-<p>gensimの以下のナイーブなコードから学習・保存されるのがWord2Vecクラスをそのまま保存したもので以下の3ファイルから構成される．</p>
+    <h2 id="コンペ概要">コンペ概要</h2>
 <ul>
-<li>w2v.model</li>
-<li>w2v.model.trainables.syn1neg.npy</li>
-<li>w2v.model.wv.vectors.npy</li>
+<li><a href="https://www.kaggle.com/c/jigsaw-toxic-comment-classification-challenge">https://www.kaggle.com/c/jigsaw-toxic-comment-classification-challenge</a></li>
+<li>2017年12月から2018年3月まで行われたJigsaw主催の有害コメント検出コンペ</li>
+<li>テキストからtoxic, severe toxic, obscene, threat, insult, identityhateの6クラスのマルチラベル分類タスク</li>
+<li>精度評価はAUCの各クラスの平均で算出される</li>
+<li>タスクが簡単なせいかまとめていてあまり技術的に面白い部分はなく，NLPのKaggle入門としてはいいのかもという感覚があった</li>
 </ul>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> gensim.models <span style="color:#f92672">import</span> word2vec
-
-sentences <span style="color:#f92672">=</span> word2vec<span style="color:#f92672">.</span>Text8Corpus(<span style="color:#e6db74">&#39;corpus.txt&#39;</span>)
-model <span style="color:#f92672">=</span> word2vec<span style="color:#f92672">.</span>Word2Vec(sentences, size<span style="color:#f92672">=</span><span style="color:#ae81ff">200</span>)
-model<span style="color:#f92672">.</span>save(<span style="color:#e6db74">&#39;w2v.model&#39;</span>)
-</code></pre></div><p>これらはベクトルの再学習を行うためのデータも同時に保存しているため，モデルサイズが大きく読み込みに時間を要する．再学習に必要なデータを削除し，より軽量に単語の埋め込みを利用できるようにしたものがgensimのKeyedvectorsである．公式ドキュメントの表を参考にWord2VecとKeyedVectorsを比較する．</p>
+<h2 id="データ">データ</h2>
+<p>データはwikipediaの利用者が議論を行うための場であるtalk pageのコメントに対して6種類の有害コメントに該当するかをラベル付けされたもの．また学習データ約16万件中，どのラベルにも属さないものが約14万件とかなりラベルが不均衡なデータセットとなっている．</p>
 <table>
 <thead>
 <tr>
-<th>capability</th>
-<th>KeyedVectors</th>
-<th>Word2Vec</th>
-<th>鼻腔</th>
+<th>クラス名</th>
+<th>件数</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>再学習可能か</td>
-<td>❌</td>
-<td>✅</td>
-<td>ベクトルの更新にはWord2Vecが必要</td>
+<td>学習データ全体</td>
+<td>約16万件</td>
 </tr>
 <tr>
-<td>ファイルサイズの小ささ</td>
-<td>✅</td>
-<td>❌</td>
-<td>再学習に必要な状態を持たないため軽量で要求するRAMが少ない</td>
+<td>どのラベルにも当てはまらない(有害でない)</td>
+<td>約14.3万件</td>
 </tr>
 <tr>
-<td>fasttext/word2vecの読み込み・保存</td>
-<td>✅</td>
-<td>❌</td>
-<td>FacebookやGoogleが提供しているモデルは再学習をサポートしていないのでKeyedVectorsのみで利用可能</td>
+<td>toxic</td>
+<td>約1.5万件</td>
 </tr>
 <tr>
-<td>新たな単語・ベクトルの追加</td>
-<td>✅</td>
-<td>✅</td>
-<td>新たな単語とそのベクトルの追加はどちらもok</td>
+<td>severe toxic</td>
+<td>約1,600件</td>
+</tr>
+<tr>
+<td>obscene</td>
+<td>約8,400件</td>
+</tr>
+<tr>
+<td>threat</td>
+<td>約500件</td>
+</tr>
+<tr>
+<td>insult</td>
+<td>約7,800件</td>
+</tr>
+<tr>
+<td>identity hate</td>
+<td>約1,400件</td>
 </tr>
 </tbody>
 </table>
-<h2 id="keydvectorsのみ保存する">KeydVectorsのみ保存する</h2>
-<p>システムでの運用や取り回しの良さを考えるのであれば基本的にはファイルサイズが小さく，また高速に読み込めて欲しいため先ほど保存したWord2VecモデルをKeyedVectorsとして保存する．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> gensim.models <span style="color:#f92672">import</span> word2vec
-
-w2v <span style="color:#f92672">=</span> word2vec<span style="color:#f92672">.</span>Word2Vec<span style="color:#f92672">.</span>load(<span style="color:#e6db74">&#39;w2v.model&#39;</span>)  <span style="color:#75715e"># Word2Vecの読み込み</span>
-w2v<span style="color:#f92672">.</span>wv<span style="color:#f92672">.</span>save(<span style="color:#e6db74">&#39;vectors.kv&#39;</span>)  <span style="color:#75715e"># 単語とベクトルの辞書のみ保存</span>
-</code></pre></div><p>元のw2v.modelとして保存していたファイルのそれぞれのサイズが以下．</p>
+<p>データセットのサイズとしてはtrain.csvが68.8MB，test.csvが60.4MBと比較的軽量なデータセットである．</p>
+<p><img src="/images/kaggle-jigsaw/train-csv.png" alt=""></p>
+<p>csvの中身は上記のようになっており，あくまでコメントに対する有害検出であるため各文書も比較的短いものが多い．</p>
+<h2 id="評価指標">評価指標</h2>
+<p>評価指標はmean column-wise ROC AUC，つまりクラス毎にAUCの平均を取ったものである．1st placeのスコアが0.9885でありタスク自体は比較的容易なものであったことがわかる．</p>
+<h2 id="参考になるkernel-discussion">参考になるKernel, Discussion</h2>
+<h3 id="kernel">Kernel</h3>
+<ul>
+<li><a href="https://www.kaggle.com/jagangupta/stop-the-s-toxic-comments-eda">Stop the S@#$ - Toxic Comments EDA</a>
+<ul>
+<li>ToxicのEDAカーネル．各クラスのデータの分布や代表的なコメント例などを表示し，特徴量エンジニアリングからモデリングまで</li>
+</ul>
+</li>
+<li><a href="https://www.kaggle.com/tunguz/logistic-regression-with-words-and-char-n-grams">Logistic regression with words and char n-grams</a>
+<ul>
+<li>ロジスティック回帰でwordベースとcharベース両方のtfidfを計算してモデルを作成している</li>
+</ul>
+</li>
+<li><a href="https://www.kaggle.com/jhoward/improved-lstm-baseline-glove-dropout">Improved LSTM baseline: GloVe + dropout</a>
+<ul>
+<li>Gloveの学習済みembeddingとLSTMベースのNNのシンプルなnotebook</li>
+</ul>
+</li>
+</ul>
+<h3 id="discussion">Discussion</h3>
+<h4 id="1st-place-solution-overview">1st place solution overview</h4>
+<ul>
+<li>Links
+<ul>
+<li><a href="https://www.kaggle.com/c/jigsaw-toxic-comment-classification-challenge/discussion/52557">Discussion on Kaggle</a></li>
+</ul>
+</li>
+<li>解法まとめ
+<ul>
+<li>様々な事前学習済みembeddingの利用 (public LB: 0.9877)
+<ul>
+<li>モデルの多様性のほとんどがembeddingによるものなのでembedding layerに注力した</li>
+<li>FastTextとGloveをCommon Crawl, Wikipedia, Twitterで学習させたものを利用</li>
+</ul>
+</li>
+<li>翻訳による学習データの水増しとTTA (public LB: 0.9880)
+<ul>
+<li>EN, DE, FR, ESの翻訳</li>
+</ul>
+</li>
+<li>Pseudo Labeling (public LB: 0.9885)</li>
+<li>Robust CVとstackingアンサンブル(public LB: 0.9890)</li>
+</ul>
+</li>
+</ul>
+<p>正直あまりまとめたい解法がなかった…</p>
+<p>その他の気になった手法など</p>
+<ul>
+<li>レーベンシュタイン距離でtypo探し</li>
+<li>TextBlobの辞書でtypo探し</li>
+<li>絵文字置き換え</li>
+<li>前処理をあえて何もしない</li>
+<li>OOVの単語をtypo修正</li>
+</ul>
+<h2 id="上位解法一覧">上位解法一覧</h2>
 <table>
 <thead>
 <tr>
-<th>ファイル名</th>
-<th>ファイルサイズ</th>
+<th>place</th>
+<th>discussion</th>
+<th>GitHub</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>w2v.model</td>
-<td>65MB</td>
+<td>3rd</td>
+<td><a href="https://www.kaggle.com/c/jigsaw-toxic-comment-classification-challenge/discussion/52644">About my 0.9872 single model</a></td>
+<td></td>
 </tr>
 <tr>
-<td>w2v.model.trainables.syn1neg.npy</td>
-<td>731MB</td>
+<td>5th</td>
+<td><a href="https://www.kaggle.com/c/jigsaw-toxic-comment-classification-challenge/discussion/52630">5th place Brief Solution</a></td>
+<td></td>
 </tr>
 <tr>
-<td>w2v.model.wv.vectors.npy</td>
-<td>731MB</td>
+<td>12th</td>
+<td><a href="https://www.kaggle.com/c/jigsaw-toxic-comment-classification-challenge/discussion/52702">12th place single model solution share</a></td>
+<td><a href="https://github.com/thinline72/toxic">thinline72/toxic</a></td>
+</tr>
+<tr>
+<td>15th</td>
+<td><a href="https://www.kaggle.com/c/jigsaw-toxic-comment-classification-challenge/discussion/52563">15th Solution Summary: Byte Pair Encoding</a></td>
+<td></td>
+</tr>
+<tr>
+<td>27th</td>
+<td><a href="https://www.kaggle.com/c/jigsaw-toxic-comment-classification-challenge/discussion/52719">27th place solution overview</a></td>
+<td><a href="https://github.com/zake7749/DeepToxic">zake7749/DeepToxic</a></td>
+</tr>
+<tr>
+<td>33rd</td>
+<td><a href="https://www.kaggle.com/c/jigsaw-toxic-comment-classification-challenge/discussion/52666">33rd Place Solution Using Embedding Imputation (0.9872 private, 0.9876 public)</a></td>
+<td><a href="https://github.com/mattmotoki/toxic-comment-classification">mattmotoki/toxic-comment-classification</a></td>
 </tr>
 </tbody>
 </table>
-<p>KeyedVectorsとして保存したもののファイルサイズはこっち．</p>
-<table>
-<thead>
-<tr>
-<th>ファイル名</th>
-<th>ファイルサイズ</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>vectors.kv</td>
-<td>60MB</td>
-</tr>
-<tr>
-<td>vectors.kv.vectors.npy</td>
-<td>731MB</td>
-</tr>
-</tbody>
-</table>
-<p>KeyedVectorsで保存したことでファイルサイズが約半分になった．</p>
-<p>またWord2VecフルモデルとKeyedVectorsの読み込み時間を手元のマシンで計測したところ，</p>
-<table>
-<thead>
-<tr>
-<th>フォーマット</th>
-<th>読み込み時間</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Word2Vec</td>
-<td>約4.2sec</td>
-</tr>
-<tr>
-<td>KeyedVectors</td>
-<td>約2.2sec</td>
-</tr>
-<tr>
-<td>KeyedVectors (binary)</td>
-<td>約6.0sec</td>
-</tr>
-</tbody>
-</table>
-<p>という結果となり，モデルの軽量化と読み込みの高速化の両方を実現できた．</p>
-<p>またbinaryとしてKeyedVectorsを保存する方法もあり，この場合は単一のファイルにまとめることができ，ファイルサイズも通常のKeyedVectorsと比較して50MBほど小さくなる．</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">w2v<span style="color:#f92672">.</span>wv<span style="color:#f92672">.</span>save_word2vec_format(<span style="color:#e6db74">&#39;vectors.bin&#39;</span>, binary<span style="color:#f92672">=</span>True)
-</code></pre></div><p>ただし読み込みには約6秒かかりWord2Vecのフルモデルを読み込むより遅かったので私は通常のKeyedVectorsを採用した．</p>
+<p>基本的にはどれも複数のembeddingを利用したNNとtfidfやその他手作り特徴量とのアンサンブルという方針．ただしOOVの対処法などにいくつか違いが見られる．</p>
 <h2 id="参考">参考</h2>
 <ul>
-<li><a href="https://radimrehurek.com/gensim/models/keyedvectors.html">gensim: models.keyedvectors – Store and query word vectors</a></li>
+<li><a href="https://copypaste-ds.hatenablog.com/entry/2019/02/01/174135">kaggle: Toxic Comment Classification Challenge まとめ</a></li>
 </ul>
 
   </section>
@@ -242,12 +270,11 @@ w2v<span style="color:#f92672">.</span>wv<span style="color:#f92672">.</span>sav
       <div class="c-pagination__ctrl">
         <div class="c-pagination__newer">
           
-          <a href="https://yutayamazaki.github.io/posts/kaggle-jigsaw-toxic-comment-classification/">Newer</a>
           
         </div>
         <div class="c-pagination__older">
           
-          <a href="https://yutayamazaki.github.io/posts/download-file-from-google-drive/">Older</a>
+          <a href="https://yutayamazaki.github.io/posts/gensim-light-w2v/">Older</a>
           
         </div>
       </div>
@@ -257,6 +284,34 @@ w2v<span style="color:#f92672">.</span>wv<span style="color:#f92672">.</span>sav
 <section class="p-related">
   <h3>See Also</h3>
   <ul id="slider" class="p-related__list">
+    
+    <li class="p-related__item js-related__item">
+      <a href="/posts/gensim-light-w2v/"
+        >
+        <span>gensimのWord2Vecモデルをなるべく軽量にして利用する</span>
+      </a>
+    </li>
+    
+    <li class="p-related__item js-related__item">
+      <a href="/posts/kaggle_serverstal_steel_defect_detection/"
+        >
+        <span>Kaggle解法まとめ Serverstal: Steel Defect Detection</span>
+      </a>
+    </li>
+    
+    <li class="p-related__item js-related__item">
+      <a href="/posts/kaggle_siim_acr/"
+        >
+        <span>Kaggle解法まとめ SIIM-ACR Pneumothorax Segmentation</span>
+      </a>
+    </li>
+    
+    <li class="p-related__item js-related__item">
+      <a href="/posts/kaggle_understanding_clouds_from_satellite_images/"
+        >
+        <span>Kaggle解法まとめ Understanding Clouds from Satellite Images</span>
+      </a>
+    </li>
     
     <li class="p-related__item js-related__item">
       <a href="/posts/okapi_bm25/"
