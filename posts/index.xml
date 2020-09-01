@@ -6,10 +6,19 @@
     <description>Recent content in Posts on ざきメモ</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 01 Sep 2020 01:00:23 +0900</lastBuildDate>
+    <lastBuildDate>Tue, 01 Sep 2020 03:00:23 +0900</lastBuildDate>
     
 	<atom:link href="https://yutayamazaki.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Smooth L1 Lossを理解する</title>
+      <link>https://yutayamazaki.github.io/posts/what-is-smooth-l1-loss/</link>
+      <pubDate>Tue, 01 Sep 2020 03:00:23 +0900</pubDate>
+      
+      <guid>https://yutayamazaki.github.io/posts/what-is-smooth-l1-loss/</guid>
+      <description>回帰問題の損失関数としてよく利用されるSmooth L1 Lossを理解する．</description>
+    </item>
     
     <item>
       <title>ハッシュ値を利用してデータセット中の同一画像を探す</title>

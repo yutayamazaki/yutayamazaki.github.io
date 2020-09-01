@@ -3,22 +3,32 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://yutayamazaki.github.io/tags/computer-vision/</loc>
-    <lastmod>2020-09-01T01:00:23+09:00</lastmod>
+    <loc>https://yutayamazaki.github.io/tags/deep-learning/</loc>
+    <lastmod>2020-09-01T03:00:23+09:00</lastmod>
   </url>
   
   <url>
     <loc>https://yutayamazaki.github.io/posts/</loc>
-    <lastmod>2020-09-01T01:00:23+09:00</lastmod>
+    <lastmod>2020-09-01T03:00:23+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://yutayamazaki.github.io/posts/what-is-smooth-l1-loss/</loc>
+    <lastmod>2020-09-01T03:00:23+09:00</lastmod>
   </url>
   
   <url>
     <loc>https://yutayamazaki.github.io/tags/</loc>
-    <lastmod>2020-09-01T01:00:23+09:00</lastmod>
+    <lastmod>2020-09-01T03:00:23+09:00</lastmod>
   </url>
   
   <url>
     <loc>https://yutayamazaki.github.io/</loc>
+    <lastmod>2020-09-01T03:00:23+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://yutayamazaki.github.io/tags/computer-vision/</loc>
     <lastmod>2020-09-01T01:00:23+09:00</lastmod>
   </url>
   
