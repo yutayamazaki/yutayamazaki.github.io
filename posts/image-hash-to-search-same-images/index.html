@@ -105,11 +105,11 @@
     <h2 id="概要">概要</h2>
 <ul>
 <li>学習データ内とテストデータ内に同一の画像がある場合や，学習データ中やテストデータ中に同一の画像が複数ある場合，リークやoverfittingの原因になりうる</li>
-<li>画像のバイナリからMD5でハッシュを生成し，同一の画像がないかを検索するコードのスニペット</li>
-<li>ハッシュ値に基づいて同一判定を行うため，極端に類似しているが完全に同一ではない画像は別の方法で判定する必要がある</li>
+<li>画像のバイナリからMD5でハッシュを生成し，同一の画像がないかを検索するのと，全く同一ではないが類似した画像を探すためのハッシュ化の2本だて</li>
 </ul>
-<h2 id="画像のハッシュ化">画像のハッシュ化</h2>
+<h2 id="md5で画像を直接ハッシュ化">MD5で画像を直接ハッシュ化</h2>
 <p>ハッシュ化の関数はMD5を用いる．画像をバイナリで読み込み，バイナリをハッシュ関数に通したもの同士が同一であるかを判定する．</p>
+<p>この手法は後ほど紹介する手法と異なり全く同じ画像かどうかを調査する手法で，類似する画像などは探せない．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> hashlib
 
 
@@ -118,7 +118,7 @@
         img_bytes: bytes <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>read()
         <span style="color:#66d9ef">return</span> hashlib<span style="color:#f92672">.</span>md5(img_bytes)<span style="color:#f92672">.</span>hexdigest()
 
-</code></pre></div><h2 id="画像のハッシュ値を比較して同一画像を探す">画像のハッシュ値を比較して同一画像を探す</h2>
+</code></pre></div><h3 id="画像のハッシュ値を比較して同一画像を探す">画像のハッシュ値を比較して同一画像を探す</h3>
 <p>今回実験に用いたのは以下の画像2つで，imagesディレクトリは犬画像を2枚とピノの画像1枚から構成される．</p>
 <p><img src="/images/hash-image/dog.jpg" alt="">
 <img src="/images/hash-image/pino.jpg" alt=""></p>
@@ -157,17 +157,72 @@
 <p>同一画像は同一のハッシュ値に変換されるため，同じ画像を検出することができる．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">d95b83fd951400c7c735a104b038a76a <span style="color:#f92672">[</span><span style="color:#e6db74">&#39;../images/dog.jpg&#39;</span>, <span style="color:#e6db74">&#39;../images/dog_copy.jpg&#39;</span><span style="color:#f92672">]</span>
 </code></pre></div><h2 id="類似画像の判定">類似画像の判定</h2>
-<p>類似画像をよしなにハッシュ化する方法はいくつかあり，<a href="https://github.com/JohannesBuchner/imagehash">JohannesBuchner/imagehash: A Python Perceptual Image Hashing Module</a>のリポジトリなどで実装されている．が，今回は完全に同じでなければ問題なかったのでまたどこかの機会に．</p>
+<p>類似画像をよしなにハッシュ化する方法はいくつかあり，<a href="https://github.com/JohannesBuchner/imagehash">JohannesBuchner/imagehash: A Python Perceptual Image Hashing Module</a>などで実装されている．主な手法には以下がある．今回はこの中からAverage HashingとPerceptual Hashingの簡単な説明を実装を行う．</p>
 <ul>
-<li>Average hashing (aHash)</li>
-<li>Perceptual hashing (pHash)</li>
-<li>Difference hashing (dHash)</li>
-<li>Wavelet hashing (wHash)</li>
-<li>HSV color hashing (colorhash)</li>
+<li>Average Hashing</li>
+<li>Perceptual Hashing</li>
+<li>Difference Hashing</li>
+<li>Wavelet Hashing</li>
+<li>HSV Color Hashing</li>
 </ul>
-<p>などの方法が有名らしい．</p>
-<h2 id="参考">参考</h2>
+<h3 id="average-hashing">Average Hashing</h3>
+<p>最も簡単で計算コストも低いのがこのAverage Hashingである．ハッシュ化の手順は，</p>
 <ul>
+<li>画像を(8, 8)にリサイズする(64bitのハッシュにしたいので)</li>
+<li>グレイスケールにする</li>
+<li>全ピクセルの平均値を閾値として，各ピクセルが閾値以上か以下かで0と1を割り当てる</li>
+<li>任意の並びでflattenする</li>
+</ul>
+<p>PythonでPIL.Image.ImageからAverage Hashingを計算するコードのスニペットがこれ．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+<span style="color:#f92672">from</span> PIL <span style="color:#f92672">import</span> Image
+
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">average_hash</span>(img: Image<span style="color:#f92672">.</span>Image) <span style="color:#f92672">-&gt;</span> str:
+    resized_gray: Image<span style="color:#f92672">.</span>Image <span style="color:#f92672">=</span> img<span style="color:#f92672">.</span>resize((<span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">8</span>))<span style="color:#f92672">.</span>convert(<span style="color:#e6db74">&#39;LA&#39;</span>)
+    avg: float <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>mean(resized_gray)
+    bit_img: np<span style="color:#f92672">.</span>ndarray <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(resized_gray) <span style="color:#f92672">&gt;=</span> avg
+    bit_flatten: np<span style="color:#f92672">.</span>ndarray <span style="color:#f92672">=</span> bit_img<span style="color:#f92672">.</span>flatten()<span style="color:#f92672">.</span>astype(int)
+    <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#39;&#39;</span><span style="color:#f92672">.</span>join(map(str, bit_flatten<span style="color:#f92672">.</span>tolist()))
+</code></pre></div><p>この関数でハッシュ化した文字列をもとにハミング距離を計算することで，画像間の類似度を簡単に求めることができる．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">hamming_distance</span>(a: str, b: str) <span style="color:#f92672">-&gt;</span> int:
+    <span style="color:#66d9ef">assert</span> len(a) <span style="color:#f92672">==</span> len(b)
+    distance: int <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+    <span style="color:#66d9ef">for</span> a_, b_ <span style="color:#f92672">in</span> zip(a, b):
+        <span style="color:#66d9ef">if</span> a_ <span style="color:#f92672">!=</span> b_:
+            distance <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+    <span style="color:#66d9ef">return</span> distance
+</code></pre></div><p>実装が容易で高速に動作するが精度はそこそこで，データセットによってかなり得手不得手がありそうな印象．</p>
+<h3 id="perceptual-hashing">Perceptual Hashing</h3>
+<p>離散コサイン変換(DCT)という変換方法を用いてAverage Hashingよりもロバストなハッシュ化を行う手法がPerceptual Hashingである．</p>
+<ul>
+<li>画像を(8, 8)の定数倍(4など)した値(32, 32)などにリサイズする</li>
+<li>グレイスケールにする</li>
+<li>DCTを行い(32, 32)の左上から(8, 8)の低周波数成分を取り出す</li>
+<li>先ほど取り出した(8, 8)の平均値を閾値として(8, 8)の低周波成分がそれより大きいか否かで0か1を割り当てる</li>
+<li>任意の並びでflattenする</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+<span style="color:#f92672">import</span> scipy.fftpack
+<span style="color:#f92672">from</span> PIL <span style="color:#f92672">import</span> Image
+
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">perceptual_hash</span>(img: Image<span style="color:#f92672">.</span>Image, freq_factor: int <span style="color:#f92672">=</span> <span style="color:#ae81ff">4</span>) <span style="color:#f92672">-&gt;</span> str:
+    hash_size: int <span style="color:#f92672">=</span> <span style="color:#ae81ff">8</span>
+    img_size: int <span style="color:#f92672">=</span> hash_size <span style="color:#f92672">*</span> freq_factor
+    resized_gray: Image<span style="color:#f92672">.</span>Image <span style="color:#f92672">=</span> img<span style="color:#f92672">.</span>convert(<span style="color:#e6db74">&#39;L&#39;</span>)<span style="color:#f92672">.</span>resize((img_size, img_size))
+    img_arr: np<span style="color:#f92672">.</span>ndarray <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(resized_gray)
+
+    dct <span style="color:#f92672">=</span> scipy<span style="color:#f92672">.</span>fftpack<span style="color:#f92672">.</span>dct(scipy<span style="color:#f92672">.</span>fftpack<span style="color:#f92672">.</span>dct(img_arr, axis<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>), axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+    dct_low <span style="color:#f92672">=</span> dct[:hash_size, :hash_size]
+    avg <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>mean(dct_low)
+    bit_img: np<span style="color:#f92672">.</span>ndarray <span style="color:#f92672">=</span> dct_low <span style="color:#f92672">&gt;=</span> avg
+    bit_flatten: np<span style="color:#f92672">.</span>ndarray <span style="color:#f92672">=</span> bit_img<span style="color:#f92672">.</span>flatten()<span style="color:#f92672">.</span>astype(int)
+    <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#39;&#39;</span><span style="color:#f92672">.</span>join(map(str, bit_flatten<span style="color:#f92672">.</span>tolist()))
+</code></pre></div><h2 id="参考">参考</h2>
+<ul>
+<li><a href="http://www.hackerfactor.com/blog/index.php?/archives/432-Looks-Like-It.html">Looks Like It  - The Hacker Factor Blog</a></li>
+<li><a href="http://www.phash.org/">pHash.org: Home of pHash, the open source perceptual hash library</a></li>
 <li><a href="https://github.com/JohannesBuchner/imagehash">JohannesBuchner/imagehash: A Python Perceptual Image Hashing Module</a></li>
 <li><a href="https://qiita.com/mamo3gr/items/b93545a0346d8731f03c">同一画像を判定するためのハッシュ化アルゴリズム - Qiita</a></li>
 </ul>
