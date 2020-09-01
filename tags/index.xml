@@ -6,10 +6,19 @@
     <description>Recent content in Tags on ざきメモ</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 31 Aug 2020 03:00:23 +0900</lastBuildDate>
+    <lastBuildDate>Tue, 01 Sep 2020 01:00:23 +0900</lastBuildDate>
     
 	<atom:link href="https://yutayamazaki.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Computer Vision</title>
+      <link>https://yutayamazaki.github.io/tags/computer-vision/</link>
+      <pubDate>Tue, 01 Sep 2020 01:00:23 +0900</pubDate>
+      
+      <guid>https://yutayamazaki.github.io/tags/computer-vision/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Kaggle</title>
@@ -62,15 +71,6 @@
       <pubDate>Tue, 25 Aug 2020 01:50:23 +0900</pubDate>
       
       <guid>https://yutayamazaki.github.io/tags/python/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Computer Vision</title>
-      <link>https://yutayamazaki.github.io/tags/computer-vision/</link>
-      <pubDate>Thu, 13 Aug 2020 03:00:23 +0900</pubDate>
-      
-      <guid>https://yutayamazaki.github.io/tags/computer-vision/</guid>
       <description></description>
     </item>
     
