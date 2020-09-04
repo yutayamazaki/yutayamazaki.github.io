@@ -6,10 +6,28 @@
     <description>Recent content in Tags on ざきメモ</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 01 Sep 2020 03:00:23 +0900</lastBuildDate>
+    <lastBuildDate>Wed, 02 Sep 2020 03:00:23 +0900</lastBuildDate>
     
 	<atom:link href="https://yutayamazaki.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Computer Vision</title>
+      <link>https://yutayamazaki.github.io/tags/computer-vision/</link>
+      <pubDate>Wed, 02 Sep 2020 03:00:23 +0900</pubDate>
+      
+      <guid>https://yutayamazaki.github.io/tags/computer-vision/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Depth Estimation</title>
+      <link>https://yutayamazaki.github.io/tags/depth-estimation/</link>
+      <pubDate>Wed, 02 Sep 2020 03:00:23 +0900</pubDate>
+      
+      <guid>https://yutayamazaki.github.io/tags/depth-estimation/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Deep Learning</title>
@@ -17,15 +35,6 @@
       <pubDate>Tue, 01 Sep 2020 03:00:23 +0900</pubDate>
       
       <guid>https://yutayamazaki.github.io/tags/deep-learning/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Computer Vision</title>
-      <link>https://yutayamazaki.github.io/tags/computer-vision/</link>
-      <pubDate>Tue, 01 Sep 2020 01:00:23 +0900</pubDate>
-      
-      <guid>https://yutayamazaki.github.io/tags/computer-vision/</guid>
       <description></description>
     </item>
     

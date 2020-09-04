@@ -6,10 +6,19 @@
     <description>Recent content in Posts on ざきメモ</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 01 Sep 2020 03:00:23 +0900</lastBuildDate>
+    <lastBuildDate>Wed, 02 Sep 2020 03:00:23 +0900</lastBuildDate>
     
 	<atom:link href="https://yutayamazaki.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>&lt;暫定版&gt; 教師あり深度推定入門</title>
+      <link>https://yutayamazaki.github.io/posts/supervised-monocular-depth-estimation/</link>
+      <pubDate>Wed, 02 Sep 2020 03:00:23 +0900</pubDate>
+      
+      <guid>https://yutayamazaki.github.io/posts/supervised-monocular-depth-estimation/</guid>
+      <description>深度推定でよく利用されるデータセットや評価指標をまとめる</description>
+    </item>
     
     <item>
       <title>Smooth L1 Lossを理解する</title>
