@@ -6,10 +6,28 @@
     <description>Recent content in Posts on ざきメモ</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 02 Sep 2020 03:00:23 +0900</lastBuildDate>
+    <lastBuildDate>Fri, 11 Sep 2020 03:00:23 +0900</lastBuildDate>
     
 	<atom:link href="https://yutayamazaki.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>ArcFace, CosFace, SphereFaceを理解する</title>
+      <link>https://yutayamazaki.github.io/posts/metric-learning/</link>
+      <pubDate>Fri, 11 Sep 2020 03:00:23 +0900</pubDate>
+      
+      <guid>https://yutayamazaki.github.io/posts/metric-learning/</guid>
+      <description>Deep Netric LearningにおけるArcFace, CosFace, SphereFaceを理解する記事</description>
+    </item>
+    
+    <item>
+      <title>&lt;暫定版&gt; 教師あり深度推定入門</title>
+      <link>https://yutayamazaki.github.io/posts/depth-estimation-metrics/</link>
+      <pubDate>Wed, 02 Sep 2020 03:00:23 +0900</pubDate>
+      
+      <guid>https://yutayamazaki.github.io/posts/depth-estimation-metrics/</guid>
+      <description>深度推定でよく利用されるデータセットや評価指標をまとめる</description>
+    </item>
     
     <item>
       <title>&lt;暫定版&gt; 教師あり深度推定入門</title>

@@ -13,6 +13,15 @@
     
     <item>
       <title>&lt;暫定版&gt; 教師あり深度推定入門</title>
+      <link>https://yutayamazaki.github.io/posts/depth-estimation-metrics/</link>
+      <pubDate>Wed, 02 Sep 2020 03:00:23 +0900</pubDate>
+      
+      <guid>https://yutayamazaki.github.io/posts/depth-estimation-metrics/</guid>
+      <description>深度推定でよく利用されるデータセットや評価指標をまとめる</description>
+    </item>
+    
+    <item>
+      <title>&lt;暫定版&gt; 教師あり深度推定入門</title>
       <link>https://yutayamazaki.github.io/posts/supervised-monocular-depth-estimation/</link>
       <pubDate>Wed, 02 Sep 2020 03:00:23 +0900</pubDate>
       
