@@ -133,11 +133,11 @@
 </ul>
 <h2 id="cosfacehttpsarxivorgpdf180109414pdf"><a href="https://arxiv.org/pdf/1801.09414.pdf">CosFace</a></h2>
 <p><img src="/images/metric-learning/cosface.png" alt=""></p>
-<p>cosθに対して角度ベースでマージンを考えるArcFace対してCosFaceではlogitに対してマージンを取っている．どうせ超球面上に配置するのなら角度ベースで取る方が直感的だなぁ．</p>
+<p>cosθに対して角度ベースでマージンを考えるArcFace対してCosFaceではlogitに対してマージンを取っている．これによって角度で割合として影響を与えるArcFaceと異なり，スケーリングパラメータによってマージンが吸収されるためあまり学習が上手くいかなそう．</p>
 <h2 id="spherefacehttpsarxivorgpdf170408063pdf"><a href="https://arxiv.org/pdf/1704.08063.pdf">SphereFace</a></h2>
 <p><img src="/images/metric-learning/sphereface.png" alt=""></p>
 <p>ArcFaceやCosFaceの元となった手法．どうやら後続のArcFaceやCosFaceと比べて学習が不安定などの問題があるよう．</p>
-<p>角度ベースで距離を取るという考えは素晴らしい，しかし後発の手法と比較して角度をm倍して云々と言うのはあまり筋が良くなかったよう．</p>
+<p>角度ベースで距離を取るという考えは素晴らしいガ，後発の手法と比較して角度をm倍して云々と言うのはハイパラ調整の観点からして少し難しそう．</p>
 <h2 id="参考">参考</h2>
 <ul>
 <li><a href="https://arxiv.org/abs/1801.07698">ArcFace: Additive Angular Margin Loss for Deep Face Recognition</a></li>
