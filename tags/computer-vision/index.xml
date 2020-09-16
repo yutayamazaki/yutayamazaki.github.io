@@ -6,10 +6,28 @@
     <description>Recent content in Computer Vision on ざきメモ</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 11 Sep 2020 03:00:23 +0900</lastBuildDate>
+    <lastBuildDate>Wed, 16 Sep 2020 10:14:23 +0900</lastBuildDate>
     
 	<atom:link href="https://yutayamazaki.github.io/tags/computer-vision/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Deep系の画像タスクの取り組み方</title>
+      <link>https://yutayamazaki.github.io/posts/cv-task-tips/</link>
+      <pubDate>Wed, 16 Sep 2020 10:14:23 +0900</pubDate>
+      
+      <guid>https://yutayamazaki.github.io/posts/cv-task-tips/</guid>
+      <description>主にDeepの画像系タスクを行う際のEDAの手順をまとめる</description>
+    </item>
+    
+    <item>
+      <title>Kaggle解法まとめ iMet Collection 2019 - FGVC6</title>
+      <link>https://yutayamazaki.github.io/posts/kaggle-imet-collection-2019-fgvc6/</link>
+      <pubDate>Tue, 15 Sep 2020 16:14:23 +0900</pubDate>
+      
+      <guid>https://yutayamazaki.github.io/posts/kaggle-imet-collection-2019-fgvc6/</guid>
+      <description>Kaggleの2019年開催の壺コンペの解放をまとめる</description>
+    </item>
     
     <item>
       <title>ArcFace, CosFace, SphereFaceを理解する</title>
