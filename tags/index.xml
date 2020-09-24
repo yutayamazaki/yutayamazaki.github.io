@@ -6,10 +6,28 @@
     <description>Recent content in Tags on ざきメモ</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 16 Sep 2020 10:14:23 +0900</lastBuildDate>
+    <lastBuildDate>Fri, 25 Sep 2020 01:00:23 +0900</lastBuildDate>
     
 	<atom:link href="https://yutayamazaki.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>frontend</title>
+      <link>https://yutayamazaki.github.io/tags/frontend/</link>
+      <pubDate>Fri, 25 Sep 2020 01:00:23 +0900</pubDate>
+      
+      <guid>https://yutayamazaki.github.io/tags/frontend/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>JavaScript</title>
+      <link>https://yutayamazaki.github.io/tags/javascript/</link>
+      <pubDate>Fri, 25 Sep 2020 01:00:23 +0900</pubDate>
+      
+      <guid>https://yutayamazaki.github.io/tags/javascript/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Computer Vision</title>
