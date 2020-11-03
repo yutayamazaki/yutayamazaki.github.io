@@ -6,10 +6,19 @@
     <description>Recent content on ざきメモ</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 25 Sep 2020 01:00:23 +0900</lastBuildDate>
+    <lastBuildDate>Tue, 03 Nov 2020 03:00:23 +0900</lastBuildDate>
     
 	<atom:link href="https://yutayamazaki.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>AWSであるドメインから別のドメインへリダイレクトさせる</title>
+      <link>https://yutayamazaki.github.io/posts/aws-redirect-domain/</link>
+      <pubDate>Tue, 03 Nov 2020 03:00:23 +0900</pubDate>
+      
+      <guid>https://yutayamazaki.github.io/posts/aws-redirect-domain/</guid>
+      <description>AWSで元々配信していたドメインから新たなドメインへとリダイレクトさせるための手順のメモ．</description>
+    </item>
     
     <item>
       <title>HTMLをPDFとして出力する際に色がグレーになるバグの対応</title>
